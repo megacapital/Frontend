@@ -55,7 +55,7 @@ export default function Projects() {
               sx={{ display: 'flex', position: 'relative', justifyContent: 'center' }}
             >
               <h1
-                class="text-mute text-center fw-bold position-absolute start-50 translate-middle"
+                className="text-mute text-center fw-bold position-absolute start-50 translate-middle"
                 style={{
                   fontSize: 120,
                   top: '30px',
@@ -66,7 +66,7 @@ export default function Projects() {
               >
                 projects
               </h1>
-              <h2 class="text-light text-center position-absolute start-50 translate-middle-x" style={{ top: '13px' }}>
+              <h2 className="text-light text-center position-absolute start-50 translate-middle-x" style={{ top: '13px' }}>
                 Upcoming Projects
               </h2>
             </Box>
@@ -132,7 +132,7 @@ export default function Projects() {
             >
               <MHidden width="mdUp">
                 <h2
-                  class="text-light text-center position-absolute start-50 translate-middle-x"
+                  className="text-light text-center position-absolute start-50 translate-middle-x"
                   style={{ top: '13px', fontSize: 18 }}
                 >
                   Upcoming Projects

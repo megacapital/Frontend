@@ -26,13 +26,13 @@ export default function Token() {
               sx={{ display: 'flex', position: 'relative', justifyContent: 'center' }}
             >
               <h1
-                class="text-mute text-center fw-bold position-absolute start-50 translate-middle"
+                className="text-mute text-center fw-bold position-absolute start-50 translate-middle"
                 style={{ fontSize: 120, top: '30px', left: '50%', color: '#232323', fontFamily: { font_Family } }}
               >
                 TOKEN
               </h1>
               <h2
-                class="text-light text-center position-absolute start-50 translate-middle-x"
+                className="text-light text-center position-absolute start-50 translate-middle-x"
                 style={{ top: '13px', fontFamily: { font_Family } }}
               >
                 Features & Utility Cases

@@ -51,32 +51,39 @@ export default function Router() {
         { path: '/', element: <Navigate to="/home" replace /> },
         { path: '/presale/:address', element: <DetailPage /> }, // presale
         { path: '/home', element: <HomePage /> },
-        // { path: '/project', element: <ProjectDetail /> },
-        { path: '/project/:address', element: <ProjectDetail /> },
-        { path: '/create', element: <CreatePage /> }, //admin - create presale
-        { path: '/create-lock', element: <CreateLock /> },
-        { path: '/create-stake', element: <CreateStake /> }, //admin - create stake
+
         { path: '/deals', element: <Deals /> },
         { path: '/idodeals', element: <IdoDeals /> },
+        { path: '/inodeals', element: <InoDeals /> },
+        { path: '/vcdeals', element: <VCDeals /> },
+        { path: '/create-ido', element: <CreatePage /> }, //admin - create IDO deal
+        { path: '/project/:address', element: <ProjectDetail /> }, // one IDO deal
+
         { path: '/vote', element: <Vote /> },
         { path: '/dashboard', element: <Dashboard /> },
-        { path: '/vcdeals', element: <VCDeals /> },
+
+        { path: '/stakepad', element: <Stakepad /> },
         { path: '/stakingpool', element: <StakingPool /> },
-        { path: '/helpcenter', element: <HelpCenter /> },
         { path: '/farmingpool', element: <FarmingPool /> },
-        { path: '/inodeals', element: <InoDeals /> },
-        { path: '/phonecalendar', element: <PhoneCalendar /> },
+        { path: '/create-stake', element: <CreateStake /> }, //admin - create staking pool
+
         { path: '/blog', element: <Blog /> },
-        { path: '/lock', element: <LockListPage /> },
+        { path: '/helpcenter', element: <HelpCenter /> },
+
+        { path: '/calender', element: <Calendar /> },
+        { path: '/phonecalendar', element: <PhoneCalendar /> },
+
+        { path: '/lock', element: <LockListPage /> },  // remove this
         { path: '/token-lock-detail/:token/:owner', element: <TokenLockDetailPage /> },
         { path: '/liquidity-lock-detail/:token/:owner', element: <LiquidityLockDetailPage /> },
         { path: '/presales', element: <Presales /> },
-        { path: '/stakepad', element: <Stakepad /> },
+
         { path: '/staking/:address', element: <StakingCard /> },
         // { path: '/admin-presales', element: account === ADMIN_ADDRESS[network] ? <AdminPresales /> : '' }
         { path: '/admin-presales', element: <AdminPresales /> },
         { path: '/admin', element: <Admin /> },
-        { path: '/calender', element: <Calendar /> }
+
+        { path: '/pages', element: <PageList /> },  // list of pages
       ]
     },
 
@@ -119,12 +126,11 @@ const FarmingPool = Loadable(lazy(() => import('pages/FarmingPool')));
 const Blog = Loadable(lazy(() => import('pages/Blog')));
 const DetailPage = Loadable(lazy(() => import('pages/DetailPage')));
 const CreatePage = Loadable(lazy(() => import('pages/CreatePage')));
-const CreateLock = Loadable(lazy(() => import('pages/CreateLock')));
 const CreateStake = Loadable(lazy(() => import('pages/CreateStake')));
 const LockListPage = Loadable(lazy(() => import('pages/LockListPage')));
 const TokenLockDetailPage = Loadable(lazy(() => import('pages/TokenLockDetailPage')));
 const LiquidityLockDetailPage = Loadable(lazy(() => import('pages/LiquidityLockDetailPage')));
-// const PageFour = Loadable(lazy(() => import('pages/PageFour')));
+const PageList = Loadable(lazy(() => import('pages/PageList')));
 const AdminPresales = Loadable(lazy(() => import('pages/AdminPresales')));
 const NotFound = Loadable(lazy(() => import('pages/Page404')));
 const Admin = Loadable(lazy(() => import('pages/Admin')));

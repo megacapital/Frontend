@@ -157,13 +157,13 @@ export default function Heading() {
               </p>
             </Grid>
             <Grid marginTop="40px" container spacing={2}>
-              <Grid item component="a" href="/idodeals" class="hero-buttons btn btn-info text-light mx-3">
+              <Grid item component="a" href="/idodeals" className="hero-buttons btn btn-info text-light mx-3">
                 Buy $MGV
               </Grid>
-              <Grid item component="a" href="/stakepad" class="button-text hero-buttons btn btn-outline-info mx-1">
+              <Grid item component="a" href="/stakepad" className="button-text hero-buttons btn btn-outline-info mx-1">
                 Stake $MGV
               </Grid>
-              <Grid item component="a" href="#" class="hero-buttons btn btn-dark mx-3">
+              <Grid item component="a" href="#" className="hero-buttons btn btn-dark mx-3">
                 JOIN THE COMMUNITY
               </Grid>
             </Grid>

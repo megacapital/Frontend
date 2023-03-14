@@ -4,19 +4,13 @@ import Router from 'router';
 // theme
 import ThemeConfig from './theme';
 // components
-// import Settings from './components/settings';
-// import ScrollToTop from './components/ScrollToTop';
 import ThemePrimaryColor from './components/ThemePrimaryColor';
 import { useDispatch, useSelector } from "react-redux";
-import { setPools, setPool } from "./redux/slices/pools";
 import useEagerConnect from "./hooks/useEagerConnect";
 import { switchNetwork } from "./redux/slices/network";
-import { BigNumber } from "ethers";
-// import { addLiquidity, removeLiquidity } from "./redux/slices/liquidityLocks";
-// import { addToken, removeToken } from "./redux/slices/tokenLocks";
+
 import { useInactiveListener } from './hooks/useInactiveListener'
-import { formatEther, parseEther, formatUnits } from '@ethersproject/units';
-// import io from "socket.io-client";
+
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import { setupNetwork } from 'utils/wallet';
 
@@ -24,9 +18,8 @@ import { setupNetwork } from 'utils/wallet';
 
 export default function App() {
   const { chainId } = useActiveWeb3React();  
-  // const aaa = useActiveWeb3React();  
-  const poolsStore = useSelector((state) => state.pools.pools);
-  const poolStore = useSelector((state) => state.pools.pool);
+
+
   const network = useSelector((state) => state.network.chainId);
   const dispatch = useDispatch();
 

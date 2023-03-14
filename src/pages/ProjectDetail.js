@@ -12,18 +12,6 @@ import { atcb_action } from 'add-to-calendar-button';
 import 'add-to-calendar-button/assets/css/atcb.css';
 
 export default function ProjectDetail(props) {
-  // const [name, setName] = React.useState('Some event');
-  // async function Twitter() {
-  //   await fetch('https://api.twitter.com/2/lists/84839422/followers?user.fields=id,name,profile_image_url', {
-  //     headers: {
-  //       Authorization:
-  //         'Bearer AAAAAAAAAAAAAAAAAAAAANSAfgEAAAAAa%2FBPgl22Md491LAnCNfZNiB2mT0%3D9fALsRkc8QUEFlbj2zGXyPDIYHYxlIsdAV2vx5IoEs0f3GP7Ac'
-  //     }
-  //   });
-  //   let followerCount = user.fields.public_metrics.follower_count;
-  //   return followerCount;
-  // }
-
   const { pathname, hash } = useLocation();
 
   const [pools, setPools] = useState([]);

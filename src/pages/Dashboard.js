@@ -174,13 +174,13 @@ function VoteCard(props){
                     <Box marginTop='13px'>NFT</Box>
                 </Grid>
                 <Grid item md="1.5" sm="3">
-                    <Button class="btn btn-info text-light mx-2 px-5 mt-2">YES</Button>
+                    <Button className="btn btn-info text-light mx-2 px-5 mt-2">YES</Button>
                 </Grid>
                 <Grid item md="1.5" sm="3">
-                    <Button class="btn btn-outline-info mx-2 px-5 mt-2">NO</Button>
+                    <Button className="btn btn-outline-info mx-2 px-5 mt-2">NO</Button>
                 </Grid>
                 <Grid item md="1" sm="3">
-                    <Button><i class="Nft-arrow fa-solid fa-angle-down text-info mx-5 pt-3"></i></Button>
+                    <Button><i className="Nft-arrow fa-solid fa-angle-down text-info mx-5 pt-3"></i></Button>
                 </Grid>
             </Grid>
     );
@@ -255,7 +255,7 @@ function AddressCard(props){
         <MHidden width="mdDown">
             <Grid container direction="row" bgcolor={"#303030"} padding="20px" borderRadius={1}>
                 <Grid item md="2" display="flex" align="center" justifyContent="center">
-                    {/* <Box component="i" class="e-icon fa-solid fa-envelope text-info"></Box> */}
+                    {/* <Box component="i" className="e-icon fa-solid fa-envelope text-info"></Box> */}
                     <Box backgroundColor="rgba(255, 255, 255, 0.1)" width="70px" height="70px" borderRadius="50%" padding="15px"
                         justifyContent="center" display="flex"><Box component="img" src={props.src}></Box></Box>
                     {/* src="my_public/images/address-logo.png" */}
@@ -284,7 +284,7 @@ function AddressCard(props){
         <MHidden width="mdUp">
             <Grid container direction="row" bgcolor={"#303030"} padding="15px" borderRadius={1}>
                 <Grid item xs="2" display="flex" align="center" justifyContent="center">
-                    {/* <Box component="i" class="e-icon fa-solid fa-envelope text-info"></Box> */}
+                    {/* <Box component="i" className="e-icon fa-solid fa-envelope text-info"></Box> */}
                     <Box backgroundColor="rgba(255, 255, 255, 0.1)" width="50px" height="50px" borderRadius="50%" padding="10px"><Box component="img" src={props.src}></Box></Box>
                     {/* src="my_public/images/address-logo.png" */}
                 </Grid>

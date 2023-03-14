@@ -70,7 +70,7 @@ export default function Vote() {
       <MHidden width='mdDown'>
         <Grid paddingLeft={'10%'} paddingRight={'10%'} paddingTop='70px'>
           <Grid align='center' justifyContent='center' paddingBottom='30px'>
-            <Box component='h2' class='text-info'>VOTE</Box>
+            <Box component='h2' className='text-info'>VOTE</Box>
             <Box component='h5' color='white'>
               Vote for the next project you'd like to see on mega capital<br />Launchpads
             </Box>
@@ -86,7 +86,7 @@ export default function Vote() {
       <MHidden width='mdUp'>
         <Grid paddingLeft={'10%'} paddingRight={'10%'} paddingTop='30px'>
           <Grid align='center' justifyContent='center'>
-            <Box component='h2' class='text-info'>VOTE</Box>
+            <Box component='h2' className='text-info'>VOTE</Box>
             <Box color='white' fontSize={16} marginBottom='20px'>
               Vote for the next project you'd like to see on mega capital Launchpads
             </Box>
@@ -151,13 +151,13 @@ function VoteCard(props) {
         }}>NFT</Box>
       </Grid>
       <Grid item md='1.5' sm='3'>
-        <Button class='btn btn-info text-light mx-2 px-5 mt-2'>YES</Button>
+        <Button className='btn btn-info text-light mx-2 px-5 mt-2'>YES</Button>
       </Grid>
       <Grid item md='1.5' sm='3'>
-        <Button class='btn btn-outline-info mx-2 px-5 mt-2'>NO</Button>
+        <Button className='btn btn-outline-info mx-2 px-5 mt-2'>NO</Button>
       </Grid>
       <Grid item md='1' sm='3'>
-        <Button><i class='Nft-arrow fa-solid fa-angle-down text-info mx-5 pt-3'></i></Button>
+        <Button><i className='Nft-arrow fa-solid fa-angle-down text-info mx-5 pt-3'></i></Button>
       </Grid>
     </Grid>
   );
@@ -168,7 +168,7 @@ function AboutCard() {
     <>
       <MHidden width='mdDown'>
         <Grid container bgcolor={'#272727'} sx={{ width: '100%' }} padding='20px' marginTop='20px' borderRadius={2}>
-          <Box component='h2' class='text-info'>About</Box>
+          <Box component='h2' className='text-info'>About</Box>
           <Box marginTop='30px' component='p' color='white'>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             Mattis congue volutpat in et, dui, iaculis. Commodo morbi posuere et porta. Velit aliquet imperdiet
             fringilla faucibus tincidunt quam facilisi. Risus, posuere lacus, vel aliquet ultrices sagittis, ultrices
@@ -214,7 +214,7 @@ function AboutCard() {
               backgroundColor: 'rgba(255, 255, 255, 0.1)',
               padding: '10px',
               color: 'white'
-            }}><i class='fa-regular fa-file text-info mx-2'></i>Pitch Dock</Box>
+            }}><i className='fa-regular fa-file text-info mx-2'></i>Pitch Dock</Box>
           </Grid>
           <Box component='img' borderRadius={2} width='100%' height='300px' src={imageURL('projects (2).png')} />
         </Grid>
@@ -254,7 +254,7 @@ function AboutCard() {
                 backgroundColor: 'rgba(255, 255, 255, 0.1)',
                 padding: '10px',
                 color: 'white'
-              }}><i class='fa-regular fa-file text-info mx-2'></i>Pitch Dock</Box>
+              }}><i className='fa-regular fa-file text-info mx-2'></i>Pitch Dock</Box>
             </Grid>
             <Grid item xs={12} marginTop='28px' display='flex' justifyContent='space-around'>
               <Box component='button' marginLeft='10px' href='/' style={{

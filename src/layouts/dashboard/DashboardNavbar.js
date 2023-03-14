@@ -94,60 +94,7 @@ export default function DashboardNavbar({ onOpenSidebar }) {
               <NavMenuItem onClick={handleClose} title="Deals" link="/deals" />
 
               <NavMenuItem onClick={handleClose} title="Pools" link="/stakepad" />
-              <Box
-                component={'a'}
-                mx={1}
-                fontSize={'16px'}
-                sx={{ textDecoration: 'none', color: '#FFF', cursor: 'pointer' }}
-                onClick={() => alert('Coming Soon')}
-              >
-                Vote
-              </Box>
-
-              <Box
-                component={'a'}
-                mx={1}
-                fontSize={'16px'}
-                sx={{ textDecoration: 'none', color: '#FFF', cursor: 'pointer' }}
-                onClick={() => alert('Coming Soon')}
-              >
-                Dashboard
-              </Box>
-
-              <Box
-                component={'a'}
-                mx={1}
-                fontSize={'16px'}
-                sx={{ textDecoration: 'none', color: '#FFF', cursor: 'pointer' }}
-                onClick={() => alert('Coming Soon')}
-              >
-                Blog
-              </Box>
-
-              <Box
-                component={'a'}
-                mx={1}
-                fontSize={'16px'}
-                sx={{ textDecoration: 'none', color: '#FFF', cursor: 'pointer', whiteSpace: 'nowrap' }}
-                onClick={() => alert('Coming Soon')}
-              >
-                Help Center
-              </Box>
-
-              <Box
-                component={'a'}
-                mx={1}
-                fontSize={'16px'}
-                sx={{ textDecoration: 'none', color: '#FFF', cursor: 'pointer' }}
-                onClick={() =>
-                  window.open(
-                    'https://docs.google.com/forms/d/e/1FAIpQLSdVDWrRUIjrf2WpgD7pnTyOPR97kfXO1V4cFYiv4aIIgAI6TA/viewform',
-                    '_blank'
-                  )
-                }
-              >
-                Suggestions
-              </Box>
+              
             </Box>
             {/*<NavMenuItem onClick={handleClose} title="Vote" link="/vote" />*/}
             {/*<NavMenuItem onClick={handleClose} title="Dashboard" link="/dashboard" />*/}
@@ -157,18 +104,8 @@ export default function DashboardNavbar({ onOpenSidebar }) {
             {/* <Box sx={{ flexGrow: 1 }} /> */}
 
             <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-              {/* <Link
-            href={
-              process.env.REACT_APP_MODE == 'testnet'
-                ? process.env.REACT_APP_MAINNET_URL
-                : process.env.REACT_APP_TESTNET_URL
-            }
-            color="primary"
-            fontSize={16}
-          >
-            {process.env.REACT_APP_MODE == 'testnet' ? 'To Mainnet' : 'To Testnet'}
-          </Link> */}
-              <LanguagePopover />
+
+              {/* <LanguagePopover /> */}
               <NetworkPopover />
               <AccountPopover />
             </Stack>
@@ -287,22 +224,5 @@ function NavMenuItem(props) {
         </Grid>
       </MHidden>
     </>
-  );
-}
-function NavMenuItem1(props) {
-  return (
-    <a
-      class="nav-link mx-3 text-light"
-      href={props.link}
-      style={{
-        fontSize: '17px',
-        color: 'white',
-        cursor: 'pointer',
-        marginLeft: '30px',
-        textDecoration: 'none'
-      }}
-    >
-      {props.title}
-    </a>
   );
 }

@@ -11,9 +11,9 @@ export default function DashboardFooter() {
             <Box component="h4" color="white">
               Join Army
             </Box>
-            <div class="d-flex">
-              <div class="bg-img_09">
-                 {/*<Box component="p" class="mb-0" style={{ color: 'white' }}>
+            <div className="d-flex">
+              <div className="bg-img_09">
+                {/*<Box component="p" className="mb-0" style={{ color: 'white' }}>
                    Promote Tweets for additional score points
                  </Box>*/}
                 <Box
@@ -21,15 +21,14 @@ export default function DashboardFooter() {
                   target="_blank"
                   href="https://docs.google.com/forms/d/e/1FAIpQLSd1Z4Ju-Xzr0qvrbLpw3ffY8DpaJYSkW7TDIvx9hdeHlGGUhg/viewform"
                 >
-                  <button class="join-army-btn">Join Now</button>
+                  <button className="join-army-btn">Join Now</button>
                 </Box>
               </div>
-              <div class="bg-img_09">
-                <div class="a-image">
+              <div className="bg-img_09">
+                <div className="a-image">
                   <Box
                     component="img"
                     src={imageURL('army.png')}
-                    army-img
                     alt="Army-Image"
                     sx={{ width: '80%', height: '80%' }}
                   />
@@ -47,8 +46,9 @@ export default function DashboardFooter() {
             padding="30px"
             style={{ background: 'linear-gradient(to bottom right, #56C5ff  10%, #67CBFF 73%)' }}
           >
-            {/* <div class="col-md-6 p-0"> */}
+            {/* <div className="col-md-6 p-0"> */}
             <Grid
+              container
               item
               sm={12}
               component="h4"
@@ -72,8 +72,8 @@ export default function DashboardFooter() {
               style={{ textDecoration: 'none' }}
               href="https://docs.google.com/forms/d/e/1FAIpQLSccomiCjlviokNn0_zuOHpStCNb3x_0OQreV4qEaGLpIyTMzg/viewform"
             >
-              <Box component="button" class="btn btn-dark">
-                <i class="fa-solid fa-rocket text-info"></i> Apply to Launch
+              <Box component="button" className="btn btn-dark">
+                <i className="fa-solid fa-rocket text-info"></i> Apply to Launch
               </Box>
             </Grid>
             {/* </div> */}
@@ -153,7 +153,7 @@ export default function DashboardFooter() {
                 </Box>
               </Grid>
             </Grid>
-            <Grid item md="2">
+            <Grid item md={2}>
               <Box component="h3" color="white">
                 General
               </Box>
@@ -202,7 +202,7 @@ export default function DashboardFooter() {
                 </Box>
               </Box>
             </Grid>
-            <Grid item md="2.5">
+            <Grid item md={2.5}>
               <Box component="h3" color="white">
                 About Us
               </Box>
@@ -237,7 +237,7 @@ export default function DashboardFooter() {
                 </Box>
               </Box>
             </Grid>
-            <Grid item md="2.5">
+            <Grid item md={2.5}>
               <Box component="h3" color="white">
                 Community
               </Box>
@@ -289,7 +289,7 @@ export default function DashboardFooter() {
                 </Box>
               </Box>
             </Grid>
-            <Grid item md="2.5">
+            <Grid item md={2.5}>
               <Box component="h3" color="white">
                 &nbsp;{' '}
               </Box>
@@ -338,7 +338,7 @@ export default function DashboardFooter() {
               Join Army
             </Box>
             <Box
-              class="mb-0"
+              className="mb-0"
               style={{ color: 'white' }}
               fontSize={23}
               padding="0 20px"
@@ -364,7 +364,6 @@ export default function DashboardFooter() {
               <Box
                 component="img"
                 src={imageURL('army.png')}
-                army-img
                 alt="Army-Image"
                 sx={{ width: '80%', height: '80%' }}
               />
@@ -380,14 +379,13 @@ export default function DashboardFooter() {
             padding="30px 10px"
             style={{ background: 'linear-gradient(to bottom right, #56C5ff  10%, #67CBFF 73%)' }}
           >
-            {/* <div class="col-md-6 p-0"> */}
+            {/* <div className="col-md-6 p-0"> */}
             <Grid
               item
               sm={12}
               marginTop="30px"
               padding="0 10px"
-              component="h4"
-              direction="column"
+              component="h4"           
               color="white"
               alignItems={'center'}
               justifyContent="center"
@@ -407,20 +405,20 @@ export default function DashboardFooter() {
               <Box
                 component="a"
                 target="_blank"
-                class="btn btn-dark"
+                className="btn btn-dark"
                 style={{ backgroundColo: 'black' }}
                 href="https://docs.google.com/forms/d/e/1FAIpQLSccomiCjlviokNn0_zuOHpStCNb3x_0OQreV4qEaGLpIyTMzg/viewform"
               >
-                <i class="fa-solid fa-rocket text-info"></i> Apply to Launch
+                <i className="fa-solid fa-rocket text-info"></i> Apply to Launch
               </Box>
             </Grid>
             {/* </div> */}
           </Grid>
         </Grid>
-        <Grid xs={12} marginTop="40px" display="flex" justifyContent="center">
+        <Grid item  xs={12} marginTop="40px" display="flex" justifyContent="center">
           <Box component="img" src={imageURL('logo.png')}></Box>
         </Grid>
-        <Grid xs={12} marginTop="20px" padding="0px 20px">
+        <Grid item  xs={12} marginTop="20px" padding="0px 20px">
           <Box textAlign="center" color="white">
             Lorem ipsum dolor sit amet consectetur adipiscing elit Pharetra tortor nec
           </Box>

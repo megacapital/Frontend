@@ -133,7 +133,7 @@ export default function CreateStake() {
         try {
           const token0 = await tokenContract.token0();
           if (token0) isLiquidity = true;
-        } catch (err) {}
+        } catch (err) { }
         //check wallet balance
         try {
           const balance = await tokenContract.balanceOf(account);
@@ -275,6 +275,9 @@ export default function CreateStake() {
   return (
     <Page title="Create Lock">
       <Container maxWidth="lg" className="pt-5">
+        {/* For test */}
+        <h6>Network: {network}, Account: {account}, Token: {token}</h6> 
+
         <Card
           sx={{
             width: 1,
@@ -369,7 +372,7 @@ export default function CreateStake() {
           </Stack>
           <Stack sx={{ mt: 2 }} alignItems="center" spacing={1}>
             {/* <Typography>You will pay: 0.1BNB</Typography> */}
-            <Button size="large" variant="contained" class="btn btn-info text-light mt-2 mx-4" onClick={handleCreate}>
+            <Button size="large" variant="contained" className="btn btn-info text-light mt-2 mx-4" onClick={handleCreate}>
               {processing ? <HashLoader color="#59f1f6" size={30} /> : 'Create Pool'}
             </Button>
           </Stack>

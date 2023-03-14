@@ -88,7 +88,7 @@ export default function LaunchCard(props) {
               </Grid>
               <Grid marginTop="5px" display="flex" align="center" justifyContent="center">
                 <Box component="a" href="/project">
-                  <i class="fa-solid fa-circle-arrow-right text-info"></i>
+                  <i className="fa-solid fa-circle-arrow-right text-info"></i>
                 </Box>
               </Grid>
             </Grid>

@@ -35,8 +35,8 @@ export default function Performance(){
             <Box  component="img" src={imageURL('h-3.png')} ></Box>
           </Box>
           <Box data-aos="zoom-in" fontFamily={font_Family} sx={{display:'flex', position:'relative', justifyContent:'center'}}>
-              <h1 class="text-mute text-center fw-bold position-absolute start-50 translate-middle" style={{fontSize:120, top:'30px', left:'50%', color:"#232323", fontFamily:{font_Family}}}>PERFORMANCE</h1>
-              <h2 class="text-light text-center position-absolute start-50 translate-middle-x" style={{top:'13px'}}>Past Invest Performance</h2>
+              <h1 className="text-mute text-center fw-bold position-absolute start-50 translate-middle" style={{fontSize:120, top:'30px', left:'50%', color:"#232323", fontFamily:{font_Family}}}>PERFORMANCE</h1>
+              <h2 className="text-light text-center position-absolute start-50 translate-middle-x" style={{top:'13px'}}>Past Invest Performance</h2>
           </Box>
           <Grid spacing={2} container data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="300" data-aos-offset="0" marginTop="150px" >
 
@@ -67,7 +67,7 @@ export default function Performance(){
             <Box  component="img"  src={imageURL('h-3.png')}></Box>
           </Box>
           <Box data-aos="zoom-in" fontFamily={font_Family} sx={{display:'flex', position:'relative', justifyContent:'center'}}>
-              <h2 class="text-light text-center position-absolute start-50 translate-middle-x" style={{fontSize:15, top:'13px'}}>Past Invest Performance</h2>
+              <h2 className="text-light text-center position-absolute start-50 translate-middle-x" style={{fontSize:15, top:'13px'}}>Past Invest Performance</h2>
           </Box>
           <Grid spacing={2} container marginTop="40px" >
             {pools.length > 0 && pools.map( (pool, poolIdx) =>  {

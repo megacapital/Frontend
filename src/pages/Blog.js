@@ -116,11 +116,11 @@ export default function Stakepad() {
             <MHidden width="mdDown">
               <Grid paddingLeft={'11%'} paddingRight={'11%'}>
                   <Grid  align="center" justifyContent="center" paddingTop="60px">
-                  <Box component="h1" class="text-info">News and Blog</Box>
+                  <Box component="h1" className="text-info">News and Blog</Box>
                   </Grid>
                   <Grid width="100%" display="flex" position="relative" marginTop="50px" marginBottom="40px">
-                      <Box component="h3" class="text-info" position="relative" left="5px">Blogs</Box>
-                      <Box position="absolute" right="5px"><Button class="btn btn-outline-info">Read all articles</Button></Box>
+                      <Box component="h3" className="text-info" position="relative" left="5px">Blogs</Box>
+                      <Box position="absolute" right="5px"><Button className="btn btn-outline-info">Read all articles</Button></Box>
                   </Grid>
                   <Grid container spacing={2}>
                       <Grid item md="4"><BlogCard blog={blogs[0]}></BlogCard></Grid>
@@ -131,8 +131,8 @@ export default function Stakepad() {
                       <Grid item md="4"><BlogCard blog={blogs[2]}></BlogCard></Grid>
                   </Grid>
                   <Grid width="100%" display="flex" position="relative" marginTop="30px" marginBottom="30px">
-                      <Box component="h3" class="text-info" position="relative" left="5px">NEWS</Box>
-                      <Box position="absolute" right="5px"><Button class="btn btn-outline-info">Read all articles</Button></Box>
+                      <Box component="h3" className="text-info" position="relative" left="5px">NEWS</Box>
+                      <Box position="absolute" right="5px"><Button className="btn btn-outline-info">Read all articles</Button></Box>
                   </Grid>
                   <Grid container spacing={2}>
                       <Grid item md="4"><BlogCard blog={blogs[0]}></BlogCard></Grid>
@@ -190,13 +190,13 @@ function VoteCard(props){
                     <Box marginTop='13px'>NFT</Box>
                 </Grid>
                 <Grid item md="1.5" sm="3">
-                    <Button class="btn btn-info text-light mx-2 px-5 mt-2">YES</Button>
+                    <Button className="btn btn-info text-light mx-2 px-5 mt-2">YES</Button>
                 </Grid>
                 <Grid item md="1.5" sm="3">
-                    <Button class="btn btn-outline-info mx-2 px-5 mt-2">NO</Button>
+                    <Button className="btn btn-outline-info mx-2 px-5 mt-2">NO</Button>
                 </Grid>
                 <Grid item md="1" sm="3">
-                    <Button><i class="Nft-arrow fa-solid fa-angle-down text-info mx-5 pt-3"></i></Button>
+                    <Button><i className="Nft-arrow fa-solid fa-angle-down text-info mx-5 pt-3"></i></Button>
                 </Grid>
             </Grid>
     );

@@ -71,17 +71,17 @@ export default function StakingPool() {
         <Grid paddingLeft={'7%'} paddingRight={'7%'}>
           <Grid align="center" justifyContent="center">
             <Box component="a" href="/stakepad">
-              <Button class="btn btn-dark text-info mx-1">Stakepad</Button>
+              <Button className="btn btn-dark text-info mx-1">Stakepad</Button>
             </Box>
-            <a href="/#" class="btn btn-light text-info mx-1">
+            <a href="/#" className="btn btn-light text-info mx-1">
               Staking Pools
             </a>
-            <a href="/farmingpool" class="btn btn-dark text-info mx-1">
+            <a href="/farmingpool" className="btn btn-dark text-info mx-1">
               Farming Pools
             </a>
           </Grid>
           <Grid align="center" justifyContent="center" marginTop="30px">
-            <Box component="h2" class="text-info">
+            <Box component="h2" className="text-info">
               STAKING MEGA CAPITAL TOKEN
             </Box>
             <Box component="h5" fontSize={10}>
@@ -92,7 +92,7 @@ export default function StakingPool() {
           </Grid>
           <Grid marginTop="50px">
             <Grid container position="relative" marginBottom="30px">
-              <Box component="h4" class="text-info" sx={{ position: 'absolute', left: '10px' }}>
+              <Box component="h4" className="text-info" sx={{ position: 'absolute', left: '10px' }}>
                 Stakepad
               </Box>
               <Box component="h4" sx={{ position: 'absolute', right: '10px' }}>
@@ -105,7 +105,7 @@ export default function StakingPool() {
           </Grid>
           <Grid marginTop="50px">
             <Grid container position="relative" marginBottom="30px">
-              <Box component="h4" class="text-info" sx={{ position: 'absolute', left: '10px' }}>
+              <Box component="h4" className="text-info" sx={{ position: 'absolute', left: '10px' }}>
                 Staking Pools
               </Box>
               <Box component="h4" sx={{ position: 'absolute', right: '10px' }}>
@@ -120,7 +120,7 @@ export default function StakingPool() {
             <BuyToken></BuyToken>
             <Grid marginTop="50px">
               <Grid container position="relative" marginBottom="30px">
-                <Box component="h4" class="text-info" sx={{ position: 'absolute', left: '10px' }}>
+                <Box component="h4" className="text-info" sx={{ position: 'absolute', left: '10px' }}>
                   Farming Pools
                 </Box>
                 <Box component="h4" sx={{ position: 'absolute', right: '10px' }}>
@@ -170,7 +170,7 @@ function BuyToken() {
       >
         <Grid bottom="10px">0.0</Grid>
         <Grid position="absolute" right="5px">
-          <Button class="btn btn-info mx-1 px-4">MAX</Button>
+          <Button className="btn btn-info mx-1 px-4">MAX</Button>
         </Grid>
       </Grid>
       <Grid
@@ -185,22 +185,22 @@ function BuyToken() {
       >
         <Grid bottom="10px">0.0</Grid>
         <Grid position="absolute" right="5px">
-          <Button class="btn btn-info mx-1 px-4">MAX</Button>
+          <Button className="btn btn-info mx-1 px-4">MAX</Button>
         </Grid>
       </Grid>
       <Grid container direction="row" marginTop="10px">
-        <Button class="btn btn-info mx-1 px-4 text-light">STAKE</Button>
-        <Button class="btn btn-outline-secondary mx-1 px-4 text-info">UNSTAKE</Button>
+        <Button className="btn btn-info mx-1 px-4 text-light">STAKE</Button>
+        <Button className="btn btn-outline-secondary mx-1 px-4 text-info">UNSTAKE</Button>
       </Grid>
       <Grid marginTop="10px">
-        <Button class="btn btn-outline-secondary mx-1 px-4 mt-2 text-light">HARVEST 43.66 MGV</Button>
+        <Button className="btn btn-outline-secondary mx-1 px-4 mt-2 text-light">HARVEST 43.66 MGV</Button>
         <Box>Harvesting will reset the lock time</Box>
       </Grid>
       <Grid container direction="row" marginTop="10px">
         <Grid sm="3">
           <Box>DEPOSIT FEE</Box>
         </Grid>
-        <Grid class="text-info" sm="3">
+        <Grid className="text-info" sm="3">
           <Box>None</Box>
         </Grid>
       </Grid>
@@ -208,7 +208,7 @@ function BuyToken() {
         <Grid sm="3">
           <Box>WITHDRAW FEE</Box>
         </Grid>
-        <Grid class="text-info" sm="3">
+        <Grid className="text-info" sm="3">
           <Box>None</Box>
         </Grid>
       </Grid>
@@ -216,7 +216,7 @@ function BuyToken() {
         <Grid sm="3">
           <Box>PERFORMANCE FEE TIME</Box>
         </Grid>
-        <Grid class="text-info" sm="3">
+        <Grid className="text-info" sm="3">
           <Box>None</Box>
         </Grid>
       </Grid>
@@ -224,11 +224,11 @@ function BuyToken() {
         <Grid sm="3">
           <Box>LOCK TIME</Box>
         </Grid>
-        <Grid class="text-info" sm="3">
+        <Grid className="text-info" sm="3">
           <Box>30 Days</Box>
         </Grid>
       </Grid>
-      <Box class="text-info" marginTop="10px">
+      <Box className="text-info" marginTop="10px">
         Buy Token
       </Box>
     </Grid>
@@ -265,7 +265,7 @@ function PoolBox() {
           </Typography>
         </Grid>
         <Grid item sm={1} sx={{ marginRight: '10px' }}>
-          <button class="btn btn-info text-light mt-2 mx-4">Discover</button>
+          <button className="btn btn-info text-light mt-2 mx-4">Discover</button>
         </Grid>
       </Grid>
     </Box>

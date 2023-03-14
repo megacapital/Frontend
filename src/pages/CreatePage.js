@@ -194,7 +194,7 @@ function Create() {
   };
 
   return (
-    <Page title="Create Presale">
+    <Page title="Create IDO">
       <Container maxWidth="lg">
         <Box sx={{ mt: 5 }}>
           <Stepper alternativeLabel activeStep={activeStep} sx={{ mb: 5 }}>
@@ -208,20 +208,7 @@ function Create() {
             ))}
           </Stepper>
           {activeStep == 0 ? (
-            <Paper
-              sx={{
-                p: 10,
-                mx: 'auto'
-                // background: 'rgba(255, 255, 255, 0.2)'
-                // backdropFilter: 'blur(6px)'
-              }}
-            >
-              {/* ====================zubair====================== */}
-
-              {/* <AdditionalInfo goBack={goBack} goNext={goNext}></AdditionalInfo> */}
-
-              {/* ====================zubair====================== */}
-
+            <Paper sx={{ p: 10, mx: 'auto' }}>
               <Stack>
                 <TextField
                   fullWidth

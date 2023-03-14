@@ -14,7 +14,7 @@ const APP_BAR_MOBILE = 64;
 
 const RootStyle = styled('div')({
   position: 'relative',
-  backgroundColor:"#171819",
+  backgroundColor: "#171819",
   display: 'flex',
   minHeight: '100%',
   overflow: 'hidden'
@@ -25,7 +25,7 @@ const MainStyle = styled('div')(({ theme }) => ({
   overflow: 'auto',
   minHeight: '100%',
   paddingTop: APP_BAR_MOBILE + 24,
-  backgroundColor:"#171819",
+  backgroundColor: "#171819",
   // paddingBottom: theme.spacing(10),
   [theme.breakpoints.up('lg')]: {
     // paddingTop: APP_BAR_DESKTOP + 24,
@@ -44,10 +44,9 @@ export default function DashboardLayout() {
   return (
     <RootStyle>
       <DashboardNavbar onOpenSidebar={() => setOpen(true)} />
-      {/* <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} /> */}
       <MainStyle
         sx={{
-          backgroundColor:"#171819",
+          backgroundColor: "#171819",
           transition: theme.transitions.create('margin', {
             duration: theme.transitions.duration.complex
           }),
@@ -57,7 +56,6 @@ export default function DashboardLayout() {
         }}
       >
         <Outlet />
-        {/* <SocialLinks /> */}
       </MainStyle>
     </RootStyle>
   );

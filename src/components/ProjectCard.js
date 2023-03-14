@@ -40,7 +40,7 @@ export default function ProjectName(props) {
               <Typography variant="body2" align="center" fontSize="16px"  fontFamily={'Segoe UI'} marginTop="15px" color="#56C5FF">
                 <Link style={{color:"#56C5FF"}} to={`/project/${address}`}>learn more</Link>
                 {/*<a href="/project" style={{color:"#56C5FF"}}>learn more</a><br/>*/}
-                {/* <i class="fa-solid fa-arrow-right text-info"></i> */}
+                {/* <i className="fa-solid fa-arrow-right text-info"></i> */}
               </Typography>
               <Typography display="flex" justifyContent="center" sx={{ cursor: 'pointer' }} onClick={()=>navigate(`/project/${address}`)}>
                 <Box component="img" width="70px" height="70px" src={imageURL('Ellipse.png')} />
@@ -71,7 +71,7 @@ export default function ProjectName(props) {
               </Typography>
               <Typography variant="body2" align="center" fontSize="16px"  fontFamily={'Segoe UI'} marginTop="15px" color="#56C5FF">
                 <a href="/project" style={{color:"#56C5FF"}}>learn more</a><br/>
-                {/* <i class="fa-solid fa-arrow-right text-info"></i> */}
+                {/* <i className="fa-solid fa-arrow-right text-info"></i> */}
               </Typography>
               <Typography display="flex" justifyContent="center" padding="0 80px">
                 <Box component="img" width="70px" height="70px"  src={imageURL('Ellipse.png')} />

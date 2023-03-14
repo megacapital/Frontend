@@ -25,7 +25,7 @@ export default function PoolsCard(props) {
             {/* if(props.allocation == 1){ */}
             { props.allocation == 1 ?  <Grid item sm={8}><Box marginTop="5px" >
             
-            <button class="btn mx-3 text-white" style={{backgroundColor:'#56C5FF'}}>Guaranteed allocation</button>
+            <button className="btn mx-3 text-white" style={{backgroundColor:'#56C5FF'}}>Guaranteed allocation</button>
             </Box></Grid>
             :null
             }
@@ -50,7 +50,7 @@ export default function PoolsCard(props) {
               </Typography>
           </Grid>
           <Grid item sm={1.5}>
-            <Box sx={{ color: 'white', marginRight: '10px', width: '100%' }}><button class="btn text-light" style={{backgroundColor:'#56C5FF'}}>Discover</button></Box>
+            <Box sx={{ color: 'white', marginRight: '10px', width: '100%' }}><button className="btn text-light" style={{backgroundColor:'#56C5FF'}}>Discover</button></Box>
           </Grid>
         </Grid>
       </Box>

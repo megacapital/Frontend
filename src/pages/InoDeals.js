@@ -70,12 +70,12 @@ export default function IdoDeals(){
                     const btnColor = pathname === link ? 'light' : 'dark';
                     return  (
                       <Box item key={id} component={Link} to={link}
-                           class={`btn btn-${btnColor} text-info mx-1`}
+                           className={`btn btn-${btnColor} text-info mx-1`}
                       >{title}</Box>
                     )
                   })}
-                    <Box item component="button"  onClick={handleOpen} class="btn btn-dark text-info mx-1">
-                        <i class="fa-solid fa-calendar-days text-info mx-1"></i>Calendar
+                    <Box item component="button"  onClick={handleOpen} className="btn btn-dark text-info mx-1">
+                        <i className="fa-solid fa-calendar-days text-info mx-1"></i>Calendar
                     </Box>
                 </Grid>
                 <Box component="h2" marginTop="20px" display="flex" align="center" justifyContent="center" color="#00BFFF">PROJECTS</Box>

@@ -6,28 +6,6 @@ import Page from 'components/Page';
 import { Box, Typography, Grid, Button, Card, CardContent } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom'
 
-// hooks
-// components
-
-// ----------------------------------------------------------------------
-function CustomCard(props) {
-  return (
-    <>
-      <MHidden width="mdDown">
-        <Grid style={{ backgroundColor: '#232323', borderRadius: 10, padding: '20px' }}>
-          <Box style={{ fontSize: '15px', color: '#24B6E6' }}>{props.name}</Box>
-        </Grid>
-      </MHidden>
-      <MHidden width="mdUp">
-        <Grid style={{ backgroundColor: '#232323', borderRadius: 10, padding: '20px' }}>
-          <Box style={{ fontSize: '15px', color: '#24B6E6' }} textAlign="center">
-            {props.name}
-          </Box>
-        </Grid>
-      </MHidden>
-    </>
-  );
-}
 
 export default function Admin() {
   const navigate = useNavigate();
@@ -45,8 +23,8 @@ export default function Admin() {
               padding="3px 8px"
               backgroundColor="rgb(255, 255, 255, 0)"
             >
-              <Box component={Link} to={'/create'}  sx={{ textDecoration: 'none' }}>
-                CREATE DEALS
+              <Box component={Link} to={'/create-ido'}  sx={{ textDecoration: 'none' }}>
+                CREATE IDO DEALS
               </Box>
             </Box>
           </Grid>
@@ -59,8 +37,8 @@ export default function Admin() {
               style={{ backgroundColor: '#24B6E6', border: 'none', color: 'white' }}
               onClick={() => navigate('/create-stake')}
             >
-              {' '}
-              POOLS{' '}
+             
+              Create Staking POOLS
             </Box>
           </Grid>
 
@@ -78,19 +56,7 @@ export default function Admin() {
                 CALENDER
               </Box>
             </Box>
-          </Grid>
-          <Grid item md={3} sm={3} xs={12} padding="5px">
-            <Box
-              component="button"
-              width="100%"
-              borderRadius={1}
-              padding="3px 8px"
-              style={{ backgroundColor: '#24B6E6', border: 'none', color: 'white' }}
-            >
-              {' '}
-              KYC{' '}
-            </Box>
-          </Grid>
+          </Grid>      
         </Grid>
       </Grid>
     </Page>

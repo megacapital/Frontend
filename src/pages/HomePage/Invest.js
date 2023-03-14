@@ -35,14 +35,14 @@ export default function Invest() {
           >
             <MHidden width="mdDown">
               <h1
-                class="text-mute text-center fw-bold position-absolute start-50 translate-middle"
+                className="text-mute text-center fw-bold position-absolute start-50 translate-middle"
                 style={{ fontSize: 120, top: '30px', left: '50%', color: '#232323', fontFamily: { font_Family } }}
               >
                 INVEST
               </h1>
             </MHidden>
             <h2
-              class="text-light text-center position-absolute start-50 translate-middle-x"
+              className="text-light text-center position-absolute start-50 translate-middle-x"
               style={{ top: '13px', fontFamily: { font_Family } }}
             >
               How To Invest

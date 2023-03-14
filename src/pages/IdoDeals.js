@@ -87,16 +87,16 @@ export default function IdoDeals() {
               const btnColor = pathname === link ? 'light' : 'dark';
               return  (
                 <Box item key={id} component={Link} to={link}
-                     class={`btn btn-${btnColor} text-info mx-1`}
+                     className={`btn btn-${btnColor} text-info mx-1`}
                 >{title}</Box>
               )
             })}
-            <Box item class={`btn btn-dark text-info mx-1`} onClick={() => alert('Coming Soon')}>INO Deals</Box>
-            {/*<Box item component='button' onClick={() => alert('Coming Soon')} class='btn btn-dark text-info mx-1'>*/}
-            {/*  <i class='fa-solid fa-calendar-days text-info mx-1'></i>Calendar*/}
+            <Box item className={`btn btn-dark text-info mx-1`} onClick={() => alert('Coming Soon')}>INO Deals</Box>
+            {/*<Box item component='button' onClick={() => alert('Coming Soon')} className='btn btn-dark text-info mx-1'>*/}
+            {/*  <i className='fa-solid fa-calendar-days text-info mx-1'></i>Calendar*/}
             {/*</Box>*/}
-            {/* <Box item component="a" href="/phonecalendar" class="btn btn-dark text-info mx-1">
-                        <i class="fa-solid fa-calendar-days text-info mx-1"></i>Calendar
+            {/* <Box item component="a" href="/phonecalendar" className="btn btn-dark text-info mx-1">
+                        <i className="fa-solid fa-calendar-days text-info mx-1"></i>Calendar
                     </Box> */}
           </Grid>
           {/*<Box component='h2' marginTop='20px' display='flex' align='center' justifyContent='center'*/}
@@ -105,7 +105,7 @@ export default function IdoDeals() {
                                                               src={imageURL('projects.png')}></Box></Grid>
           <Grid container direction="row" marginTop="90px" marginBottom="50px" gap={1}>
             <Grid item container md="8" justifyContent='flex-end'>
-              <Box item component="button" class="btn btn-dark text-info mx-1">
+              <Box item component="button" className="btn btn-dark text-info mx-1">
                 <Box component={'a'} href="/calender" sx={{ textDecoration: 'none' }}>
                   <Box component="img" src={imageURL('Calendar.png')} />
                 </Box>
@@ -162,13 +162,13 @@ export default function IdoDeals() {
               const btnColor = pathname === link ? 'light' : 'dark';
               return (
                 <Box item key={id} component={Link} to={link}
-                     class={`btn btn-${btnColor} text-info mx-1`}
+                     className={`btn btn-${btnColor} text-info mx-1`}
                 >{title}</Box>
               );
             })}
-            <Box item class={`btn btn-dark text-info mx-1`} onClick={() => alert('Coming Soon')}>INO Deals</Box>
-            {/*<Box item component='button' onClick={() => alert('Coming Soon')} class='btn btn-dark text-info mx-1'>
-              <i class='fa-solid fa-calendar-days text-info mx-1'></i>Calendar
+            <Box item className={`btn btn-dark text-info mx-1`} onClick={() => alert('Coming Soon')}>INO Deals</Box>
+            {/*<Box item component='button' onClick={() => alert('Coming Soon')} className='btn btn-dark text-info mx-1'>
+              <i className='fa-solid fa-calendar-days text-info mx-1'></i>Calendar
             </Box>*/}
           </Grid>
           {/*<Box component='h2' marginTop='20px' display='flex' align='center' justifyContent='center'*/}

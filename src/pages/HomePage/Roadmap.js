@@ -26,14 +26,14 @@ export default function Roadmap() {
             >
               <MHidden width="mdDown">
                 <h1
-                  class="text-mute text-center fw-bold position-absolute start-50 translate-middle"
+                  className="text-mute text-center fw-bold position-absolute start-50 translate-middle"
                   style={{ fontSize: 120, top: '30px', left: '50%', color: '#232323', fontFamily: { font_Family } }}
                 >
                   MAP
                 </h1>
               </MHidden>
               <h2
-                class="text-light text-center position-absolute start-50 translate-middle-x"
+                className="text-light text-center position-absolute start-50 translate-middle-x"
                 style={{ top: '13px', fontFamily: { font_Family } }}
               >
                 Roadmap
@@ -41,32 +41,32 @@ export default function Roadmap() {
             </Box>
           </Typography>
           <Box style={{ marginTop: '150px' }}>
-            <div id="one" class="animate corner m-auto">
-              <div class="road-map">
-                <div class="animate road-map-text text-light">
+            <div id="one" className="animate corner m-auto">
+              <div className="road-map">
+                <div className="animate road-map-text text-light">
                   <h4>Q4</h4>
                   <p>2022</p>
                 </div>
 
                 <a href="#">
-                  <i class="fa-solid fa-play text-light"></i>
+                  <i className="fa-solid fa-play text-light"></i>
                 </a>
-                <div class="road-map-text text-light">
+                <div className="road-map-text text-light">
                   <h4>Q1</h4>
                   <p>2023</p>
                 </div>
                 <a href="#">
-                  <i class="fa-solid fa-play text-light"></i>
-                  <i class="fa-solid fa-play text-light"></i>
+                  <i className="fa-solid fa-play text-light"></i>
+                  <i className="fa-solid fa-play text-light"></i>
                 </a>
-                <div class="road-map-text text-light">
+                <div className="road-map-text text-light">
                   <h4>Q2</h4>
                   <p>2023</p>
                 </div>
                 <a href="#">
-                  <i class="fa-solid fa-play text-light"></i>
-                  <i class="fa-solid fa-play text-light"></i>
-                  <i class="fa-solid fa-play text-light"></i>
+                  <i className="fa-solid fa-play text-light"></i>
+                  <i className="fa-solid fa-play text-light"></i>
+                  <i className="fa-solid fa-play text-light"></i>
                 </a>
               </div>
             </div>

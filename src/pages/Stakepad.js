@@ -26,7 +26,7 @@ export default function Stakepad() {
           <Grid paddingLeft={'10%'} paddingRight={'10%'} paddingTop="30px">
             <Grid align="center" justifyContent="center">
               {/*<Box component="a" href="#">*/}
-              {/*  <Button class="btn btn-light text-info mx-1">Stakepad</Button>*/}
+              {/*  <Button className="btn btn-light text-info mx-1">Stakepad</Button>*/}
               {/*</Box>*/}
               <button
                 className="btn btn-dark text-info mx-1"
@@ -330,7 +330,7 @@ function PoolBox(props) {
               </Box>
             </Grid>
             {/* <Grid item sx={{ marginRight: '20px' }}>
-              <button class="btn btn-info text-light mt-2 mx-4">Discover</button>
+              <button className="btn btn-info text-light mt-2 mx-4">Discover</button>
             </Grid> */}
           </Grid>
         </Grid>
@@ -425,16 +425,16 @@ function PoolBox(props) {
               </Box>
             </Grid>
             <Grid container item direction="row" marginTop="10px">
-              <Button class="btn btn-info mx-1 px-4 text-light" onClick={() => handleStake()}>
+              <Button className="btn btn-info mx-1 px-4 text-light" onClick={() => handleStake()}>
                 STAKE
               </Button>
-              <Button class="btn btn-outline-secondary mx-1 px-4 text-info" onClick={() => handleUnstake()}>
+              <Button className="btn btn-outline-secondary mx-1 px-4 text-info" onClick={() => handleUnstake()}>
                 UNSTAKE
               </Button>
             </Grid>
             <Grid item>
               <Button
-                class="btn btn-outline-secondary mx-1 px-4 mt-2 text-light"
+                className="btn btn-outline-secondary mx-1 px-4 mt-2 text-light"
                 width="100px"
                 onClick={() => handleHarvest()}
               >

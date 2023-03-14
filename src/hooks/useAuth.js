@@ -27,7 +27,7 @@ const useAuth = (network) => {
   const login = useCallback((connectorID) => {
     
     const connector = connectorsByName[connectorID];
-    console.log(connector)
+    // console.log(connector)
     if (connector) {
       activate(connector, async (error) => {
         console.log(error);
