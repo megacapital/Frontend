@@ -183,8 +183,8 @@ function VoteCard(props){
     return(
             <Grid container bgcolor={'#272727'} direction="row" sx={{width:"100%"}} padding="5px" marginTop="40px">
                 <Grid item container md="7" sm="12" direction="row" >
-                    <Box item component="img" src="img/catecoin.webp"></Box>
-                    <Box item marginTop='13px' marginLeft="10px"> {props.name}</Box>
+                    <Box component="img" src="img/catecoin.webp"></Box>
+                    <Box marginTop='13px' marginLeft="10px"> {props.name}</Box>
                 </Grid>
                 <Grid item md="1"sm="3" >
                     <Box marginTop='13px'>NFT</Box>

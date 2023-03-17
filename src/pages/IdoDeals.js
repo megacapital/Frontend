@@ -86,16 +86,16 @@ export default function IdoDeals() {
             {DEALS_TAB.map(({ id, link, title }) => {
               const btnColor = pathname === link ? 'light' : 'dark';
               return  (
-                <Box item key={id} component={Link} to={link}
+                <Box key={id} component={Link} to={link}
                      className={`btn btn-${btnColor} text-info mx-1`}
                 >{title}</Box>
               )
             })}
-            <Box item className={`btn btn-dark text-info mx-1`} onClick={() => alert('Coming Soon')}>INO Deals</Box>
-            {/*<Box item component='button' onClick={() => alert('Coming Soon')} className='btn btn-dark text-info mx-1'>*/}
+            <Box className={`btn btn-dark text-info mx-1`} onClick={() => alert('Coming Soon')}>INO Deals</Box>
+            {/*<Box component='button' onClick={() => alert('Coming Soon')} className='btn btn-dark text-info mx-1'>*/}
             {/*  <i className='fa-solid fa-calendar-days text-info mx-1'></i>Calendar*/}
             {/*</Box>*/}
-            {/* <Box item component="a" href="/phonecalendar" className="btn btn-dark text-info mx-1">
+            {/* <Box component="a" href="/phonecalendar" className="btn btn-dark text-info mx-1">
                         <i className="fa-solid fa-calendar-days text-info mx-1"></i>Calendar
                     </Box> */}
           </Grid>
@@ -105,7 +105,7 @@ export default function IdoDeals() {
                                                               src={imageURL('projects.png')}></Box></Grid>
           <Grid container direction="row" marginTop="90px" marginBottom="50px" gap={1}>
             <Grid item container md="8" justifyContent='flex-end'>
-              <Box item component="button" className="btn btn-dark text-info mx-1">
+              <Box component="button" className="btn btn-dark text-info mx-1">
                 <Box component={'a'} href="/calender" sx={{ textDecoration: 'none' }}>
                   <Box component="img" src={imageURL('Calendar.png')} />
                 </Box>
@@ -136,8 +136,8 @@ export default function IdoDeals() {
 
           {completedProject > 0 && (
             <Grid marginTop='50px' dispay='flex' position='relative' container direction='row'>
-              <Box item component='h4' position='relative' color='#56C5FF' fontSize={34}>Completed Projects</Box>
-              <Box item component='p' position='absolute' right='0px' top='10px' fontSize={24} color='white'>View All
+              <Box component='h4' position='relative' color='#56C5FF' fontSize={34}>Completed Projects</Box>
+              <Box component='p' position='absolute' right='0px' top='10px' fontSize={24} color='white'>View All
                 Pools</Box>
             </Grid>
           )}
@@ -161,13 +161,13 @@ export default function IdoDeals() {
             {DEALS_TAB.map(({ id, link, title }) => {
               const btnColor = pathname === link ? 'light' : 'dark';
               return (
-                <Box item key={id} component={Link} to={link}
+                <Box key={id} component={Link} to={link}
                      className={`btn btn-${btnColor} text-info mx-1`}
                 >{title}</Box>
               );
             })}
-            <Box item className={`btn btn-dark text-info mx-1`} onClick={() => alert('Coming Soon')}>INO Deals</Box>
-            {/*<Box item component='button' onClick={() => alert('Coming Soon')} className='btn btn-dark text-info mx-1'>
+            <Box className={`btn btn-dark text-info mx-1`} onClick={() => alert('Coming Soon')}>INO Deals</Box>
+            {/*<Box component='button' onClick={() => alert('Coming Soon')} className='btn btn-dark text-info mx-1'>
               <i className='fa-solid fa-calendar-days text-info mx-1'></i>Calendar
             </Box>*/}
           </Grid>
@@ -208,7 +208,7 @@ export default function IdoDeals() {
             })}
           </Grid>
           <Grid marginTop='30px' display='flex' justifyContent='center'>
-            <Box item component='p' fontSize={16} color='white'>View All Pools</Box>
+            <Box component='p' fontSize={16} color='white'>View All Pools</Box>
           </Grid>
           <PhoneProjectCard angle='up'></PhoneProjectCard>
           <PhoneProjectCard angle='down'></PhoneProjectCard>

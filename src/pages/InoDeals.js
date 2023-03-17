@@ -69,12 +69,12 @@ export default function IdoDeals(){
                   {DEALS_TAB.map(({id, link, title}) =>{
                     const btnColor = pathname === link ? 'light' : 'dark';
                     return  (
-                      <Box item key={id} component={Link} to={link}
+                      <Box key={id} component={Link} to={link}
                            className={`btn btn-${btnColor} text-info mx-1`}
                       >{title}</Box>
                     )
                   })}
-                    <Box item component="button"  onClick={handleOpen} className="btn btn-dark text-info mx-1">
+                    <Box component="button"  onClick={handleOpen} className="btn btn-dark text-info mx-1">
                         <i className="fa-solid fa-calendar-days text-info mx-1"></i>Calendar
                     </Box>
                 </Grid>
@@ -97,8 +97,8 @@ export default function IdoDeals(){
                     {/*<LaunchCard></LaunchCard>*/}
                 </Grid>
                 <Grid marginTop="50px" dispay="flex" position="relative" container direction="row">
-                    <Box item component="h4" position="relative" color="#56C5FF" fontSize={34}>Completed Projects</Box>
-                    <Box item component="p" position="absolute" right="0px" top="10px" fontSize={24} color="white">View All Pools</Box>
+                    <Box component="h4" position="relative" color="#56C5FF" fontSize={34}>Completed Projects</Box>
+                    <Box component="p" position="absolute" right="0px" top="10px" fontSize={24} color="white">View All Pools</Box>
                 </Grid>
                 <MyProjectCard></MyProjectCard>
                 <MyProjectCard></MyProjectCard>

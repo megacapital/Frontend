@@ -660,17 +660,17 @@ export default function DetailPage() {
             {account === pool?.owner ? (
               <Grid item xs={12} sm={12} md={12} lg={12}>
                 <Alert variant="outlined" severity="warning" sx={{ mt: 2, fontWeight: 'bold', wordWrap: 'break-word' }}>
-                  If your token has tax or max transaction, make sure to whitelist/exclude presale address{' '}
+                  If your token has tax or max transaction, make sure to whitelist/exclude presale address
                   <b>{pool.address}</b> <CopyClipboard value={pool.address} /> from Tax, Rewards and Max Transaction.
-                  Check{' '}
+                  Check
                   <Link
                     href="https://gem-pad.gitbook.io/the-gempad/guide-for-project-owners/create-and-manage-a-presale"
                     target="_blank"
                     color="white"
                   >
-                    {' '}
+                    
                     Docs
-                  </Link>{' '}
+                  </Link>
                   for more information.
                 </Alert>
               </Grid>
@@ -947,7 +947,7 @@ export default function DetailPage() {
                           color="info"
                           variant="filled"
                         />
-                      )}{' '}
+                      )}
                     </Stack>
                   </Stack>
                   <Stack component="span" marginLeft="60px">
@@ -1024,7 +1024,7 @@ export default function DetailPage() {
                   <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
                     <Typography>Soft Cap</Typography>
                     <Typography>
-                      {commify(pool?.softCap)}{' '}
+                      {commify(pool?.softCap)}
                       {network == Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
                     </Typography>
                   </Stack>
@@ -1032,7 +1032,7 @@ export default function DetailPage() {
                   <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
                     <Typography>Hard Cap</Typography>
                     <Typography>
-                      {commify(pool?.hardCap)}{' '}
+                      {commify(pool?.hardCap)}
                       {network == Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
                     </Typography>
                   </Stack>
@@ -1178,11 +1178,11 @@ export default function DetailPage() {
                   </Stack>
                   <Stack direction="row" justifyContent="space-between" marginTop="5px" padding="0 10px">
                     <Stack component="span" fontSize="0.7rem">
-                      {commify(pool?.weiRaised)}{' '}
+                      {commify(pool?.weiRaised)}
                       {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
                     </Stack>
                     <Stack component="span" fontSize="0.7rem">
-                      {commify(pool?.hardCap)}{' '}
+                      {commify(pool?.hardCap)}
                       {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
                     </Stack>
                   </Stack>
@@ -1216,7 +1216,7 @@ export default function DetailPage() {
                             </Button>
                           ) : (
                             <Button variant="contained" disabled style={{ marginTop: 20 }}>
-                              Refunded ({depositedAmount} / {depositedAmount} {pool?.symbol}{' '}
+                              Refunded ({depositedAmount} / {depositedAmount} {pool?.symbol}
                               {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'})
                             </Button>
                           )
@@ -1242,7 +1242,7 @@ export default function DetailPage() {
                             </Button>
                           ) : (
                             <Button variant="contained" disabled style={{ marginTop: 20 }}>
-                              Claimed ({commify(pool?.presaleRate * depositedAmount)} /{' '}
+                              Claimed ({commify(pool?.presaleRate * depositedAmount)} /
                               {commify(pool?.presaleRate * depositedAmount)} {pool?.symbol})
                             </Button>
                           )
@@ -1322,7 +1322,7 @@ export default function DetailPage() {
                   <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
                     <span>Minimum Buy</span>
                     <span>
-                      {commify(pool?.minAllocationPerUser)}{' '}
+                      {commify(pool?.minAllocationPerUser)}
                       {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
                     </span>
                   </Stack>
@@ -1330,7 +1330,7 @@ export default function DetailPage() {
                   <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
                     <span>Maximum Buy</span>
                     <span>
-                      {commify(pool?.maxAllocationPerUser)}{' '}
+                      {commify(pool?.maxAllocationPerUser)}
                       {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
                     </span>
                   </Stack>
@@ -1651,11 +1651,11 @@ export default function DetailPage() {
                   </Stack>
                   <Stack direction="row" justifyContent="space-between" marginTop="5px" padding="0 10px">
                     <Stack component="span" fontSize="0.7rem">
-                      {commify(pool?.weiRaised)}{' '}
+                      {commify(pool?.weiRaised)}
                       {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
                     </Stack>
                     <Stack component="span" fontSize="0.7rem">
-                      {commify(pool?.hardCap)}{' '}
+                      {commify(pool?.hardCap)}
                       {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
                     </Stack>
                   </Stack>
@@ -1689,7 +1689,7 @@ export default function DetailPage() {
                             </Button>
                           ) : (
                             <Button variant="contained" disabled style={{ marginTop: 20 }}>
-                              Refunded ({depositedAmount} / {depositedAmount} {pool?.symbol}{' '}
+                              Refunded ({depositedAmount} / {depositedAmount} {pool?.symbol}
                               {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'})
                             </Button>
                           )
@@ -1715,7 +1715,7 @@ export default function DetailPage() {
                             </Button>
                           ) : (
                             <Button variant="contained" disabled style={{ marginTop: 20 }}>
-                              Claimed ({commify(pool?.presaleRate * depositedAmount)} /{' '}
+                              Claimed ({commify(pool?.presaleRate * depositedAmount)} /
                               {commify(pool?.presaleRate * depositedAmount)} {pool?.symbol})
                             </Button>
                           )
@@ -1795,7 +1795,7 @@ export default function DetailPage() {
                   <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
                     <span>Minimum Buy</span>
                     <span>
-                      {commify(pool?.minAllocationPerUser)}{' '}
+                      {commify(pool?.minAllocationPerUser)}
                       {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
                     </span>
                   </Stack>
@@ -1803,7 +1803,7 @@ export default function DetailPage() {
                   <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
                     <span>Maximum Buy</span>
                     <span>
-                      {commify(pool?.maxAllocationPerUser)}{' '}
+                      {commify(pool?.maxAllocationPerUser)}
                       {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
                     </span>
                   </Stack>

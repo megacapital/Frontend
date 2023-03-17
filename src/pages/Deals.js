@@ -72,18 +72,18 @@ const Deals = () => {
             {DEALS_TAB.map(({ id, link, title }) => {
               const btnColor = pathname === link ? 'light' : 'dark';
               return (
-                <Box item key={id} component={Link} to={link} className={`btn btn-${btnColor} text-info mx-1`}>
+                <Box key={id} component={Link} to={link} className={`btn btn-${btnColor} text-info mx-1`}>
                   {title}
                 </Box>
               );
             })}
-            <Box item className={`btn btn-dark text-info mx-1`} onClick={() => alert('Coming Soon')}>
+            <Box className={`btn btn-dark text-info mx-1`} onClick={() => alert('Coming Soon')}>
               INO Deals
             </Box>
-            {/*<Box item component="button" onClick={() => alert('Coming Soon')} className="btn btn-dark text-info mx-1">*/}
+            {/*<Box component="button" onClick={() => alert('Coming Soon')} className="btn btn-dark text-info mx-1">*/}
             {/*  <i className="fa-solid fa-calendar-days text-info mx-1"></i>Calendar*/}
             {/*</Box>*/}
-            {/* <Box item component="a" href="/phonecalendar" className="btn btn-dark text-info mx-1">
+            {/* <Box component="a" href="/phonecalendar" className="btn btn-dark text-info mx-1">
                         <i className="fa-solid fa-calendar-days text-info mx-1"></i>Calendar
                     </Box> */}
           </Grid>
@@ -102,8 +102,8 @@ const Deals = () => {
             <Box component="img" marginTop="30px" src={imageURL('projects.png')}></Box>
           </Grid>
           <Grid container direction="row" marginTop="90px" marginBottom="50px" gap={1}>
-            <Grid item container md="8" justifyContent="flex-end">
-              <Box item component="button" className="btn btn-dark text-info mx-1">
+            <Grid item container md={8} justifyContent="flex-end">
+              <Box component="button" className="btn btn-dark text-info mx-1">
                 {/* <i className="fa-solid fa-calendar-days text-info mx-1"></i>Calendar */}
 
                 <Box component={'a'} href="/calender" sx={{ textDecoration: 'none' }}>
@@ -111,7 +111,7 @@ const Deals = () => {
                 </Box>
               </Box>
             </Grid>
-            <Grid item md="3.5" position="relative" display="flex">
+            <Grid item md={3.5} position="relative" display="flex">
               <Box
                 component="input"
                 placeholder="Search..."
@@ -154,10 +154,10 @@ const Deals = () => {
 
           {completedProject > 0 && (
             <Grid marginTop="50px" dispay="flex" position="relative" container direction="row">
-              <Box item component="h4" position="relative" color="#56C5FF" fontSize={34}>
+              <Box  component="h4" position="relative" color="#56C5FF" fontSize={34}>
                 Completed Projects
               </Box>
-              <Box item component="p" position="absolute" right="0px" top="10px" fontSize={24} color="white">
+              <Box  component="p" position="absolute" right="0px" top="10px" fontSize={24} color="white">
                 View All Pools
               </Box>
             </Grid>
@@ -182,12 +182,12 @@ const Deals = () => {
             {DEALS_TAB.map(({ id, link, title }) => {
               const btnColor = pathname === link ? 'light' : 'dark';
               return (
-                <Box item key={id} component={Link} to={link} className={`btn btn-${btnColor} text-info mx-1`}>
+                <Box key={id} component={Link} to={link} className={`btn btn-${btnColor} text-info mx-1`}>
                   {title}
                 </Box>
               );
             })}
-            <Box item className={`btn btn-dark text-info mx-1`} onClick={() => alert('Coming Soon')}>
+            <Box className={`btn btn-dark text-info mx-1`} onClick={() => alert('Coming Soon')}>
               INO Deals
             </Box>
           </Grid>
@@ -246,7 +246,7 @@ const Deals = () => {
               })}
           </Grid>
           <Grid marginTop="30px" display="flex" justifyContent="center">
-            <Box item component="p" fontSize={16} color="white">
+            <Box component="p" fontSize={16} color="white">
               View All Pools
             </Box>
           </Grid>

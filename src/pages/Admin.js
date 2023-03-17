@@ -23,7 +23,7 @@ export default function Admin() {
               padding="3px 8px"
               backgroundColor="rgb(255, 255, 255, 0)"
             >
-              <Box component={Link} to={'/create-ido'}  sx={{ textDecoration: 'none' }}>
+              <Box component={Link} to={'/create-ido'} sx={{ textDecoration: 'none' }}>
                 CREATE IDO DEALS
               </Box>
             </Box>
@@ -37,7 +37,7 @@ export default function Admin() {
               style={{ backgroundColor: '#24B6E6', border: 'none', color: 'white' }}
               onClick={() => navigate('/create-stake')}
             >
-             
+
               Create Staking POOLS
             </Box>
           </Grid>
@@ -56,9 +56,14 @@ export default function Admin() {
                 CALENDER
               </Box>
             </Box>
-          </Grid>      
+          </Grid>
         </Grid>
+
+
       </Grid>
+      <p>Create staking: working token: BUSD on BSC testnet: 0xed24fc36d5ee211ea25a80239fb8c4cfd80f12ee</p>
+      <p>Staking Contract, Verified:  0x1182b77a40aa95978c9906058fd927f4a17a6203</p>
+
     </Page>
   );
 }

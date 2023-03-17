@@ -291,7 +291,7 @@ export default function DashboardFooter() {
             </Grid>
             <Grid item md={2.5}>
               <Box component="h3" color="white">
-                &nbsp;{' '}
+                &nbsp;
               </Box>
               <Box marginTop="20px">
                 <Box
@@ -655,7 +655,7 @@ export default function DashboardFooter() {
           </Box>
         </Grid>
         <Grid padding="0 15px" marginTop="30px" color="white" fontSize={14}>
-          copyright @ 2022, <span style={{ color: '#56C5FF' }}>megacapital</span>.{' '}
+          copyright @ 2022, <span style={{ color: '#56C5FF' }}>megacapital</span>.
           <span style={{ fontStyle: 'italic' }}>All Right Reserved</span>
         </Grid>
       </MHidden>

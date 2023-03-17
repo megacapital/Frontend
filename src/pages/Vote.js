@@ -138,8 +138,8 @@ function VoteCard(props) {
     <Grid borderRadius={1} container bgcolor={'#232323'} direction='row' sx={{ width: '100%' }}
           padding='20px 5px 20px 5px' marginTop='20px'>
       <Grid item container md='5' sm='12' direction='row'>
-        <Box item component='img' src={imageURL('logo.png')} marginLeft='10px'></Box>
-        <Box item fontSize='20px' marginTop='13px' marginLeft='10px' color='white'> {props.name}</Box>
+        <Box component='img' src={imageURL('logo.png')} marginLeft='10px'></Box>
+        <Box fontSize='20px' marginTop='13px' marginLeft='10px' color='white'> {props.name}</Box>
       </Grid>
       <Grid item md='3' sm='3'>
         <Box marginTop='13px' alignItems='center' justifyContent='center' display='flex' fontSize='16px'

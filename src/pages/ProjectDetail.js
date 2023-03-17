@@ -225,8 +225,8 @@ export default function ProjectDetail(props) {
             </Grid> */}
             <div id='sticky' style={{ position: 'sticky', top: '92px', backgroundColor: 'rgb(23, 24, 25)' }}>
               <Grid container marginTop='60px' justifyContent='center' sx={{ width: '113%' }}>
-                <Grid xs position='relative'>
-                  {' '}
+                <Grid item xs position='relative'>
+                  
                   <Box component='div' width={'50%'}>
                     <Box component={'a'} href='#roadmap'>
                       <img src={imageURL('roadmap-icon-1.png')} />
@@ -245,8 +245,8 @@ export default function ProjectDetail(props) {
                   ></Box>
                   {/* <img src={imageURL('roadmap-icon-line.png')} /> */}
                 </Grid>
-                <Grid xs position='relative'>
-                  {' '}
+                <Grid item xs position='relative'>
+                  
                   <Box component='div' width={'50%'}>
                     <Box component={'a'} href='#about'>
                       <img src={imageURL('roadmap-icon-2.png')} />
@@ -265,8 +265,8 @@ export default function ProjectDetail(props) {
                   ></Box>
                   {/* <img src={imageURL('roadmap-icon-line.png')} /> */}
                 </Grid>
-                <Grid xs position='relative'>
-                  {' '}
+                <Grid item xs position='relative'>
+                  
                   <Box component='div' width={'50%'}>
                     <Box component={'a'} href='#features'>
                       <img src={imageURL('roadmap-icon-3.png')} />
@@ -285,8 +285,8 @@ export default function ProjectDetail(props) {
                   ></Box>
                   {/* <img src={imageURL('roadmap-icon-line.png')} /> */}
                 </Grid>
-                <Grid xs position='relative'>
-                  {' '}
+                <Grid item xs position='relative'>
+                  
                   <Box component='div' width={'50%'}>
                     <Box component={'a'} href='#team'>
                       <img src={imageURL('roadmap-icon-4.png')} />
@@ -305,8 +305,8 @@ export default function ProjectDetail(props) {
                   ></Box>
                   {/* <img src={imageURL('roadmap-icon-line.png')} /> */}
                 </Grid>
-                <Grid xs position='relative'>
-                  {' '}
+                <Grid item xs position='relative'>
+                  
                   <Box component='div' width={'50%'}>
                     <Box component={'a'} href='#tokenomics'>
                       <img src={imageURL('roadmap-icon-5.png')} />
@@ -565,7 +565,7 @@ export default function ProjectDetail(props) {
                     padding: '10px 10px 10px 10px'
                   }}
                 >
-                  {' '}
+                  
                   <Box component='a' href={`${data?.ipfs?.discord}`}>
                     <Box component='img' src={imageURL('Discord.png')} />
                   </Box>
@@ -581,8 +581,8 @@ export default function ProjectDetail(props) {
               <ProjectInformation data={data}></ProjectInformation>
             </Grid>
             <Grid container marginTop='60px' justifyContent='center' display='flex'>
-              <Grid xs={2.4} position='relative'>
-                {' '}
+              <Grid item xs={2.4} position='relative'>
+                
                 <Box component='div' width={'50%'}>
                   <Box component={'a'} href='#roadmap'>
                     <img src={imageURL('roadmap-icon-1.png')} />
@@ -601,8 +601,8 @@ export default function ProjectDetail(props) {
                 ></Box>
                 {/* <img src={imageURL('roadmap-icon-line.png')} /> */}
               </Grid>
-              <Grid xs={2.4} position='relative'>
-                {' '}
+              <Grid item xs={2.4} position='relative'>
+                
                 <Box component='div' width={'50%'}>
                   <Box component={'a'} href='#about'>
                     <img src={imageURL('roadmap-icon-2.png')} />
@@ -621,8 +621,8 @@ export default function ProjectDetail(props) {
                 ></Box>
                 {/* <img src={imageURL('roadmap-icon-line.png')} /> */}
               </Grid>
-              <Grid xs={2.4} position='relative'>
-                {' '}
+              <Grid item xs={2.4} position='relative'>
+                
                 <Box component='div' width={'50%'}>
                   <Box component={'a'} href='#features'>
                     <img src={imageURL('roadmap-icon-3.png')} />
@@ -641,8 +641,8 @@ export default function ProjectDetail(props) {
                 ></Box>
                 {/* <img src={imageURL('roadmap-icon-line.png')} /> */}
               </Grid>
-              <Grid xs={2.4} position='relative'>
-                {' '}
+              <Grid item xs={2.4} position='relative'>
+                
                 <Box component='div' width={'50%'}>
                   <Box component={'a'} href='#team'>
                     <img src={imageURL('roadmap-icon-4.png')} />
@@ -661,8 +661,8 @@ export default function ProjectDetail(props) {
                 ></Box>
                 {/* <img src={imageURL('roadmap-icon-line.png')} /> */}
               </Grid>
-              <Grid xs={2.4} position='relative'>
-                {' '}
+              <Grid item xs={2.4} position='relative'>
+                
                 <Box component='div' width={'50%'}>
                   <Box component={'a'} href='#tokenomics'>
                     <img src={imageURL('roadmap-icon-5.png')} />
@@ -1046,31 +1046,31 @@ function ProjectInformation({ data, roadmapdata }) {
           <Grid item xs={12} color='#56C5FF' marginTop='15px' marginBottom='20px'>
             PRGC
           </Grid>
-          <Grid xs={6}>
+          <Grid item xs={6}>
             <Box color='white'>CATEGORY</Box>
             <Box color='#56C5FF' marginTop='2px'>
               Metaverse
             </Box>
           </Grid>
-          <Grid xs={6}>
+          <Grid item xs={6}>
             <Box color='white'>TGI</Box>
             <Box color='#56C5FF' marginTop='2px'>
               Solana
             </Box>
           </Grid>
-          <Grid xs={6} marginTop='10px'>
+          <Grid item xs={6} marginTop='10px'>
             <Box color='white'>BLOCKCHAIN</Box>
             <Box color='#56C5FF' marginTop='2px'>
               Solana
             </Box>
           </Grid>
-          <Grid xs={6} marginTop='10px'>
+          <Grid item xs={6} marginTop='10px'>
             <Box color='white'>TYPE</Box>
             <Box color='#56C5FF' marginTop='2px'>
               unlocked
             </Box>
           </Grid>
-          <Grid xs={12} marginTop='30px' width='100%'>
+          <Grid item xs={12} marginTop='30px' width='100%'>
             <Box color='#56C5FF'>35700/100000</Box>
             <Box position='relative' display='flex'>
               <Box width='100%' height='10px' borderRadius={2} backgroundColor='white' />

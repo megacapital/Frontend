@@ -570,7 +570,7 @@ const MainInfo = ({ goBack, goNext }) => {
                 {commify(Number(((Number(values.teamVesting_amount)*100 +
                   Number(values.presale_rate) * Number(values.hard_cap) * 100 +
                   (Number(values.hard_cap) * Number(values.dex_amount) * Number(values.dex_rate))) *
-                  (100 + Number(poolTokenPercentFee)) / 10000).toPrecision(15)))}{' '}
+                  (100 + Number(poolTokenPercentFee)) / 10000).toPrecision(15)))}
                 {symbol} needed to create a pool!
               </Stack>
             ) : (
@@ -585,7 +585,7 @@ const MainInfo = ({ goBack, goNext }) => {
                   {commify(Number(((Number(values.teamVesting_amount)*100 +
                     Number(values.presale_rate) * Number(values.hard_cap) * 100 +
                     (Number(values.hard_cap) * Number(values.dex_amount) * Number(values.dex_rate))) *
-                    (100 + Number(poolTokenPercentFee)) / 10000).toPrecision(15)))}{' '}
+                    (100 + Number(poolTokenPercentFee)) / 10000).toPrecision(15)))}
                   {symbol} needed to create a pool!
                   <br />( {commify(Number(formatUnits(allowance, decimals)))} {symbol} allowed!
                   <br />
@@ -594,7 +594,7 @@ const MainInfo = ({ goBack, goNext }) => {
                     (Number(values.hard_cap) * Number(values.dex_amount) * Number(values.dex_rate))) *
                     (100 + Number(poolTokenPercentFee)) / 10000).toPrecision(15)) -
                     Number(formatUnits(allowance, decimals))
-                  )}{' '}
+                  )}
                   {symbol} needed more! )
                 </Alert>
               </Stack>

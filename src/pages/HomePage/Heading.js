@@ -187,8 +187,8 @@ export default function Heading() {
 
           {/*{pool && (*/}
           {/*  <Grid>*/}
-          {/*    {' '}*/}
-          {/*    <ProjectCard {...pool} />{' '}*/}
+          {/*    */}
+          {/*    <ProjectCard {...pool} />*/}
           {/*  </Grid>*/}
           {/*)}*/}
         </Grid>

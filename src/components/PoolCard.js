@@ -310,14 +310,14 @@ export default function PoolCard({ pool, account }) {
                 <Label color="error">LIQ Unlocked</Label>
               ) : (
                 <Label color="primary" >Listed on DEX</Label>
-              )}{' '}
+              )}
             </Stack>
           </Stack>
 
           <Stack sx={{ mt: 2 }}>
             <Typography variant="h4">{pool.name}</Typography>
             <Typography>
-              Max Contribution: {pool.maxAllocationPerUser}{' '}
+              Max Contribution: {pool.maxAllocationPerUser}
               {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
               {/* 1 {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'} = {Number(rate).toLocaleString('en')} {pool.symbol} */}
             </Typography>

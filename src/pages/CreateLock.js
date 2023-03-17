@@ -285,7 +285,7 @@ export default function CreateLock() {
             />
           </Stack>
           <Alert variant="outlined" severity="warning" sx={{ mt: 2 }}>
-            Exclude GemPad's lock address <b>{LOCK_ADDRESS[network]}</b> <CopyClipboard value={LOCK_ADDRESS[network]} />{' '}
+            Exclude GemPad's lock address <b>{LOCK_ADDRESS[network]}</b> <CopyClipboard value={LOCK_ADDRESS[network]} />
             from Fees, Max Transaction and Rewards.
           </Alert>
           <Stack sx={{ mt: 2 }} alignItems="center" spacing={1}>

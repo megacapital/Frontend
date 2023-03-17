@@ -55,7 +55,7 @@ export default function LaunchCard(props) {
                   right="20px"
                   top="15px"
                 >
-                  {tag}{' '}
+                  {tag}
                 </Box>
               </Grid>
               <Grid>
@@ -68,10 +68,10 @@ export default function LaunchCard(props) {
               </Grid>
               <Grid marginTop="10px">
                 <Grid dispay="flex" position="relative" container direction="row">
-                  <Box item component="p" position="relative">
+                  <Box component="p" position="relative">
                     Total Raise
                   </Box>
-                  <Box item component="p" position="absolute" right="0px" fontSize="24px">
+                  <Box component="p" position="absolute" right="0px" fontSize="24px">
                     {getNetworkSymbol(chainId)} {weiRaised}
                   </Box>
                 </Grid>

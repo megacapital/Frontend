@@ -563,7 +563,7 @@ const AdditionalInfo = ({ goBack, goNext }) => {
                             </Typography>
                           </Stack>
                           <Typography align="center" variant="h5">
-                            FEE: {poolFixedFees[0] ? commify(formatEther(poolFixedFees[0])) : 0}{' '}
+                            FEE: {poolFixedFees[0] ? commify(formatEther(poolFixedFees[0])) : 0}
                             {network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'ETH' : 'BNB'}
                           </Typography>
                         </Box>
@@ -603,7 +603,7 @@ const AdditionalInfo = ({ goBack, goNext }) => {
                           </Typography>
                         </Stack>
                         <Typography align="center" variant="h5">
-                          FEE: {poolFixedFees[1] ? commify(formatEther(poolFixedFees[1])) : 0}{' '}
+                          FEE: {poolFixedFees[1] ? commify(formatEther(poolFixedFees[1])) : 0}
                           {network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'ETH' : 'BNB'}
                         </Typography>
                       </Paper>
