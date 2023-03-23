@@ -49,7 +49,7 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { path: '/', element: <Navigate to="/home" replace /> },
-        { path: '/presale/:address', element: <DetailPage /> }, // presale
+
         { path: '/home', element: <HomePage /> },
 
         { path: '/deals', element: <Deals /> },
@@ -58,6 +58,7 @@ export default function Router() {
         { path: '/vcdeals', element: <VCDeals /> },
         { path: '/create-ido', element: <CreatePage /> }, //admin - create IDO deal
         { path: '/project/:address', element: <ProjectDetail /> }, // one IDO deal
+        { path: '/presale/:address', element: <DetailPage /> }, // presale
 
         { path: '/vote', element: <Vote /> },
         { path: '/dashboard', element: <Dashboard /> },

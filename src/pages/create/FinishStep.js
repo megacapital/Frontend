@@ -4,7 +4,7 @@ import { useIDOContract } from '../../hooks/useContract';
 // import Loader from 'react-loader-spinner';
 import HashLoader from 'react-spinners/HashLoader';
 // import { BigNumber } from '@ethersproject/bignumber';
-import { formatUnits, parseEther, parseUnits } from '@ethersproject/units';
+import { formatEther, formatUnits, parseEther, parseUnits } from '@ethersproject/units';
 // import CopyClipboard from 'components/CopyToClipboard';
 import Moment from 'react-moment';
 
@@ -121,44 +121,15 @@ const FinishStep = ({ goBack, goComplete }) => {
           reddit,
           description,
         };
-        const cid = await client.add(JSON.stringify(extraData));
+
+        /**deploy ipfs */
+        // const cid = await client.add(JSON.stringify(extraData));
+        // const cid_path = cid.path;
+        const cid_path = 'QmYDVpAS9PBa9qCgUK36T8z98yecasXN4D2xaeGorQao7X';
+
         const poolFixedFee = await idoContract.poolFixedFee(POOL_TIER.findIndex((ele) => ele === tier));
-        // console.log(
-        //   [
-        //     parseEther(String(hard_cap)),
-        //     parseEther(String(soft_cap)),
-        //     parseUnits(String(presale_rate), decimals),
-        //     dex_amount,
-        //     parseUnits(String(dex_rate), decimals),
-        //     POOL_TIER.findIndex((ele) => ele === tier)
-        //   ],
-        //   [
-        //     Math.round(new Date(start_date).getTime() / 1000),
-        //     Math.round(new Date(end_date).getTime() / 1000),
-        //     Math.round(new Date(list_date).getTime() / 1000),
-        //     parseEther(String(min_buy)),
-        //     parseEther(String(max_buy)),
-        //     dex_lockup,
-        //     // refund == 'refund' ? true : false,
-        //     whiteListable === 'whiteListable' ? true : false
-        //   ],
-        //   address,
-        //   cid.path,
-        //   // "QmYDVpAS9PBa9qCgUK36T8z98yecasXN4D2xaeGorQao7X",
-        //   teamVesting_amount > 0
-        //     ? [
-        //         parseUnits(String(teamVesting_amount), decimals),
-        //         0,
-        //         teamVesting_first_percent,
-        //         teamVesting_first_period,
-        //         teamVesting_each_percent,
-        //         teamVesting_each_period
-        //       ]
-        //     : [0, 0, 0, 0, 0, 0],
-        //   {
-        //     value: poolFixedFee
-        //   }
-        // );
+        console.log('poolFixedFee', formatEther(poolFixedFee))
+
         let _model = [
           parseEther(String(hard_cap)),
           parseEther(String(soft_cap)),
@@ -182,26 +153,27 @@ const FinishStep = ({ goBack, goComplete }) => {
 
         teamVesting_amount > 0
           ? (_vesting = [
-              parseUnits(String(teamVesting_amount), decimals),
-              0,
-              teamVesting_first_percent,
-              teamVesting_first_period,
-              teamVesting_each_percent,
-              teamVesting_each_period
-            ])
+            parseUnits(String(teamVesting_amount), decimals),
+            0,
+            teamVesting_first_percent,
+            teamVesting_first_period,
+            teamVesting_each_percent,
+            teamVesting_each_period
+          ])
           : (_vesting = [0, 0, 0, 0, 0, 0]);
+
+        console.log(_model, _details, address, poolFixedFee)
         const tx = await idoContract.createPool(
           _model,
           _details,
           address,
-          cid.path,
-          // "QmYDVpAS9PBa9qCgUK36T8z98yecasXN4D2xaeGorQao7X",
-          _vesting,
+          cid_path,
+          // _vesting,
           {
             value: poolFixedFee
           }
         );
-
+        console.log('tx', tx);
         const aa = await tx.wait();
         console.log('AA', aa);
         if (aa.confirmations > 0) {
@@ -215,7 +187,7 @@ const FinishStep = ({ goBack, goComplete }) => {
             }
           }
           _model.push(address);
-          _details.push(cid.path);
+          _details.push(cid_path);
           console.log('projectTokenAddress', address);
           console.log('projectTokenAddress', _model[6]);
           const data = {
@@ -237,8 +209,9 @@ const FinishStep = ({ goBack, goComplete }) => {
               teams_url,
               tokenomics_description,
               tokenomics_url,
-              twitter_followers
-            }
+              twitter_followers,              
+            },
+            logo
           };
 
           const _res = await apis.createBscIdo(data);

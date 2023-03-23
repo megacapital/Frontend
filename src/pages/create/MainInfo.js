@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import { setMainInfo } from '../../redux/slices/tokenListing';
-import { formatUnits, commify} from '@ethersproject/units';
+import { formatUnits, commify } from '@ethersproject/units';
 
 import { useFormik, FormikProvider } from 'formik';
 import {
@@ -159,7 +159,7 @@ const MainInfo = ({ goBack, goNext }) => {
   const currentDateTime = new Date();
   currentDateTime.setSeconds(0);
   currentDateTime.setMilliseconds(0);
-  const [startDate, setStartDate] = useState(start_date || currentDateTime.setHours(currentDateTime.getHours() + 1));
+  const [startDate, setStartDate] = useState(start_date || currentDateTime.setMinutes(currentDateTime.getMinutes() + 5));
   const [endDate, setEndDate] = useState(end_date || currentDateTime.setHours(currentDateTime.getHours() + 24));
   const [listDate, setListDate] = useState(list_date || currentDateTime);
   const formik = useFormik({
@@ -213,11 +213,11 @@ const MainInfo = ({ goBack, goNext }) => {
         //   return;
         // }
         if (Number(formatUnits(allowance, decimals)) <
-          Number(((Number(values.teamVesting_amount)*100 +
+          Number(((Number(values.teamVesting_amount) * 100 +
             Number(values.presale_rate) * Number(values.hard_cap) * 100 +
             (Number(values.hard_cap) * Number(values.dex_amount) * Number(values.dex_rate))) *
             (100 + Number(poolTokenPercentFee)) / 10000).toPrecision(15))) {
-          enqueueSnackbar(`${commify(Number(((Number(values.teamVesting_amount)*100 +
+          enqueueSnackbar(`${commify(Number(((Number(values.teamVesting_amount) * 100 +
             Number(values.presale_rate) * Number(values.hard_cap) * 100 +
             (Number(values.hard_cap) * Number(values.dex_amount) * Number(values.dex_rate))) *
             (100 + Number(poolTokenPercentFee)) / 10000).toPrecision(15)) - Number(formatUnits(allowance, decimals)))}
@@ -480,11 +480,9 @@ const MainInfo = ({ goBack, goNext }) => {
             <Stack direction="row" spacing={3} alignItems="flex-start">
               *Time is displayed locally.
             </Stack>
-            <Stack direction="row" spacing={3} alignItems="flex-start">
-              {/* <FormControlLabel
-                control={<Checkbox checked={teamVestingExisted} onChange={handleTeamVesting} color="primary" />}
-                label="Enable Team Vesting ? If you have team tokens, lock them with vesting for additional security and trust to your investors."
-              /> */}
+
+            {/* Team vesting option */}
+            {/* <Stack direction="row" spacing={3} alignItems="flex-start">          
               <FormControlLabel
                 control={<Switch checked={teamVestingExisted} onChange={handleTeamVesting} color="primary" />}
                 label="Add Team Token Vesting"
@@ -492,7 +490,7 @@ const MainInfo = ({ goBack, goNext }) => {
               <Alert variant="outlined" severity="success">
                 Lock your team tokens with a vesting schedule for further transparency and trust.
               </Alert>
-            </Stack>
+            </Stack> */}
             {teamVestingExisted ? (
               <>
                 <Stack direction="row" spacing={3} alignItems="flex-start">
@@ -554,7 +552,7 @@ const MainInfo = ({ goBack, goNext }) => {
               ''
             )}
             {Number(formatUnits(allowance, decimals)) >=
-              Number(((Number(values.teamVesting_amount)*100 +
+              Number(((Number(values.teamVesting_amount) * 100 +
                 Number(values.presale_rate) * Number(values.hard_cap) * 100 +
                 (Number(values.hard_cap) * Number(values.dex_amount) * Number(values.dex_rate))) *
                 (100 + Number(poolTokenPercentFee)) / 10000).toPrecision(15)) ? (
@@ -567,7 +565,7 @@ const MainInfo = ({ goBack, goNext }) => {
                 fontSize="0.8rem"
                 color="warning.main"
               >
-                {commify(Number(((Number(values.teamVesting_amount)*100 +
+                {commify(Number(((Number(values.teamVesting_amount) * 100 +
                   Number(values.presale_rate) * Number(values.hard_cap) * 100 +
                   (Number(values.hard_cap) * Number(values.dex_amount) * Number(values.dex_rate))) *
                   (100 + Number(poolTokenPercentFee)) / 10000).toPrecision(15)))}
@@ -582,14 +580,14 @@ const MainInfo = ({ goBack, goNext }) => {
                 marginRight="auto!important"
               >
                 <Alert variant="outlined" severity="error" sx={{ mt: 2, wordWrap: 'break-word' }}>
-                  {commify(Number(((Number(values.teamVesting_amount)*100 +
+                  {commify(Number(((Number(values.teamVesting_amount) * 100 +
                     Number(values.presale_rate) * Number(values.hard_cap) * 100 +
                     (Number(values.hard_cap) * Number(values.dex_amount) * Number(values.dex_rate))) *
                     (100 + Number(poolTokenPercentFee)) / 10000).toPrecision(15)))}
                   {symbol} needed to create a pool!
                   <br />( {commify(Number(formatUnits(allowance, decimals)))} {symbol} allowed!
                   <br />
-                  {commify(Number(((Number(values.teamVesting_amount)*100 +
+                  {commify(Number(((Number(values.teamVesting_amount) * 100 +
                     Number(values.presale_rate) * Number(values.hard_cap) * 100 +
                     (Number(values.hard_cap) * Number(values.dex_amount) * Number(values.dex_rate))) *
                     (100 + Number(poolTokenPercentFee)) / 10000).toPrecision(15)) -

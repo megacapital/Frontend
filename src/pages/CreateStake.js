@@ -276,7 +276,7 @@ export default function CreateStake() {
     <Page title="Create Lock">
       <Container maxWidth="lg" className="pt-5">
         {/* For test */}
-        <h6>Network: {network}, Account: {account}, Token: {token}</h6> 
+        {/* <h6>Network: {network}, Account: {account}, Token: {token}</h6>  */}
 
         <Card
           sx={{

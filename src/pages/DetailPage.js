@@ -223,16 +223,20 @@ export default function DetailPage() {
   useEffect(() => {
     let unmounted = false;
     console.log(pool.address);
+    console.log('xxx');
     (async () => {
       try {
         const collaborated = await poolContract.collaborations(account);
+        console.log('hhhhhhhhhhh', collaborated)
         const _didRefund = await poolContract._didRefund(account);
         if (!unmounted) {
           setDepositedAmount(ethers.utils.formatEther(collaborated));
           setDidRefund(_didRefund);
           console.log(ethers.utils.formatEther(collaborated));
         }
-      } catch (err) { }
+      } catch (err) { 
+        console.log('hhhhh', err.message)
+      }
     })();
     return () => {
       unmounted = true;
@@ -1551,6 +1555,7 @@ export default function DetailPage() {
                 </CardContainer>
               )}
             </Grid>
+
             <Grid item xs={12} sm={12} md={4} lg={4}>
               {pool.whitelistable && Number(pool.status) === 0 && new Date(pool.startDateTime).getTime() > Date.now() && (
                 <Alert

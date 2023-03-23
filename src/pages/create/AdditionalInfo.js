@@ -85,16 +85,16 @@ const AdditionalInfo = ({ goBack, goNext }) => {
   // const tier = useSelector((state) => state.tokenListing.tier);
   // const reddit = useSelector((state) => state.tokenListing.reddit);
   const description = useSelector((state) => state.tokenListing.description);
-  const roadmap_description = useSelector((state) => state.tokenListing.description);
-  const roadmap_url = useSelector((state) => state.tokenListing.description);
-  const about_description = useSelector((state) => state.tokenListing.description);
-  const about_url = useSelector((state) => state.tokenListing.description);
-  const features_description = useSelector((state) => state.tokenListing.description);
-  const features_url = useSelector((state) => state.tokenListing.description);
-  const teams_description = useSelector((state) => state.tokenListing.description);
-  const teams_url = useSelector((state) => state.tokenListing.description);
-  const tokenomics_description = useSelector((state) => state.tokenListing.description);
-  const tokenomics_url = useSelector((state) => state.tokenListing.description);
+  const roadmap_description = useSelector((state) => state.tokenListing.roadmap_description);
+  const roadmap_url = useSelector((state) => state.tokenListing.roadmap_url);
+  const about_description = useSelector((state) => state.tokenListing.about_description);
+  const about_url = useSelector((state) => state.tokenListing.about_url);
+  const features_description = useSelector((state) => state.tokenListing.features_description);
+  const features_url = useSelector((state) => state.tokenListing.features_url);
+  const teams_description = useSelector((state) => state.tokenListing.teams_description);
+  const teams_url = useSelector((state) => state.tokenListing.teams_url);
+  const tokenomics_description = useSelector((state) => state.tokenListing.tokenomics_description);
+  const tokenomics_url = useSelector((state) => state.tokenListing.tokenomics_url);
   const twitter_followers = useSelector((state) => state.tokenListing.twitter_followers);
   const dispatch = useDispatch();
 

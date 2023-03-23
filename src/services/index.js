@@ -23,13 +23,14 @@ const createBackendServer = (baseURL) => {
   const ipfs = async (id = "QmXRAQ7YecZrV6Yyew2h1Vh9kFHxyuLNEPPYooUDPpRcsf") => axios.get(`https://ipfs.io/ipfs/${id}`);
   /*==========    POST REQUESTS    ==========*/
   const createBscIdo = (body) => api.post('api/create-bsc-ido', body);
+  const updateIDOWeiRaised = (body) => api.post('api/update-ido-weiraiased', body);
   const saveEvent = async (body) => api.post('api/calender/save-event', body);
 
   /*==========    DELETE REQUESTS    ==========*/
 
   /*==========    PUT REQUESTS    ==========*/
 
-  return { createBscIdo, getBscIdo, getVCDeals, getProjectDetails, getDeals, getEvent, saveEvent,getFollowers,getRandomImages,ipfs};
+  return { createBscIdo, updateIDOWeiRaised, getBscIdo, getVCDeals, getProjectDetails, getDeals, getEvent, saveEvent, getFollowers, getRandomImages, ipfs };
 };
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;

@@ -46,9 +46,6 @@ const Deals = () => {
         console.log(pools);
       }
 
-      // console.log(idoDeals);
-
-      // pools = response.data.pools;
       if (!unmounted) setIsLoading(false);
     })();
     return () => (unmounted = true);
@@ -77,27 +74,7 @@ const Deals = () => {
                 </Box>
               );
             })}
-            <Box className={`btn btn-dark text-info mx-1`} onClick={() => alert('Coming Soon')}>
-              INO Deals
-            </Box>
-            {/*<Box component="button" onClick={() => alert('Coming Soon')} className="btn btn-dark text-info mx-1">*/}
-            {/*  <i className="fa-solid fa-calendar-days text-info mx-1"></i>Calendar*/}
-            {/*</Box>*/}
-            {/* <Box component="a" href="/phonecalendar" className="btn btn-dark text-info mx-1">
-                        <i className="fa-solid fa-calendar-days text-info mx-1"></i>Calendar
-                    </Box> */}
           </Grid>
-          {/*<Box
-            component="h2"
-            marginTop="20px"
-            display="flex"
-            align="center"
-            justifyContent="center"
-            color="#00BFFF"
-            fontSize={20}
-          >
-            PROJECTS
-          </Box>*/}
           <Grid align="center" justifyContent={'center'}>
             <Box component="img" marginTop="30px" src={imageURL('projects.png')}></Box>
           </Grid>
@@ -154,10 +131,10 @@ const Deals = () => {
 
           {completedProject > 0 && (
             <Grid marginTop="50px" dispay="flex" position="relative" container direction="row">
-              <Box  component="h4" position="relative" color="#56C5FF" fontSize={34}>
+              <Box component="h4" position="relative" color="#56C5FF" fontSize={34}>
                 Completed Projects
               </Box>
-              <Box  component="p" position="absolute" right="0px" top="10px" fontSize={24} color="white">
+              <Box component="p" position="absolute" right="0px" top="10px" fontSize={24} color="white">
                 View All Pools
               </Box>
             </Grid>
@@ -187,24 +164,11 @@ const Deals = () => {
                 </Box>
               );
             })}
-            <Box className={`btn btn-dark text-info mx-1`} onClick={() => alert('Coming Soon')}>
-              INO Deals
-            </Box>
           </Grid>
-          {/*<Box component="h2" marginTop="20px" display="flex" align="center" justifyContent="center" color="#00BFFF">*/}
-          {/*  PROJECTS*/}
-          {/*</Box>*/}
           <Grid align="center" justifyContent={'center'}>
             <Box component="img" marginTop="30px" src={imageURL('projects.png')}></Box>
           </Grid>
-          {/* <Grid container direction="row" marginTop="90px" marginBottom="50px">
-                    <Grid item md="8.5"></Grid>
-                    <Grid item md="3.5" position="relative" display="flex">
-                        <Box component="input" placeholder="Search..." style={{ paddingLeft:"10px", borderRadius:2, height:"50px", width:"100%", border:"none", backgroundColor:"rgba(255, 255, 255, 0.1)"}}/>
-                        <Box component="button" border="none" borderRadius={1} height="40px" width="90px" position="absolute" right="10px" top="5px" style={{ backgroundColor:"#56C5FF", color:"white" }}>Search</Box>
 
-                    </Grid>
-                </Grid> */}
           <Grid container marginBottom="20px">
             {pools.length > 0 && (
               <Grid item xs={8} component="h2" color="#00BFFF" fontSize={18} marginTop="20px">

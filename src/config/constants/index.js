@@ -1,6 +1,6 @@
 export const IDO_ADDRESS = {
   [process.env.REACT_APP_ETHEREUM_CHAINID]: '0xb7BB0b6Ceb97cd0F482AADA8Cf09df14451f7300', //Ropsten IDO
-  [process.env.REACT_APP_BSC_CHAINID]: '0x867C074445b148D07B1Ab02dD89c99bc1dF516f1', //BSC IDO
+  [process.env.REACT_APP_BSC_CHAINID]: '0x297463BeF73ABF5Ee36204641f0Aca5391BBD566', //BSC IDO
   [process.env.REACT_APP_LOCALHOST_CHAINID]: ''
 };
 
@@ -85,9 +85,12 @@ export const POOL_TIER = [
 ];
 
 export const DEALS_TAB = [
-  { id: 0, isComingSoon: false,link: '/idodeals', title: 'IDO Deals' },
-  { id: 1, isComingSoon: false, link: '/vcdeals', title: 'VC Deals' },
+  // { id: 0, isComingSoon: false, link: '/idodeals', title: 'IDO Deals' },
+  // { id: 1, isComingSoon: false, link: '/vcdeals', title: 'VC Deals' },
+  // { id: 1, isComingSoon: false, link: '/inodeals', title: 'INO Deals' },
 ];
+
+
 
 export const PROJECT_STATUS = {
   inProcess: 'IN-PROCESS',

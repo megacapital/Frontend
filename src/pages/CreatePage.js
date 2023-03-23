@@ -190,7 +190,7 @@ function Create() {
       });
   };
   const goComplete = (address) => {
-    navigate(`/presale/${address}`);
+    navigate(`/project/${address}`);
   };
 
   return (
