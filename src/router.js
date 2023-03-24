@@ -64,8 +64,6 @@ export default function Router() {
         { path: '/dashboard', element: <Dashboard /> },
 
         { path: '/stakepad', element: <Stakepad /> },
-        { path: '/stakingpool', element: <StakingPool /> },
-        { path: '/farmingpool', element: <FarmingPool /> },
         { path: '/create-stake', element: <CreateStake /> }, //admin - create staking pool
 
         { path: '/blog', element: <Blog /> },
@@ -122,8 +120,6 @@ const ProjectDetail = Loadable(lazy(() => import('pages/ProjectDetail')));
 const PhoneCalendar = Loadable(lazy(() => import('pages/PhoneCalendar')));
 const Vote = Loadable(lazy(() => import('pages/Vote')));
 const Dashboard = Loadable(lazy(() => import('pages/Dashboard')));
-const StakingPool = Loadable(lazy(() => import('pages/StakingPool')));
-const FarmingPool = Loadable(lazy(() => import('pages/FarmingPool')));
 const Blog = Loadable(lazy(() => import('pages/Blog')));
 const DetailPage = Loadable(lazy(() => import('pages/DetailPage')));
 const CreatePage = Loadable(lazy(() => import('pages/CreatePage')));

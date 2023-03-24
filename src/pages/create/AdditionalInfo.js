@@ -48,7 +48,7 @@ const AdditionalInfo = ({ goBack, goNext }) => {
         const poolFixedFee = [];
         for (let i = 0; i < 4; i++) poolFixedFee.push(await idoContract.poolFixedFee(i));
         if (!unmounted) setPoolFixedFees(poolFixedFee);
-      } catch (err) {}
+      } catch (err) { }
     })();
     return () => (unmounted = true);
   }, [idoContract]);
@@ -543,221 +543,193 @@ const AdditionalInfo = ({ goBack, goNext }) => {
               />
             </Grid>
           </Grid>
-          <Stack justifyContent="center" alignItems="center" spacing={2} sx={{ mt: 3 }}>
-            <Stack component="span" fontSize="1.2rem">
-              Select Tier:
-            </Stack>
-            <RadioGroup value={tier} onChange={onChangeTier}>
-              <Grid container spacing={3} sx={{ px: 2 }}>
-                <Grid item md={3} xs={6}>
-                  <Stack alignItems="center" sx={{ cursor: 'pointer' }}>
-                    <Typography variant="h5">COMMON</Typography>
-                    <CardActionArea>
-                      <Paper
-                        sx={{ width: 1, p: 2, border: `4px solid ${tier === 'common' ? '#e5e5e5' : 'transparent'}` }}
-                      >
-                        <Box>
-                          <Stack alignItems="center" justifyContent="center" sx={{ height: 300 }}>
-                            <Typography align="center" variant="h4">
-                              COMMON TIER WITHOUT ANY SPECIAL PERKS
+
+          {
+            'remove tier' == 'in this version' &&
+            <>
+              <Stack justifyContent="center" alignItems="center" spacing={2} sx={{ mt: 3 }}>
+                <Stack component="span" fontSize="1.2rem">
+                  Select Tier:
+                </Stack>
+                <RadioGroup value={tier} onChange={onChangeTier}>
+                  <Grid container spacing={3} sx={{ px: 2 }}>
+                    <Grid item md={3} xs={6}>
+                      <Stack alignItems="center" sx={{ cursor: 'pointer' }}>
+                        <Typography variant="h5">COMMON</Typography>
+                        <CardActionArea>
+                          <Paper
+                            sx={{ width: 1, p: 2, border: `4px solid ${tier === 'common' ? '#e5e5e5' : 'transparent'}` }}
+                          >
+                            <Box>
+                              <Stack alignItems="center" justifyContent="center" sx={{ height: 300 }}>
+                                <Typography align="center" variant="h4">
+                                  COMMON TIER WITHOUT ANY SPECIAL PERKS
+                                </Typography>
+                              </Stack>
+                              <Typography align="center" variant="h5">
+                                FEE: {poolFixedFees[0] ? commify(formatEther(poolFixedFees[0])) : 0}
+                                {network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'ETH' : 'BNB'}
+                              </Typography>
+                            </Box>
+                          </Paper>
+                          <FormControlLabel
+                            label=""
+                            value="common"
+                            control={<Radio sx={{ display: 'none' }} />}
+                            sx={{
+                              top: 0,
+                              margin: 0,
+                              width: '100%',
+                              height: '100%',
+                              position: 'absolute'
+                            }}
+                          />
+                        </CardActionArea>
+                      </Stack>
+                    </Grid>
+
+                    <Grid item md={3} xs={6}>
+                      <Stack alignItems="center" sx={{ cursor: 'pointer' }}>
+                        <Typography variant="h5">GOLD</Typography>
+                        <CardActionArea>
+                          <Paper
+                            sx={{ width: 1, p: 2, border: `4px solid ${tier === 'gold' ? '#fcd316' : 'transparent'}` }}
+                          >
+                            <Stack alignItems="center" justifyContent="center" sx={{ height: 300 }}>
+                              <Typography align="center" variant="h4">
+                                - GOLD BORDER
+                              </Typography>
+                              <Typography align="center" variant="h4">
+                                - AUDIT OPTION
+                              </Typography>
+                              <Typography align="center" variant="h4">
+                                - KYC OPTION
+                              </Typography>
+                            </Stack>
+                            <Typography align="center" variant="h5">
+                              FEE: {poolFixedFees[1] ? commify(formatEther(poolFixedFees[1])) : 0}
+                              {network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'ETH' : 'BNB'}
                             </Typography>
-                          </Stack>
-                          <Typography align="center" variant="h5">
-                            FEE: {poolFixedFees[0] ? commify(formatEther(poolFixedFees[0])) : 0}
-                            {network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'ETH' : 'BNB'}
-                          </Typography>
-                        </Box>
-                      </Paper>
-                      <FormControlLabel
-                        label=""
-                        value="common"
-                        control={<Radio sx={{ display: 'none' }} />}
-                        sx={{
-                          top: 0,
-                          margin: 0,
-                          width: '100%',
-                          height: '100%',
-                          position: 'absolute'
-                        }}
-                      />
-                    </CardActionArea>
-                  </Stack>
-                </Grid>
+                          </Paper>
+                          <FormControlLabel
+                            label=""
+                            value="gold"
+                            control={<Radio sx={{ display: 'none' }} />}
+                            sx={{
+                              top: 0,
+                              margin: 0,
+                              width: '100%',
+                              height: '100%',
+                              position: 'absolute'
+                            }}
+                          />
+                        </CardActionArea>
+                      </Stack>
+                    </Grid>
 
-                <Grid item md={3} xs={6}>
-                  <Stack alignItems="center" sx={{ cursor: 'pointer' }}>
-                    <Typography variant="h5">GOLD</Typography>
-                    <CardActionArea>
-                      <Paper
-                        sx={{ width: 1, p: 2, border: `4px solid ${tier === 'gold' ? '#fcd316' : 'transparent'}` }}
-                      >
-                        <Stack alignItems="center" justifyContent="center" sx={{ height: 300 }}>
-                          <Typography align="center" variant="h4">
-                            - GOLD BORDER
-                          </Typography>
-                          <Typography align="center" variant="h4">
-                            - AUDIT OPTION
-                          </Typography>
-                          <Typography align="center" variant="h4">
-                            - KYC OPTION
-                          </Typography>
-                        </Stack>
-                        <Typography align="center" variant="h5">
-                          FEE: {poolFixedFees[1] ? commify(formatEther(poolFixedFees[1])) : 0}
-                          {network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'ETH' : 'BNB'}
-                        </Typography>
-                      </Paper>
-                      <FormControlLabel
-                        label=""
-                        value="gold"
-                        control={<Radio sx={{ display: 'none' }} />}
-                        sx={{
-                          top: 0,
-                          margin: 0,
-                          width: '100%',
-                          height: '100%',
-                          position: 'absolute'
-                        }}
-                      />
-                    </CardActionArea>
-                  </Stack>
-                </Grid>
+                    <Grid item md={3} xs={6}>
+                      <Stack alignItems="center">
+                        <Typography variant="h5">PLATINUM</Typography>
+                        <CardActionArea>
+                          <Paper
+                            sx={{ width: 1, p: 2, border: `4px solid ${tier === 'platinum' ? '#49f0ff' : 'transparent'}` }}
+                          >
+                            <Stack alignItems="center" justifyContent="center" sx={{ height: 300 }}>
+                              <Typography align="center" variant="h4">
+                                - PLATINUM BORDER
+                              </Typography>
+                              <Typography align="center" variant="h4">
+                                - KYC INCLUDED
+                              </Typography>
+                              <Typography align="center" variant="h4">
+                                - GEMPAD AMA INCLUDED
+                              </Typography>
+                              <Typography align="center" variant="h4">
+                                - AUDIT OPTION
+                              </Typography>
+                              <Typography align="center" variant="h4">
+                                & MORE
+                              </Typography>
+                            </Stack>
+                            <Typography align="center" variant="h5">
+                              FEE: CONTACT US
+                            </Typography>
+                          </Paper>
+                          <FormControlLabel
+                            label=""
+                            value="platinum"
+                            control={<Radio sx={{ display: 'none' }} />}
+                            sx={{
+                              top: 0,
+                              margin: 0,
+                              width: '100%',
+                              height: '100%',
+                              position: 'absolute'
+                            }}
+                          />
+                        </CardActionArea>
+                      </Stack>
+                    </Grid>
 
-                <Grid item md={3} xs={6}>
-                  <Stack alignItems="center">
-                    <Typography variant="h5">PLATINUM</Typography>
-                    <CardActionArea>
-                      <Paper
-                        sx={{ width: 1, p: 2, border: `4px solid ${tier === 'platinum' ? '#49f0ff' : 'transparent'}` }}
-                      >
-                        <Stack alignItems="center" justifyContent="center" sx={{ height: 300 }}>
-                          <Typography align="center" variant="h4">
-                            - PLATINUM BORDER
-                          </Typography>
-                          <Typography align="center" variant="h4">
-                            - KYC INCLUDED
-                          </Typography>
-                          <Typography align="center" variant="h4">
-                            - GEMPAD AMA INCLUDED
-                          </Typography>
-                          <Typography align="center" variant="h4">
-                            - AUDIT OPTION
-                          </Typography>
-                          <Typography align="center" variant="h4">
-                            & MORE
-                          </Typography>
-                        </Stack>
-                        <Typography align="center" variant="h5">
-                          FEE: CONTACT US
-                        </Typography>
-                      </Paper>
-                      <FormControlLabel
-                        label=""
-                        value="platinum"
-                        control={<Radio sx={{ display: 'none' }} />}
-                        sx={{
-                          top: 0,
-                          margin: 0,
-                          width: '100%',
-                          height: '100%',
-                          position: 'absolute'
-                        }}
-                      />
-                    </CardActionArea>
-                  </Stack>
-                </Grid>
-
-                <Grid item md={3} xs={6}>
-                  <Stack alignItems="center">
-                    <Typography variant="h5">DIAMOND</Typography>
-                    <CardActionArea>
-                      <Paper
-                        sx={{ width: 1, p: 2, border: `4px solid ${tier === 'diamond' ? '#ab4bff' : 'transparent'}` }}
-                      >
-                        <Stack alignItems="center" justifyContent="center" sx={{ height: 300 }}>
-                          <Typography align="center" variant="h4">
-                            - DIAMOND BORDER
-                          </Typography>
-                          <Typography align="center" variant="h4">
-                            - KYC INCLUDED
-                          </Typography>
-                          <Typography align="center" variant="h4">
-                            - GEMPAD AMA INCLUDED
-                          </Typography>
-                          <Typography align="center" variant="h4">
-                            - CHEAP AUDIT RATE
-                          </Typography>
-                          <Typography align="center" variant="h4">
-                            - CMC & CG LISTING
-                          </Typography>
-                          <Typography align="center" variant="h4">
-                            - CALLS BY PARTNERS
-                          </Typography>
-                          <Typography align="center" variant="h4">
-                            & MORE!
-                          </Typography>
-                        </Stack>
-                        <Typography align="center" variant="h5">
-                          FEE: CONTACT US
-                        </Typography>
-                      </Paper>
-                      <FormControlLabel
-                        label=""
-                        value="diamond"
-                        control={<Radio sx={{ display: 'none' }} />}
-                        sx={{
-                          top: 0,
-                          margin: 0,
-                          width: '100%',
-                          height: '100%',
-                          position: 'absolute'
-                        }}
-                      />
-                    </CardActionArea>
-                  </Stack>
-                </Grid>
-              </Grid>
-            </RadioGroup>
-
-            {/* <Select
-              {...getFieldProps('tier')}          
-              fullWidth
-              inputProps={{
-                sx: {
-                  display: 'flex',
-                  alignItems: 'center'
-                }
-              }}
-              MenuProps={{
-                sx: {
-                  '& .MuiPaper-root': {
-                    background: 'rgba(255, 255, 255, 0.3)',
-                    backdropFilter: 'blur(20px)'
-                  }
-                }
-              }}
-              sx={{ width: 180 }}
-            >
-              <MenuItem value="default">Default</MenuItem>
-              <MenuItem value="platinum">
-                <Box component="img" src={`/promotions/2.png`} sx={{ width: 32, mr: 2 }} />
-                Platinum
-              </MenuItem>
-              <MenuItem value="diamond">
-                <Box component="img" src={`/promotions/3.png`} sx={{ width: 32, mr: 2 }} />
-                Diamond
-              </MenuItem>
-              <MenuItem value="gold">
-                <Box component="img" src={`/promotions/1.png`} sx={{ width: 32, mr: 2 }} />
-                Bronze
-              </MenuItem>
-            </Select> */}
-          </Stack>
-          {(formik.values.tier === 'platinum' || formik.values.tier === 'diamond') && (
-            <Typography align="center">
-              Make sure to contact us to apply for this tier with all it's benefits
-            </Typography>
-          )}
+                    <Grid item md={3} xs={6}>
+                      <Stack alignItems="center">
+                        <Typography variant="h5">DIAMOND</Typography>
+                        <CardActionArea>
+                          <Paper
+                            sx={{ width: 1, p: 2, border: `4px solid ${tier === 'diamond' ? '#ab4bff' : 'transparent'}` }}
+                          >
+                            <Stack alignItems="center" justifyContent="center" sx={{ height: 300 }}>
+                              <Typography align="center" variant="h4">
+                                - DIAMOND BORDER
+                              </Typography>
+                              <Typography align="center" variant="h4">
+                                - KYC INCLUDED
+                              </Typography>
+                              <Typography align="center" variant="h4">
+                                - GEMPAD AMA INCLUDED
+                              </Typography>
+                              <Typography align="center" variant="h4">
+                                - CHEAP AUDIT RATE
+                              </Typography>
+                              <Typography align="center" variant="h4">
+                                - CMC & CG LISTING
+                              </Typography>
+                              <Typography align="center" variant="h4">
+                                - CALLS BY PARTNERS
+                              </Typography>
+                              <Typography align="center" variant="h4">
+                                & MORE!
+                              </Typography>
+                            </Stack>
+                            <Typography align="center" variant="h5">
+                              FEE: CONTACT US
+                            </Typography>
+                          </Paper>
+                          <FormControlLabel
+                            label=""
+                            value="diamond"
+                            control={<Radio sx={{ display: 'none' }} />}
+                            sx={{
+                              top: 0,
+                              margin: 0,
+                              width: '100%',
+                              height: '100%',
+                              position: 'absolute'
+                            }}
+                          />
+                        </CardActionArea>
+                      </Stack>
+                    </Grid>
+                  </Grid>
+                </RadioGroup>
+              </Stack>
+              {(formik.values.tier === 'platinum' || formik.values.tier === 'diamond') && (
+                <Typography align="center">
+                  Make sure to contact us to apply for this tier with all it's benefits
+                </Typography>
+              )}
+            </>
+          }
 
           <Stack direction="row" justifyContent="center">
             <Button variant="outlined" color="secondary" style={{ marginTop: 20 }} onClick={goBack}>

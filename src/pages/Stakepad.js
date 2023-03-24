@@ -25,13 +25,7 @@ export default function Stakepad() {
         <MHidden width="mdDown">
           <Grid paddingLeft={'10%'} paddingRight={'10%'} paddingTop="30px">
             <Grid align="center" justifyContent="center">
-              {/*<Box component="a" href="#">*/}
-              {/*  <Button className="btn btn-light text-info mx-1">Stakepad</Button>*/}
-              {/*</Box>*/}
-              <button
-                className="btn btn-dark text-info mx-1"
-                onClick={() => window.scrollTo({ left: 0, top: 580, behavior: 'smooth' })}
-              >
+              <button className="btn btn-dark text-info mx-1">
                 Staking Pools
               </button>
               <a href="#farmingSection">
@@ -44,27 +38,15 @@ export default function Stakepad() {
                 <br />
                 attractive staking pools from IDO projects
               </Box>
-            </Grid>
-            {/*<Grid marginTop="50px">
-              <Grid container position="relative" display="flex" marginBottom="60px">
-                <Box fontSize="34px" sx={{ position: 'absolute', left: '10px', color: '#56C5FF' }}>
-                  Stakepad
-                </Box>
-                <Box fontSize="24px" sx={{ position: 'absolute', right: '10px' }}>
-                  <ViewAllPools to="#" title="View All Pools" />
-                </Box>
-              </Grid>
-              <StakePadCard></StakePadCard>
-              <StakePadCard></StakePadCard>
-              <StakePadCard></StakePadCard>
-            </Grid>*/}
+            </Grid>  
             <StakingPool></StakingPool>
             <FarmingPools></FarmingPools>
           </Grid>
         </MHidden>
+
         <MHidden width="mdUp">
           <Grid paddingLeft={'7%'} paddingRight={'7%'} paddingTop="30px">
-            <Grid color="#56C5FF" textAlign="center" fontSize={20} marginBottom="20px">
+            <Grid color="#56C5FF" textAlign="center" fontSize={20} marginBottom="20px">             
               <Box
                 component="button"
                 marginRight="10px"
@@ -73,21 +55,7 @@ export default function Stakepad() {
                 color="#56C5FF"
                 border="none"
                 borderRadius={0.5}
-                fontSize={13}
-                onClick={() => window.scrollTo({ left: 0, top: 1280, behavior: 'smooth' })}
-              >
-                Stakepad
-              </Box>
-              <Box
-                component="button"
-                marginRight="10px"
-                padding="5px"
-                backgroundColor="#232323"
-                color="#56C5FF"
-                border="none"
-                borderRadius={0.5}
-                fontSize={13}
-                onClick={() => window.scrollTo({ left: 0, top: 220, behavior: 'smooth' })}
+                fontSize={13}             
               >
                 Staking Pools
               </Box>
@@ -109,7 +77,7 @@ export default function Stakepad() {
               check word file please
             </Grid>
             <StakingPool />
-            {/*<StakingPool title="Farming Pool" />*/}
+            <FarmingPools></FarmingPools>          
           </Grid>
         </MHidden>
       </Grid>
@@ -337,23 +305,23 @@ function PoolBox(props) {
       </Box>
       {openedPool &&
         (processing ? (
-          <Grid
-            container
-            borderRadius={1}
-            bgcolor={'#232323'}
-            marginTop="20px"
-            marginBottom="20px"
-            marginLeft="0px"
-            padding="20px"
-            alignItems="center"
-            justifyContent="center"
-            columnSpacing={4}
-            rowSpacing={2}
-            width="100%"
-          >
-            {/* <Loader type="ThreeDots" color="#00BFFF" height={30} width={30} /> */}
-            <HashLoader color="#59f1f6" size={30} />
-          </Grid>
+          <></>
+          // <Grid
+          //   container
+          //   borderRadius={1}
+          //   bgcolor={'#232323'}
+          //   marginTop="20px"
+          //   marginBottom="20px"
+          //   marginLeft="0px"
+          //   padding="20px"
+          //   alignItems="center"
+          //   justifyContent="center"
+          //   columnSpacing={4}
+          //   rowSpacing={2}
+          //   width="100%"
+          // >
+          //   <HashLoader color="#59f1f6" size={30} />
+          // </Grid>
         ) : (
           <Grid
             container
@@ -361,6 +329,7 @@ function PoolBox(props) {
             bgcolor={'#232323'}
             marginTop="20px"
             marginBottom="20px"
+            paddingBottom={'20px'}
             marginLeft="0px"
             columnSpacing={4}
             rowSpacing={2}
@@ -441,41 +410,6 @@ function PoolBox(props) {
                 HARVEST {data.rewards} {pool.tokenSymbol}
               </Button>
               <Box marginTop="8px">Harvesting will reset the lock time</Box>
-            </Grid>
-            <Grid container item direction="row" marginTop="10px">
-              <Grid item sm="2">
-                <Box color="white">DEPOSIT FEE</Box>
-              </Grid>
-              <Grid item color="#56C5FF" sm="3.5" justifyContent="right" display="flex">
-                None
-              </Grid>
-            </Grid>
-            <Grid container item direction="row" marginTop="10px">
-              <Grid sm="2">
-                <Box color="white">WITHDRAW FEE</Box>
-              </Grid>
-              <Grid sm="3.5" color="#56C5FF" justifyContent="right" display="flex">
-                <Box>None</Box>
-              </Grid>
-            </Grid>
-            <Grid container item direction="row" marginTop="10px">
-              <Grid sm="2">
-                <Box color="white">PERFORMANCE FEE TIME</Box>
-              </Grid>
-              <Grid color="#56C5FF" sm="3.5" justifyContent="right" display="flex">
-                <Box>None</Box>
-              </Grid>
-            </Grid>
-            <Grid container item direction="row" marginTop="10px">
-              <Grid sm="2">
-                <Box color="white">LOCK TIME</Box>
-              </Grid>
-              <Grid color="#56C5FF" sm="3.5" justifyContent="right" display="flex">
-                <Box>30 Days</Box>
-              </Grid>
-            </Grid>
-            <Grid item color="#56C5FF" marginBottom="25px" marginTop="10px">
-              Buy Token
             </Grid>
           </Grid>
         ))}
