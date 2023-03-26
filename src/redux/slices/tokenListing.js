@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
-  totalSupply: '',
+  totalSupply: 0,
   address: '',
   error: '',
-  symbol: '',
-  name: '',
-  decimals: '',
+  symbol: 'BUSD',
+  name: 'BUSD',
+  decimals: 18,
   allowance: '',
   approved: false,
   presale_rate: '1',

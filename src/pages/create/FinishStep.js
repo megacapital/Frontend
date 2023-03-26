@@ -209,7 +209,7 @@ const FinishStep = ({ goBack, goComplete }) => {
               teams_url,
               tokenomics_description,
               tokenomics_url,
-              twitter_followers,              
+              twitter_followers,
             },
             logo
           };
@@ -324,13 +324,6 @@ const FinishStep = ({ goBack, goComplete }) => {
       >
         <Stack>
           <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
-            <span>Total Token</span>
-            <Stack component="span" color="error.main" marginLeft="15px">
-              {Number(formatUnits(totalSupply, decimals)).toLocaleString('en')}
-            </Stack>
-          </Stack>
-          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
-          <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
             <span>Token Name</span>
             <Stack component="span" color="success.main" marginLeft="15px">
               {name}
@@ -338,30 +331,9 @@ const FinishStep = ({ goBack, goComplete }) => {
           </Stack>
           <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
           <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
-            <span>Token Symbol</span>
-            <Stack component="span" color="success.main" marginLeft="15px">
-              {symbol}
-            </Stack>
-          </Stack>
-          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
-          <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
-            <span>Token Decimal</span>
-            <Stack component="span" color="success.main" marginLeft="15px">
-              {decimals}
-            </Stack>
-          </Stack>
-          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
-          <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
             <span>Presale Rate</span>
             <Stack component="span" color="success.main" marginLeft="15px">
               {presale_rate} {symbol}
-            </Stack>
-          </Stack>
-          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
-          <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
-            <span>Listing Rate</span>
-            <Stack component="span" color="success.main" marginLeft="15px">
-              {dex_rate} {symbol}
             </Stack>
           </Stack>
           <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
@@ -463,14 +435,6 @@ const FinishStep = ({ goBack, goComplete }) => {
               {discord}
             </Stack>
           </Stack>
-          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
-          <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
-            <span>Reddit</span>
-            <Stack component="span" color="error.main" marginLeft="15px">
-              {reddit}
-            </Stack>
-          </Stack>
-
           <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
           <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
             <span>Twitter Followers</span>

@@ -184,50 +184,22 @@ const MainInfo = ({ goBack, goNext }) => {
     validationSchema: NewInfluencerSchema,
     onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
       try {
-        // if (values.teamVesting_first_percent + values.teamVesting_first_percent > 100) {
-        //   enqueueSnackbar('Oops, Team vesting total percent exceeds 100%!', {
+        // if (Number(formatUnits(allowance, decimals)) <
+        //   Number(((Number(values.teamVesting_amount) * 100 +
+        //     Number(values.presale_rate) * Number(values.hard_cap) * 100 +
+        //     (Number(values.hard_cap) * Number(values.dex_amount) * Number(values.dex_rate))) *
+        //     (100 + Number(poolTokenPercentFee)) / 10000).toPrecision(15))) {
+        //   enqueueSnackbar(`${commify(Number(((Number(values.teamVesting_amount) * 100 +
+        //     Number(values.presale_rate) * Number(values.hard_cap) * 100 +
+        //     (Number(values.hard_cap) * Number(values.dex_amount) * Number(values.dex_rate))) *
+        //     (100 + Number(poolTokenPercentFee)) / 10000).toPrecision(15)) - Number(formatUnits(allowance, decimals)))}
+        //   ${" "} ${symbol} needed more to create a pool!`, {
         //     variant: 'error'
         //   });
-        //   setSubmitting(false);
-        //   return;
-        // }
-        // if (new Date(startDate).getTime() < Date.now()) {
-        //   enqueueSnackbar('Oops, Presale start time wrong!', {
-        //     variant: 'error'
-        //   });
-        //   setSubmitting(false);
-        //   return;
-        // }
-        // if (new Date(endDate).getTime() - new Date(startDate).getTime() < 24 * 3600 * 1000) {
-        //   enqueueSnackbar('Oops, Presale period is incorrect!', {
-        //     variant: 'error'
-        //   });
-        //   setSubmitting(false);
-        //   return;
-        // }
-        // if (new Date(listDate).getTime() - new Date(endDate).getTime() < 0) {
-        //   enqueueSnackbar('Oops, DEX listing time should be later than presale end time!', {
-        //     variant: 'error'
-        //   });
-        //   setSubmitting(false);
-        //   return;
-        // }
-        if (Number(formatUnits(allowance, decimals)) <
-          Number(((Number(values.teamVesting_amount) * 100 +
-            Number(values.presale_rate) * Number(values.hard_cap) * 100 +
-            (Number(values.hard_cap) * Number(values.dex_amount) * Number(values.dex_rate))) *
-            (100 + Number(poolTokenPercentFee)) / 10000).toPrecision(15))) {
-          enqueueSnackbar(`${commify(Number(((Number(values.teamVesting_amount) * 100 +
-            Number(values.presale_rate) * Number(values.hard_cap) * 100 +
-            (Number(values.hard_cap) * Number(values.dex_amount) * Number(values.dex_rate))) *
-            (100 + Number(poolTokenPercentFee)) / 10000).toPrecision(15)) - Number(formatUnits(allowance, decimals)))}
-          ${" "} ${symbol} needed more to create a pool!`, {
-            variant: 'error'
-          });
 
-          setSubmitting(false);
-          return;
-        }
+        //   setSubmitting(false);
+        //   return;
+        // }
         dispatch(setMainInfo({ ...values, startDate, endDate, listDate }));
         resetForm();
         setSubmitting(false);
@@ -281,48 +253,7 @@ const MainInfo = ({ goBack, goNext }) => {
                 receive?
               </Stack>
             </Stack>
-            <Stack spacing={1} flexGrow={1}>
-              <TextField
-                fullWidth
-                label="Dex listing rate"
-                type="number"
-                {...getFieldProps('dex_rate')}
-                error={Boolean(touched.dex_rate && errors.dex_rate)}
-                helperText={touched.dex_rate && errors.dex_rate}
-              />
-            </Stack>
-            <Stack direction="row" spacing={3} alignItems="flex-start">
-              {/* <Stack spacing={1} flexGrow={1} >
-                                <Select
-                                    labelId="refund-label"
-                                    id="refund-select"
-                                    {...getFieldProps("refund")}
-                                    inputProps={{
-                                        sx: {
-                                            // width: 160,
-                                            width: 1,
-                                            border: "1px solid white",
-                                            color: "white",
-                                            display: "flex",
-                                        },
-                                    }}
-                                    MenuProps={{
-                                        sx: {
-                                            "& .MuiPaper-root": {
-                                                background: "rgba(255, 255, 255, 0.2)",
-                                                backdropFilter: "blur(6px)",
-                                            },
-                                        },
-                                    }}
-                                >
-                                    <MenuItem value="refund">
-                                        Refund
-                                    </MenuItem>
-                                    <MenuItem value="burn">
-                                        Burn
-                                    </MenuItem>
-                                </Select>
-                            </Stack> */}
+            {/* <Stack direction="row" spacing={3} alignItems="flex-start">
               <Stack spacing={1} flexGrow={1}>
                 <TextField
                   fullWidth
@@ -343,7 +274,7 @@ const MainInfo = ({ goBack, goNext }) => {
                   helperText={touched.dex_lockup && errors.dex_lockup}
                 />
               </Stack>
-            </Stack>
+            </Stack> */}
             <Stack direction="row" spacing={3} alignItems="flex-start">
               <Stack spacing={1} flexGrow={1}>
                 <TextField
@@ -551,7 +482,10 @@ const MainInfo = ({ goBack, goNext }) => {
             ) : (
               ''
             )}
-            {Number(formatUnits(allowance, decimals)) >=
+
+
+            {/* Calculating reuqired amount */}
+            {/* {Number(formatUnits(allowance, decimals)) >=
               Number(((Number(values.teamVesting_amount) * 100 +
                 Number(values.presale_rate) * Number(values.hard_cap) * 100 +
                 (Number(values.hard_cap) * Number(values.dex_amount) * Number(values.dex_rate))) *
@@ -596,7 +530,9 @@ const MainInfo = ({ goBack, goNext }) => {
                   {symbol} needed more! )
                 </Alert>
               </Stack>
-            )}
+            )} */}
+            {/* ~~Calculating reuqired amount */}
+
             <Stack direction="row" spacing={3} alignItems="flex-start"></Stack>
           </Stack>
           <Stack direction="row" justifyContent="center">

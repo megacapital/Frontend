@@ -91,62 +91,6 @@ function Create() {
   const params = useParams();
   const navigate = useNavigate();
   const tokenContract = useTokenContract(address);
-  useEffect(() => {
-    let unmounted = false;
-    (async () => {
-      if (address != '') {
-        try {
-          const symbol = await tokenContract.symbol();
-          const name = await tokenContract.name();
-          const decimals = await tokenContract.decimals();
-          const totalSupply = await tokenContract.totalSupply();
-          if (!unmounted) {
-            dispatch(setTotalSupply(totalSupply));
-            dispatch(setError(''));
-            dispatch(
-              setParsed({
-                symbol,
-                name,
-                decimals
-              })
-            );
-          }
-          console.log({
-            symbol,
-            name,
-            decimals
-          });
-          console.log(IDO_ADDRESS[network]);
-          const allowance = await tokenContract.allowance(account, IDO_ADDRESS[network]);
-
-          console.log(allowance);
-          const balance = await tokenContract.balanceOf(account);
-          if (!unmounted) {
-            if (balance.lte(BigNumber.from(0))) {
-              dispatch(setError('No balance'));
-              dispatch(setApproved(false));
-            }
-            if (balance.gt(allowance)) dispatch(setApproved(false));
-            else {
-              dispatch(setApproved(true));
-              dispatch(setAllowance(balance));
-            }
-          }
-        } catch (err) {
-          console.log(err);
-          dispatch(setError('Invalid Token Address'));
-          dispatch(setApproved(false));
-        }
-      } else {
-        dispatch(setError(''));
-        dispatch(setApproved(false));
-      }
-      setIsParsing(false);
-    })();
-    return () => {
-      unmounted = true;
-    };
-  }, [address, network, account]);
 
   const handleTokenAddress = async (e) => {
     if (!account) {
@@ -212,7 +156,7 @@ function Create() {
               <Stack>
                 <TextField
                   fullWidth
-                  label="Token Address"
+                  label="Team Wallet Address For Raising Fund"
                   type="text"
                   error={Boolean(error)}
                   helperText={error}
@@ -223,69 +167,13 @@ function Create() {
                   }}
                 />
               </Stack>
-              {isParsing ? (
-                <>
-                  <Loader type="ThreeDots" color="#00BFFF" height={30} width={30} />
-                  {/* <HashLoader color="#59f1f6" /> */}
-                </>
-              ) : address != '' && error == '' && !approved ? (
-                <Stack sx={{ marginTop: '30px' }}>
-                  <Stack direction="row" justifyContent="space-between">
-                    <span>Name</span>
-                    <span>{name}</span>
-                  </Stack>
-                  <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
-                  <Stack direction="row" justifyContent="space-between">
-                    <span>Symbol</span>
-                    <span>{symbol}</span>
-                  </Stack>
-                  <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
-                  <Stack direction="row" justifyContent="space-between">
-                    <span>Total Supply</span>
-                    <span>{commify(formatUnits(totalSupply, decimals))}</span>
-                  </Stack>
-                  {/* <Stack direction="row" justifyContent="space-between">
-                    <span>Decimals</span>
-                    <span>{decimals}</span>
-                  </Stack> */}
-                  <Stack direction="row" justifyContent="center">
-                    {isApproving ? (
-                      <Loader type="TailSpin" color="#00BFFF" height={50} width={50} />
-                    ) : (
-                      <Button variant="contained" color="secondary" style={{ marginTop: 20 }} onClick={handleApprove}>
-                        Approve
-                      </Button>
-                    )}
-                  </Stack>
-                  <Alert
-                    variant="outlined"
-                    severity="warning"
-                    sx={{ mt: 2, fontWeight: 'bold', marginLeft: 'auto', marginRight: 'auto' }}
-                  >
-                    Make sure the token has 'Exclude transfer fee' and 'Exclude Max Transaction' if you use Tax/Fees or
-                    Max Transaction limits.
-                  </Alert>
+              <Stack sx={{ marginTop: '30px' }}>
+                <Stack direction="row" justifyContent="center">
+                  <Button variant="contained" color="primary" style={{ marginTop: 20 }} onClick={goNext}>
+                    Next
+                  </Button>
                 </Stack>
-              ) : address != '' && error == '' && approved ? (
-                <Stack sx={{ marginTop: '30px' }}>
-                  <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
-                  <Stack direction="row" justifyContent="center">
-                    <Button variant="contained" color="primary" style={{ marginTop: 20 }} onClick={goNext}>
-                      Next
-                    </Button>
-                  </Stack>
-                  <Alert
-                    variant="outlined"
-                    severity="warning"
-                    sx={{ mt: 2, fontWeight: 'bold', marginLeft: 'auto', marginRight: 'auto' }}
-                  >
-                    Make sure the token has 'Exclude transfer fee' and 'Exclude Max Transaction' if you use Tax/Fees or
-                    Max Transaction limits.
-                  </Alert>
-                </Stack>
-              ) : (
-                ''
-              )}
+              </Stack>
             </Paper>
           ) : activeStep == 1 ? (
             <MainInfo goBack={goBack} goNext={goNext}></MainInfo>
