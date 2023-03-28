@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
+  projectName: '',
+  category: 'Startup',
+  blockchain: 'Binance',
+  tgi: 'Solana',
+  type: 'Unlocked',
   totalSupply: 0,
   address: '',
   error: '',
@@ -21,7 +26,8 @@ const initialState = {
   endDate: '',
   startDate: '',
   listDate: '',
-  logo: 'https://snipboard.io/Y9PAT5.jpg',
+  poster: 'https://snipboard.io/F0wMfL.jpg',
+  logo: 'https://snipboard.io/SJgPjt.jpg',
   website: 'https://website.com',
   facebook: 'https://fb.com',
   twitter: 'https://tw.com',
@@ -42,7 +48,7 @@ const initialState = {
   teams_url: 'https://snipboard.io/hNmUvc.jpg',
   tokenomics_url: 'https://snipboard.io/S2vwcD.jpg',
   tier: 'default',
-  twitter_followers: 132,
+  twitter_followers: 0,
   teamVesting_amount: 0,
   teamVesting_first_percent: 0,
   teamVesting_first_period: 0,
@@ -59,6 +65,21 @@ const slice = createSlice({
     },
     setAddress(state, action) {
       state.address = action.payload;
+    },
+    setProjectName(state, action) {
+      state.projectName = action.payload;
+    },
+    setCategory(state, action) {
+      state.category = action.payload;
+    },
+    setBlockchain(state, action) {
+      state.blockchain = action.payload;
+    },
+    setTGI(state, action) {
+      state.tgi = action.payload;
+    },
+    setType(state, action) {
+      state.type = action.payload;
     },
     setError(state, action) {
       state.error = action.payload;
@@ -95,7 +116,12 @@ const slice = createSlice({
       state.teamVesting_each_period = action.payload.teamVesting_each_period;
     },
     setAdditionalInfo(state, action) {
+      state.category = action.payload.category;
+      state.blockchain = action.payload.blockchain;
+      state.tgi = action.payload.tgi;
+      state.type = action.payload.type;
       state.logo = action.payload.logo;
+      state.poster = action.payload.poster;
       state.website = action.payload.website;
       state.facebook = action.payload.facebook;
       state.twitter = action.payload.twitter;
@@ -126,6 +152,31 @@ export default slice.reducer;
 export function setTotalSupply(totalSupply) {
   return (dispatch) => {
     dispatch(slice.actions.setTotalSupply(totalSupply));
+  };
+}
+export function setProjectName(value) {
+  return (dispatch) => {
+    dispatch(slice.actions.setProjectName(value));
+  };
+}
+export function setCategory(value) {
+  return (dispatch) => {
+    dispatch(slice.actions.setCategory(value));
+  };
+}
+export function setBlockchain(value) {
+  return (dispatch) => {
+    dispatch(slice.actions.setBlockchain(value));
+  };
+}
+export function setTGI(value) {
+  return (dispatch) => {
+    dispatch(slice.actions.setTGI(value));
+  };
+}
+export function setType(value) {
+  return (dispatch) => {
+    dispatch(slice.actions.setType(value));
   };
 }
 export function setAddress(address) {

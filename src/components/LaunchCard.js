@@ -10,7 +10,7 @@ import { atcb_action } from 'add-to-calendar-button';
 
 export default function LaunchCard(props) {
   const navigate = useNavigate();
-  const { name = '', weiRaised, address = '', tag = '', privacy = '', ipfs, startDateTime = 'TBA', endDateTime, sm = 4, logo } = props;
+  const { name = '', weiRaised, address = '', tag = '', privacy = '', ipfs, startDateTime = 'TBA', endDateTime, sm = 4, logo, poster } = props;
 
   const { chainId = 0 } = useSelector((store) => store.network);
   console.log(chainId);
@@ -33,7 +33,7 @@ export default function LaunchCard(props) {
           <CardContent style={{ backgroundColor: '#232323', padding: '10px' }}>
             <Grid>
               <Grid marginBottom="10px" display="flex">
-                <Box component="img" src={isValidImage(logo)} width="100%" height={250}></Box>
+                <Box component="img" src={isValidImage(poster)} width="100%" height={250}></Box>
                 <Box
                   bgcolor={'#232323'}
                   borderRadius={1}
@@ -60,7 +60,7 @@ export default function LaunchCard(props) {
                   <Box component="h4" color="#00BFFF" position="relative" sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
                     {name} <span><img src={getNetworkImage(chainId)} width={25} alt={name} /></span>
                   </Box>
-                  {/* <Box component="img" src={logo} position="absolute" right="0px" width={'40px'}></Box> */}
+                  <Box component="img" src={isValidImage(logo)} position="absolute" right="0px" width={'40px'}></Box>
                 </Grid>
               </Grid>
               <Grid marginTop="10px">

@@ -112,16 +112,20 @@ export default function ProjectDetail(props) {
             <Grid marginTop='30px'>
               <Detail data={data}></Detail>
             </Grid>
-            <Typography marginTop='30px' style={{ fontSize: '34px', fontFamily: 'Segoe UI', color: '#56C5FF' }}>
+
+            {/* Follower */}
+            {/* <Typography marginTop='30px' style={{ fontSize: '34px', fontFamily: 'Segoe UI', color: '#56C5FF' }}>
               {displayFollowers(data?.twitter_followers)} Followers
             </Typography>
             <Grid container direction='row' spacing={1} marginTop='10px'>
               {randomImages.map((image, idx) => <Grid item key={idx}>
                 <Box component='img' src={image} borderRadius={'50%'} />
               </Grid>)}
-            </Grid>
+            </Grid> */}
+
+
             <Grid marginTop='30px' container direction='row' spacing={1}>
-              <Grid item>
+              {/* <Grid item>
                 <Button
                   style={{
                     borderRadius: 4,
@@ -136,23 +140,22 @@ export default function ProjectDetail(props) {
                   <Box component='img' src={imageURL('Vector.png')} mr={1} />
                   whitepaper
                 </Button>
-              </Grid>
+              </Grid> */}            
               <Grid item>
-                <Button
+                <Box
+                  component='button'
                   style={{
+                    height: '44px',
+                    border: 'none',
                     borderRadius: 4,
                     backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    fontFamily: 'Segoe UI',
-                    fontSize: '14px',
-                    color: 'white',
-                    padding: '10px 20px 10px 20px',
-                    textTransform: 'lowercase'
+                    padding: '10px 10px 10px 10px'
                   }}
-                  onClick={() => window.open(data?.ipfs?.website, '_blank')}
                 >
-                  <Box component='img' src={imageURL('Vector_www.png')} mr={1} />
-                  <span className='text-lowercase'>{data?.ipfs?.website}</span>
-                </Button>
+                  <Box component='a' href={`${data?.ipfs?.website}`} target='_blank'>
+                    <Box component='img' src={imageURL('Vector_www.png')} />
+                  </Box>
+                </Box>
               </Grid>
               <Grid item>
                 <Box
@@ -944,16 +947,17 @@ function ProjectInformation({ data, roadmapdata }) {
                     {data?.symbol}
                   </Grid>
                   <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                    Metaverse
+                    {data?.category}
                   </Grid>
                   <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                    {getNetworkSymbol(chainId, true)}
+                    {/* {getNetworkSymbol(chainId, true)} */}
+                    {data?.blockchain}
                   </Grid>
                   <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                    Solana
+                    {data?.tgi}
                   </Grid>
                   <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                    unlocked
+                    {data?.type}
                   </Grid>
                 </Grid>
               </Grid>
@@ -1100,25 +1104,25 @@ function ProjectInformation({ data, roadmapdata }) {
               <Grid item xs={6}>
                 <Box color='white'>CATEGORY</Box>
                 <Box color='#56C5FF' marginTop='2px'>
-                  Metaverse
+                  {data?.category}
                 </Box>
               </Grid>
               <Grid item xs={6}>
                 <Box color='white'>TGI</Box>
                 <Box color='#56C5FF' marginTop='2px'>
-                  Solana
+                  {data?.tgi}
                 </Box>
               </Grid>
               <Grid item xs={6} marginTop='10px'>
                 <Box color='white'>BLOCKCHAIN</Box>
                 <Box color='#56C5FF' marginTop='2px'>
-                  Solana
+                  {data?.blockchain}
                 </Box>
               </Grid>
               <Grid item xs={6} marginTop='10px'>
                 <Box color='white'>TYPE</Box>
                 <Box color='#56C5FF' marginTop='2px'>
-                  unlocked
+                  {data?.type}
                 </Box>
               </Grid>
               <Grid item xs={12} marginTop='30px' width='100%'>

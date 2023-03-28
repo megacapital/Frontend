@@ -74,6 +74,11 @@ const AdditionalInfo = ({ goBack, goNext }) => {
     tokenomics_description: Yup.string(),
     tokenomics_url: Yup.string().url('Not a url')
   });
+  const category = useSelector((state) => state.tokenListing.category);
+  const blockchain = useSelector((state) => state.tokenListing.blockchain);
+  const tgi = useSelector((state) => state.tokenListing.tgi);
+  const type = useSelector((state) => state.tokenListing.type);
+  const poster = useSelector((state) => state.tokenListing.poster);
   const logo = useSelector((state) => state.tokenListing.logo);
   const website = useSelector((state) => state.tokenListing.website);
   // const facebook = useSelector((state) => state.tokenListing.facebook);
@@ -102,6 +107,11 @@ const AdditionalInfo = ({ goBack, goNext }) => {
     enableReinitialize: true,
     initialValues: {
       logo,
+      poster,
+      category,
+      blockchain,
+      tgi,
+      type,
       website,
       // facebook,
       twitter,
@@ -157,6 +167,76 @@ const AdditionalInfo = ({ goBack, goNext }) => {
           }}
         >
           <Grid container spacing={2}>
+            <Grid item xs={12} sm={12} md={6}>
+              <TextField
+                fullWidth
+                label="Category"
+                {...getFieldProps('category')}
+                error={Boolean(touched.category && errors.category)}
+                helperText={touched.category && errors.category}
+                sx={{
+                  width: 1
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+              <TextField
+                fullWidth
+                label="Blockchain"
+                {...getFieldProps('blockchain')}
+                error={Boolean(touched.blockchain && errors.blockchain)}
+                helperText={touched.blockchain && errors.blockchain}
+                sx={{
+                  width: 1
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+              <TextField
+                fullWidth
+                label="TGI"
+                {...getFieldProps('tgi')}
+                error={Boolean(touched.tgi && errors.tgi)}
+                helperText={touched.tgi && errors.tgi}
+                sx={{
+                  width: 1
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+              <TextField
+                fullWidth
+                label="Type"
+                {...getFieldProps('type')}
+                error={Boolean(touched.type && errors.type)}
+                helperText={touched.type && errors.type}
+                sx={{
+                  width: 1
+                }}
+              />
+            </Grid>
+
+            {/* Links */}
+            <Grid item xs={12} sm={12} md={6}>
+              <TextField
+                fullWidth
+                label="Poster URL"
+                placeholder="Ex: https://..."
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start" sx={{ color: 'text.secondary' }}>
+                      <ImImage />
+                    </InputAdornment>
+                  )
+                }}
+                {...getFieldProps('poster')}
+                error={Boolean(touched.poster && errors.poster)}
+                helperText={touched.poster && errors.poster}
+                sx={{
+                  width: 1
+                }}
+              />
+            </Grid>
             <Grid item xs={12} sm={12} md={6}>
               <TextField
                 fullWidth
@@ -328,7 +408,7 @@ const AdditionalInfo = ({ goBack, goNext }) => {
                 }}
               />
             </Grid>
-            <Grid item xs={12} sm={12} md={12}>
+            {/* <Grid item xs={12} sm={12} md={12}>
               <TextField
                 fullWidth
                 label="Twitter Followers"
@@ -346,7 +426,7 @@ const AdditionalInfo = ({ goBack, goNext }) => {
                   width: 1
                 }}
               />
-            </Grid>
+            </Grid> */}
             {/* <Grid item xs={12} sm={12} md={12}>
                             <TextField
                                 fullWidth
@@ -372,6 +452,10 @@ const AdditionalInfo = ({ goBack, goNext }) => {
                                 }}
                             />
                         </Grid> */}
+
+
+
+
             <Grid item xs={12} md={12}>
               <Box component="h4">Roadmap</Box>
             </Grid>

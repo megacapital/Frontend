@@ -52,7 +52,7 @@ const FinishStep = ({ goBack, goComplete }) => {
   const [complete, setComplete] = useState(false);
   const totalSupply = useSelector((state) => state.tokenListing.totalSupply);
   const symbol = useSelector((state) => state.tokenListing.symbol);
-  const name = useSelector((state) => state.tokenListing.name);
+  const projectName = useSelector((state) => state.tokenListing.projectName);
   const decimals = useSelector((state) => state.tokenListing.decimals);
   const presale_rate = useSelector((state) => state.tokenListing.presale_rate);
   const soft_cap = useSelector((state) => state.tokenListing.soft_cap);
@@ -74,6 +74,11 @@ const FinishStep = ({ goBack, goComplete }) => {
   const end_date = useSelector((state) => state.tokenListing.endDate);
   const list_date = useSelector((state) => state.tokenListing.listDate);
 
+  const category = useSelector((state) => state.tokenListing.category);
+  const blockchain = useSelector((state) => state.tokenListing.blockchain);
+  const tgi = useSelector((state) => state.tokenListing.tgi);
+  const type = useSelector((state) => state.tokenListing.type);
+  const poster = useSelector((state) => state.tokenListing.poster);
   const logo = useSelector((state) => state.tokenListing.logo);
   const website = useSelector((state) => state.tokenListing.website);
   // const facebook = useSelector((state) => state.tokenListing.facebook);
@@ -123,9 +128,9 @@ const FinishStep = ({ goBack, goComplete }) => {
         };
 
         /**deploy ipfs */
-        // const cid = await client.add(JSON.stringify(extraData));
-        // const cid_path = cid.path;
-        const cid_path = 'QmYDVpAS9PBa9qCgUK36T8z98yecasXN4D2xaeGorQao7X';
+        const cid = await client.add(JSON.stringify(extraData));
+        const cid_path = cid.path;
+        // const cid_path = 'QmYDVpAS9PBa9qCgUK36T8z98yecasXN4D2xaeGorQao7X';
 
         const poolFixedFee = await idoContract.poolFixedFee(POOL_TIER.findIndex((ele) => ele === tier));
         console.log('poolFixedFee', formatEther(poolFixedFee))
@@ -211,7 +216,10 @@ const FinishStep = ({ goBack, goComplete }) => {
               tokenomics_url,
               twitter_followers,
             },
-            logo
+            logo,
+            projectName,         
+            poster,
+            category, blockchain, tgi, type,
           };
 
           const _res = await apis.createBscIdo(data);
@@ -324,9 +332,23 @@ const FinishStep = ({ goBack, goComplete }) => {
       >
         <Stack>
           <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
-            <span>Token Name</span>
+            <span>ProjectName</span>
             <Stack component="span" color="success.main" marginLeft="15px">
-              {name}
+              {projectName}
+            </Stack>
+          </Stack>
+          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
+          <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
+            <span>Description</span>
+            <Stack component="span" color="success.main" marginLeft="15px" wordwrap="word-break">
+              {description}
+            </Stack>
+          </Stack>
+          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
+          <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
+            <span>Wallet Address</span>
+            <Stack component="span" color="success.main" marginLeft="15px" wordwrap="word-break">
+              {address}
             </Stack>
           </Stack>
           <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
@@ -364,13 +386,13 @@ const FinishStep = ({ goBack, goComplete }) => {
               {max_buy} {network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'ETH' : 'BNB'}
             </Stack>
           </Stack>
-          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
+          {/* <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
           <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
             <span>Liquidity</span>
             <Stack component="span" color="success.main" marginLeft="15px">
               {dex_amount} %
             </Stack>
-          </Stack>
+          </Stack> */}
           <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
           <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
             <span>Start Time</span>
@@ -391,13 +413,61 @@ const FinishStep = ({ goBack, goComplete }) => {
               <Moment format="YYYY-MM-DD HH:mm">{new Date(list_date)}</Moment>
             </Stack>
           </Stack>
-          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
+          {/* <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
           <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
             <span>Liquidity Lock Time Period</span>
             <Stack component="span" color="success.main" marginLeft="15px">
               {dex_lockup}
             </Stack>
+          </Stack> */}
+
+
+          {/* category */}
+          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
+          <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
+            <span>Category</span>
+            <Stack component="span" color="success.main" marginLeft="15px">
+              {category}
+            </Stack>
           </Stack>
+          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
+          <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
+            <span>Blockchain</span>
+            <Stack component="span" color="success.main" marginLeft="15px">
+              {blockchain}
+            </Stack>
+          </Stack>
+          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
+          <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
+            <span>TGI</span>
+            <Stack component="span" color="success.main" marginLeft="15px">
+              {tgi}
+            </Stack>
+          </Stack>
+          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
+          <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
+            <span>Type</span>
+            <Stack component="span" color="success.main" marginLeft="15px">
+              {type}
+            </Stack>
+          </Stack>
+          {/* links */}
+          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
+          <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
+            <span>Project Poster</span>
+            <Stack component="span" color="error.main" marginLeft="15px">
+              {poster}
+            </Stack>
+          </Stack>
+
+          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
+          <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
+            <span>Token Logo</span>
+            <Stack component="span" color="error.main" marginLeft="15px">
+              {logo}
+            </Stack>
+          </Stack>
+
           <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
           <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
             <span>Website</span>
@@ -433,13 +503,6 @@ const FinishStep = ({ goBack, goComplete }) => {
             <span>Discord</span>
             <Stack component="span" color="error.main" marginLeft="15px">
               {discord}
-            </Stack>
-          </Stack>
-          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
-          <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
-            <span>Twitter Followers</span>
-            <Stack component="span" color="success.main" marginLeft="15px" wordwrap="word-break">
-              {twitter_followers}
             </Stack>
           </Stack>
           <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
@@ -515,20 +578,14 @@ const FinishStep = ({ goBack, goComplete }) => {
             </Stack>
           </Stack>
 
+
           <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
-          <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
-            <span>Description</span>
-            <Stack component="span" color="success.main" marginLeft="15px" wordwrap="word-break">
-              {description}
-            </Stack>
-          </Stack>
-          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
-          <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
+          {/* <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
             <span>Tier</span>
             <Stack component="span" color="success.main" marginLeft="15px" wordwrap="word-break">
               {tier}
             </Stack>
-          </Stack>
+          </Stack> */}
         </Stack>
         {teamVesting_amount > 0 ? (
           <>

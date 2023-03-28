@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   setAddress,
+  setProjectName,
   setError,
   setParsed,
   setApproved,
@@ -76,6 +77,7 @@ function Create() {
   const { pathname } = useLocation();
   const { enqueueSnackbar } = useSnackbar();
   const network = useSelector((state) => state.network.chainId);
+  const projectName = useSelector((state) => state.tokenListing.projectName);
   const address = useSelector((state) => state.tokenListing.address);
   const error = useSelector((state) => state.tokenListing.error);
   const symbol = useSelector((state) => state.tokenListing.symbol);
@@ -84,13 +86,17 @@ function Create() {
   const decimals = useSelector((state) => state.tokenListing.decimals);
   const approved = useSelector((state) => state.tokenListing.approved);
   const dispatch = useDispatch();
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(0); // 0 default
   // 0xD556Be2846DC9da80C3551D83c42A7Ad94bdADD8
   const [isApproving, setIsApproving] = useState(false);
   const [isParsing, setIsParsing] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
   const tokenContract = useTokenContract(address);
+
+  const handleProjectName = async (e) => {
+    dispatch(setProjectName(e.target.value));
+  };
 
   const handleTokenAddress = async (e) => {
     if (!account) {
@@ -154,6 +160,20 @@ function Create() {
           {activeStep == 0 ? (
             <Paper sx={{ p: 10, mx: 'auto' }}>
               <Stack>
+                <TextField
+                  fullWidth
+                  label="Project(Token) Name"
+                  type="text"
+                  error={Boolean(error)}
+                  helperText={error}
+                  value={projectName}
+                  onChange={handleProjectName}
+                  sx={{
+                    width: 1
+                  }}
+                />
+              </Stack>
+              <Stack sx={{ marginTop: '30px' }}>
                 <TextField
                   fullWidth
                   label="Team Wallet Address For Raising Fund"
