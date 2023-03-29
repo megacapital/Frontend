@@ -106,7 +106,7 @@ export default function ProjectDetail(props) {
                 <CustomCard name='Hard Cap' number={`${data?.hardCap || 0} ${getNetworkSymbol(chainId)}`}></CustomCard>
               </Grid>
               <Grid item sm={3}>
-                <CustomCard name='Type' number='unlocked'></CustomCard>
+                <CustomCard name='Type' number={data?.type}></CustomCard>
               </Grid>
             </Grid>
             <Grid marginTop='30px'>
@@ -140,7 +140,7 @@ export default function ProjectDetail(props) {
                   <Box component='img' src={imageURL('Vector.png')} mr={1} />
                   whitepaper
                 </Button>
-              </Grid> */}            
+              </Grid> */}
               <Grid item>
                 <Box
                   component='button'
@@ -380,13 +380,16 @@ export default function ProjectDetail(props) {
                 <CustomCard name='Hard Cap' number={`${data?.hardCap || 0} ${getNetworkSymbol(chainId)}`}></CustomCard>
               </Grid>
               <Grid item xs={6}>
-                <CustomCard name='Type' number='unlocked'></CustomCard>
+                <CustomCard name='Type' number={data?.type}></CustomCard>
               </Grid>
             </Grid>
             <Grid marginTop='30px'>
               <Detail data={data}></Detail>
             </Grid>
-            <Grid display='flex' justifyContent='center'>
+
+
+            {/* Followers */}
+            {/* <Grid display='flex' justifyContent='center'>
               <Typography marginTop='30px' style={{ fontSize: '20px', fontFamily: 'Segoe UI', color: '#56C5FF' }}>
                 {displayFollowers(data?.twitter_followers)} Followers
               </Typography>
@@ -401,7 +404,9 @@ export default function ProjectDetail(props) {
               <Grid item>
                 <Box component='img' src={imageURL('avatar3.png')} />
               </Grid>
-            </Grid>
+            </Grid> */}
+
+
             <Grid
               marginTop='30px'
               container
@@ -411,7 +416,7 @@ export default function ProjectDetail(props) {
               display='flex'
               justifyContent='space-around'
             >
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <Button
                   style={{
                     borderRadius: 4,
@@ -427,40 +432,22 @@ export default function ProjectDetail(props) {
                   <Box component='img' marginRight='8px' src={imageURL('Vector.png')} />
                   whitepaper
                 </Button>
-              </Grid>
-              {/* <Grid item xs={12}>
-                <Button
-                  style={{
-                    borderRadius: 4,
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    fontFamily: 'Segoe UI',
-                    fontSize: '14px',
-                    color: 'white',
-                    padding: '10px 20px 10px 20px',
-                    width: '100%',
-                    textTransform: 'lowercase'
-                  }}
-                >
-                  <Box component="img" marginRight="8px" src={imageURL('Vector_www.png')} />
-                  <span>www.megacapital.com</span>
-                </Button>
               </Grid> */}
-              <Grid item xs={12}>
-                <Button
+              <Grid item marginTop='20px'>
+                <Box
+                  component='button'
                   style={{
+                    height: '44px',
+                    border: 'none',
                     borderRadius: 4,
                     backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    fontFamily: 'Segoe UI',
-                    fontSize: '14px',
-                    color: 'white',
-                    padding: '10px 20px 10px 20px',
-                    textTransform: 'lowercase',
-                    width: '100%'
+                    padding: '10px 10px 10px 10px'
                   }}
                 >
-                  <Box component='img' marginRight='8px' src={imageURL('Vector_www.png')} />
-                  <span className='text-lowercase'>{data?.ipfs?.website}</span>
-                </Button>
+                  <Box component='a' href={`${data?.ipfs?.website}`} target="_blank">
+                    <Box component='img' src={imageURL('Vector_www.png')} />
+                  </Box>
+                </Box>
               </Grid>
 
               <Grid item marginTop='20px'>
@@ -474,7 +461,7 @@ export default function ProjectDetail(props) {
                     padding: '10px 10px 10px 10px'
                   }}
                 >
-                  <Box component='a' href={`${data?.ipfs?.telegram}`}>
+                  <Box component='a' href={`${data?.ipfs?.telegram}`} target="_blank">
                     <Box component='img' src={imageURL('plane_avatar.png')} />
                   </Box>
                 </Box>
@@ -491,7 +478,7 @@ export default function ProjectDetail(props) {
                     padding: '10px 10px 10px 10px'
                   }}
                 >
-                  <Box component='a' href={`${data?.ipfs?.twitter}`}>
+                  <Box component='a' href={`${data?.ipfs?.twitter}`} target="_blank">
                     <Box component='img' src={imageURL('twitter_avatar.png')} />
                   </Box>
                 </Box>
@@ -508,7 +495,7 @@ export default function ProjectDetail(props) {
                   }}
                 >
 
-                  <Box component='a' href={`${data?.ipfs?.discord}`}>
+                  <Box component='a' href={`${data?.ipfs?.discord}`} target="_blank">
                     <Box component='img' src={imageURL('Discord.png')} />
                   </Box>
                 </Box>
@@ -601,27 +588,13 @@ export default function ProjectDetail(props) {
                     right: -1
                   }}
                 ></Box>
-                {/* <img src={imageURL('roadmap-icon-line.png')} /> */}
               </Grid>
               <Grid item xs={2.4} position='relative'>
-
                 <Box component='div' width={'50%'}>
                   <Box component={'a'} href='#tokenomics'>
                     <img src={imageURL('roadmap-icon-5.png')} />
                   </Box>
                 </Box>
-                {/* <Box
-                  component={'span'}
-                  sx={{
-                    position: 'absolute',
-                    top: '34%',
-                    width: '52%',
-                    height: '4px',
-                    background: '#56c4ff',
-                    right: 0
-                  }}
-                ></Box> */}
-                {/* <img src={imageURL('roadmap-icon-line.png')} /> */}
               </Grid>
             </Grid>
             <Grid item marginTop='50px'>
@@ -664,62 +637,6 @@ export default function ProjectDetail(props) {
                 description_url={data?.tokenomics_url}
               ></Roadmap>
             </Grid>
-            {/* <Grid container marginTop="60px">
-              <Box color="white" fontSize={12}>
-                Jan 2022
-                <br />
-                <br />
-                Public Sale on Solanium
-                <br />
-                <br />
-                Feb 2022
-                <br />
-                <br />
-                TGE for all holders. Playable Demo - for early investors
-                <br />
-                <br />
-                Mar 2022
-                <br />
-                <br />
-                DEX listing. MVP = demo plus blockchain layer - for early investors
-                <br />
-                <br />
-                Apr 2022
-                <br />
-                <br />
-                CEX listing. Back end dev also fully underway
-                <br />
-                <br />
-                May 2022
-                <br />
-                <br />
-                Key NFT Sales. Alpha version - for key online leaders
-                <br />
-                <br />
-                Jun 2022
-                <br />
-                <br />
-                Announcement of Key Game theme Challenges
-                <br />
-                <br />
-                Jul 2022
-                <br />
-                <br />
-                Beta version - for key online leaders
-                <br />
-                <br />
-                Aug 2022
-                <br />
-                <br />
-                Partnerships Announced
-                <br />
-                <br />
-                Sep 2022
-                <br />
-                <br />
-                Game Launch on Stores
-              </Box>
-            </Grid> */}
           </Grid>
         </MHidden>
       </Page>
@@ -755,16 +672,39 @@ function CustomCard(props) {
 function ProjectInformation({ data, roadmapdata }) {
   const chainId = useSelector((store) => store.network.chainId);
   const { account, library } = useActiveWeb3React();
-  const [condition, setCondition] = useState(false); //condition for user buying
+  const [approved, setApproved] = useState(false); //user approving status
+  const [buyCondition, setBuyCondition] = useState(false); //condition for user buying
   const idoContract = useIDOContract();
   const poolContract = usePoolContract(data?.address);
   useEffect(() => {
     (async () => {
       if (account && data) {
-        setCondition(!data?.whitelistable || data?.whiteLists?.includes(account));  // if pool is public or account is whitelisted, user can buy token
+        var shouldBeWhitelisted = !data?.whitelistable || data?.whiteLists?.includes(account); // if pool is public or account is whitelisted, user can buy token
+        console.log('wowwowoowow', approved, shouldBeWhitelisted, approved & shouldBeWhitelisted)
+        setBuyCondition(approved & shouldBeWhitelisted);
       }
     })();
-  }, [account, data, roadmapdata]);
+  }, [account, data, approved]);
+
+  //approved
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await apis.getApproval({
+          pool_address: data.address,
+          user_address: account
+        });
+        if (response.data.result) {
+          setApproved(response.data.data)
+        }
+        else {
+          alert(response.data.message)
+        }
+      } catch (error) {
+        console.log(error.message)
+      }
+    })();
+  }, [account, data]);
 
   //Wallet token balance
   const [tokenBalance, setTokenBalance] = useState(0);
@@ -832,6 +772,24 @@ function ProjectInformation({ data, roadmapdata }) {
     }
   }
 
+  const preapprove = async () => {
+    try {
+      const response = await apis.setApproval({
+        pool_address: data.address,
+        user_address: account
+      });
+      if (response.data.result) {
+        alert('success');
+        window.location.reload()
+      }
+      else {
+        alert(response.data.message)
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
   useEffect(() => { //IDO Contract is working well
     (async () => {
       if (idoContract) {
@@ -874,349 +832,427 @@ function ProjectInformation({ data, roadmapdata }) {
     })();
   }, [poolContract])
 
+
+  //started or not
+  const [started, setStarted] = useState(false);
+  const [remainingHours, setRemainingHours] = useState(0);
+  useEffect(() => {
+    var startingTime = new Date(data.startDateTime).getTime()
+    var nowTime = Date.now();
+    console.log(startingTime, nowTime)
+    if (startingTime > nowTime) {
+      setStarted(false);
+      var diff = startingTime - nowTime;
+      setRemainingHours(Math.ceil(diff / 60 / 60 / 1000))
+    }
+    else setStarted(true)
+  }, [data])
+
+  //staking staus
+  const [stakingamount, setStakingAmount] = useState(true); //user staking status, it is condition for user approving
+  const stakingContract = useStakingContract('0xC9F2b512Dc996609436958300DAA5Afc5cA0C23b');
+  useEffect(() => {
+    (async () => {
+      const staked = await stakingContract.balances(account);
+      setStakingAmount(Number(formatEther(staked)))
+    })();
+  }, [account, stakingContract])
+
+
   return (
-
     <>
-      {
-        1 == 1 &&  // for test hide/show
-        <>
-          {/* Desktop view */}
-          <MHidden width='mdDown'>
-            <Grid container border='1px solid #56C5FF' borderRadius={1} bgcolor='#232323' padding='30px' rowSpacing={2}>
-              <Grid item sm={7} color='#56C5FF' fontSize={48}>
-                Project Information
+      {/* Desktop view */}
+      <MHidden width='mdDown'>
+        <Grid container border='1px solid #56C5FF' borderRadius={1} bgcolor='#232323' padding='30px' rowSpacing={2}>
+          <Grid item sm={7} color='#56C5FF' fontSize={48}>
+            Project Information
+          </Grid>
+          <Grid item sm={5} color='#56C5FF' fontSize={48}>
+            Token Information
+          </Grid>
+          <Grid container direction='row'>
+            <Grid item sm={2} >
+              <Grid item color='white'>
+                HARDCAP
               </Grid>
-              <Grid item sm={5} color='#56C5FF' fontSize={48}>
-                Token Information
+              <Grid item color='white'>
+                OPEN TIME
               </Grid>
-              <Grid container direction='row'>
-                <Grid item sm={2} >
-                  <Grid item color='white'>
-                    HARDCAP
-                  </Grid>
-                  <Grid item color='white'>
-                    OPEN TIME
-                  </Grid>
-                  <Grid item color='white'>
-                    CLOSE TIME
-                  </Grid>
-                  <Grid item color='white'>
-                    LISTING DATE
-                  </Grid>
-                  <Grid item color='white'>
-                    DEAL
-                  </Grid>
-                </Grid>
-                <Grid item sm={3} >
-                  <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                    {data?.hardCap} {getNetworkSymbol(chainId)}
-                  </Grid>
-                  <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                    {formattedDate(data?.startDateTime)}
-                  </Grid>
-                  <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                    {formattedDate(data?.endDateTime)}
-                  </Grid>
-                  <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                    {formattedDate(data?.listDateTime)}
-                  </Grid>
-                  <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                    {data?.whitelistable ? 'VC' : 'IDO'}
-                  </Grid>
-                </Grid>
-                <Grid item sm={2}></Grid>
-                <Grid item sm={2} >
-                  <Grid item color='white'>
-                    SYMBOL
-                  </Grid>
-                  <Grid item color='white'>
-                    CATEGORY
-                  </Grid>
-                  <Grid item color='white'>
-                    BLOCKCHAIN
-                  </Grid>
-                  <Grid item color='white'>
-                    TGI
-                  </Grid>
-                  <Grid item color='white'>
-                    TYPE
-                  </Grid>
-                </Grid>
-                <Grid item sm={2} >
-                  <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                    {data?.symbol}
-                  </Grid>
-                  <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                    {data?.category}
-                  </Grid>
-                  <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                    {/* {getNetworkSymbol(chainId, true)} */}
-                    {data?.blockchain}
-                  </Grid>
-                  <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                    {data?.tgi}
-                  </Grid>
-                  <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                    {data?.type}
-                  </Grid>
-                </Grid>
+              <Grid item color='white'>
+                CLOSE TIME
               </Grid>
-              <Grid item sm={12} marginTop='50px'>
-                <Box color='#56C5FF'>{etherRaised}/{data?.hardCap} {getNetworkSymbol(chainId)}</Box>
-                <Box position='relative' display='flex'>
-                  <Box width='100%' height='10px' borderRadius={2} backgroundColor='white' />
-                  <Box
-                    position='absolute'
-                    left='0px'
-                    borderRadius={2}
-                    height='10px'
-                    width={`${Number(etherRaised / data.hardCap * 100)}%`}
-                    backgroundColor='#56C5FF'
-                  />
-                </Box>
+              <Grid item color='white'>
+                LISTING DATE
               </Grid>
-              <Grid item container marginTop='50px'>
-                <Grid item sm={3} color='#56C5FF'>
-                  Your Contribution
-                </Grid>
-                <Grid item sm={3} color='#56C5FF'>
-                  Personal Min
-                </Grid>
-                <Grid item sm={3} color='#56C5FF'>
-                  Personal Max
-                </Grid>
-                <Grid item sm={3} color='#56C5FF'>
-                  Token Price
-                </Grid>
-                <Grid item sm={3} fontSize={28} color='white'>
-                  {myCollaboration} {getNetworkSymbol(chainId)}
-                </Grid>
-                <Grid item sm={3} fontSize={28} color='white'>
-                  {data?.minAllocationPerUser} {getNetworkSymbol(chainId)}
-                </Grid>
-                <Grid item sm={3} fontSize={28} color='white'>
-                  {data?.maxAllocationPerUser} {getNetworkSymbol(chainId)}
-                </Grid>
-                <Grid item sm={3} fontSize={28} color='white'>
-                  {Number(1 / data?.presaleRate)} {getNetworkSymbol(chainId)}
-                </Grid>
+              <Grid item color='white'>
+                DEAL
               </Grid>
-              {condition ? (
-                <>
-                  <Grid item container marginTop='20px'>
-                    <Grid item sm={12} color='#56C5FF'>
-                      Your BNB balance: {tokenBalance}
-                    </Grid>
-                    <Grid item container sm={6} bgcolor='#232323' position='relative' display='flex'>
-                      <Box
-                        component='input'
-                        padding='5px'
-                        width='100%'
-                        height='50px'
-                        placeholder='0.0'
-                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', border: 'none', borderRadius: 5 }}
-                        type="number"
-                        value={buyingAmount}
-                        onChange={(e) => setBuyingAmount(e.target.value)}
-                      ></Box>
-                      <Box
-                        component='button'
-                        position='absolute'
-                        right='8px'
-                        top='7px'
-                        style={{ backgroundColor: '#56C5FF', height: '70%', border: 'none', borderRadius: 6 }}
-                        color='white'
-                        paddingLeft='20px'
-                        paddingRight='20px'
-                        onClick={() => setBuyingAmount(tokenBalance)}
-                      >
-                        MAX
-                      </Box>
-                    </Grid>
-                  </Grid>
-                  <Grid marginTop='20px'>
-                    <Box
-                      component='button'
-                      style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6 }}
-                      color='white'
-                      padding='10px 28px 10px 28px'
-                      onClick={() => buy()}
-                    >
-                      BUY
-                    </Box>
-                  </Grid>
-                </>
-              ) : null}
             </Grid>
-          </MHidden>
-
-          {/* Mobile view */}
-          <MHidden width='mdUp'>
-            <Grid
-              container
-              border='1px solid #56C5FF'
-              borderRadius={1}
-              backgroundColor='#232323'
-              padding='20px'
-              rowSpacing={2}
-            >
-              <Grid item xs={12} color='#56C5FF' fontSize={20} justifyContent='center' display='flex'>
-                Project Information
+            <Grid item sm={3} >
+              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+                {data?.hardCap} {getNetworkSymbol(chainId)}
               </Grid>
-              <Grid fontSize={16}>
-                <Grid item xs={12} color='white' marginTop='20px'>
-                  HARDCAP
-                </Grid>
-                <Grid item xs={12} color='#56C5FF'>
-                  {data?.hardCap} {getNetworkSymbol(chainId)}
-                </Grid>
-                <Grid item xs={12} color='white' marginTop='15px'>
-                  OPEN TIME
-                </Grid>
-                <Grid item xs={12} color='#56C5FF'>
-                  {formattedDate(data?.startDateTime)}
-                </Grid>
-                <Grid item xs={12} color='white' marginTop='15px'>
-                  CLOSE TIME
-                </Grid>
-                <Grid item xs={12} color='#56C5FF'>
-                  {formattedDate(data?.endDateTime)}
-                </Grid>
-                <Grid item xs={12} color='white' marginTop='15px'>
-                  LISTING DATE
-                </Grid>
-                <Grid item xs={12} color='#56C5FF'>
-                  {formattedDate(data?.listDateTime)}
-                </Grid>
-                <Grid item xs={12} color='white' marginTop='15px'>
-                  DEAL
-                </Grid>
-                <Grid item xs={12} color='#56C5FF' marginBottom='30px'>
-                  {data?.whitelistable ? 'VC' : 'IDO'}
-                </Grid>
+              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+                {formattedDate(data?.startDateTime)}
               </Grid>
-              <Grid item xs={12} color='#56C5FF' fontSize={20} justifyContent='center' display='flex'>
-                Token Information
+              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+                {formattedDate(data?.endDateTime)}
               </Grid>
-              <Grid item xs={12} color='#56C5FF' marginTop='15px' marginBottom='20px'>
-                PRGC
+              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+                {formattedDate(data?.listDateTime)}
               </Grid>
-              <Grid item xs={6}>
-                <Box color='white'>CATEGORY</Box>
-                <Box color='#56C5FF' marginTop='2px'>
-                  {data?.category}
-                </Box>
+              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+                {data?.whitelistable ? 'VC' : 'IDO'}
               </Grid>
-              <Grid item xs={6}>
-                <Box color='white'>TGI</Box>
-                <Box color='#56C5FF' marginTop='2px'>
-                  {data?.tgi}
-                </Box>
-              </Grid>
-              <Grid item xs={6} marginTop='10px'>
-                <Box color='white'>BLOCKCHAIN</Box>
-                <Box color='#56C5FF' marginTop='2px'>
-                  {data?.blockchain}
-                </Box>
-              </Grid>
-              <Grid item xs={6} marginTop='10px'>
-                <Box color='white'>TYPE</Box>
-                <Box color='#56C5FF' marginTop='2px'>
-                  {data?.type}
-                </Box>
-              </Grid>
-              <Grid item xs={12} marginTop='30px' width='100%'>
-                <Box color='#56C5FF'>{etherRaised}/{data?.hardCap} {getNetworkSymbol(chainId)}</Box>
-                <Box position='relative' display='flex'>
-                  <Box width='100%' height='10px' borderRadius={2} backgroundColor='white' />
-                  <Box
-                    position='absolute'
-                    left='0px'
-                    borderRadius={2}
-                    height='10px'
-                    width={`${Number(etherRaised / data.hardCap * 100)}%`}
-                    backgroundColor='#56C5FF'
-                  />
-                </Box>
-              </Grid>
-              <Grid item container marginTop='50px'>
-                <Grid item xs={6} fontSize={16} color='#56C5FF'>
-                  Your Contribution
-                </Grid>
-                <Grid item xs={6} fontSize={22} color='white' display='flex' justifyContent='flex-end'>
-                  {myCollaboration} {getNetworkSymbol(chainId)}
-                </Grid>
-                <Grid item xs={6} fontSize={16} color='#56C5FF'>
-                  Personal Min
-                </Grid>
-                <Grid item xs={6} fontSize={22} color='white' display='flex' justifyContent='flex-end'>
-                  {data?.minAllocationPerUser} {getNetworkSymbol(chainId)}
-                </Grid>
-                <Grid item xs={6} fontSize={16} color='#56C5FF'>
-                  Personal Max
-                </Grid>
-                <Grid item xs={6} fontSize={22} color='white' display='flex' justifyContent='flex-end'>
-                  {data?.maxAllocationPerUser} {getNetworkSymbol(chainId)}
-                </Grid>
-                <Grid item xs={6} fontSize={16} color='#56C5FF'>
-                  Token Price
-                </Grid>
-                <Grid item xs={6} fontSize={22} color='white' display='flex' justifyContent='flex-end'>
-                  {Number(1 / data?.presaleRate)} {getNetworkSymbol(chainId)}
-                </Grid>
-              </Grid>
-              {condition ? (
-                <>
-                  <Grid item container marginTop='20px'>
-                    <Grid item sm={12} color='#56C5FF'>
-                      Your BNB balance: {tokenBalance}
-                    </Grid>
-                    <Grid item container sm={6} bgcolor='#232323' position='relative' display='flex'>
-                      <Box
-                        component='input'
-                        padding='5px'
-                        width='100%'
-                        height='50px'
-                        placeholder='0.0'
-                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', border: 'none', borderRadius: 5 }}
-                        type="number"
-                        value={buyingAmount}
-                        onChange={(e) => setBuyingAmount(e.target.value)}
-                      ></Box>
-                      <Box
-                        component='button'
-                        position='absolute'
-                        right='8px'
-                        top='7px'
-                        style={{ backgroundColor: '#56C5FF', height: '70%', border: 'none', borderRadius: 6 }}
-                        color='white'
-                        paddingLeft='20px'
-                        paddingRight='20px'
-                        onClick={() => setBuyingAmount(tokenBalance)}
-                      >
-                        MAX
-                      </Box>
-                    </Grid>
-                  </Grid>
-                  <Grid marginTop='20px'>
-                    <Box
-                      component='button'
-                      style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6 }}
-                      color='white'
-                      padding='10px 28px 10px 28px'
-                      onClick={() => buy()}
-                    >
-                      BUY
-                    </Box>
-                  </Grid>
-                </>
-              ) : null}
             </Grid>
-          </MHidden>
-        </>
-      }
+            <Grid item sm={2}></Grid>
+            <Grid item sm={2} >
+              <Grid item color='white'>
+                SYMBOL
+              </Grid>
+              <Grid item color='white'>
+                CATEGORY
+              </Grid>
+              <Grid item color='white'>
+                BLOCKCHAIN
+              </Grid>
+              <Grid item color='white'>
+                TGI
+              </Grid>
+              <Grid item color='white'>
+                TYPE
+              </Grid>
+            </Grid>
+            <Grid item sm={2} >
+              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+                {data?.symbol}
+              </Grid>
+              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+                {data?.category}
+              </Grid>
+              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+                {/* {getNetworkSymbol(chainId, true)} */}
+                {data?.blockchain}
+              </Grid>
+              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+                {data?.tgi}
+              </Grid>
+              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+                {data?.type}
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item sm={12} marginTop='50px'>
+            <Box color='#56C5FF'>{etherRaised}/{data?.hardCap} {getNetworkSymbol(chainId)}</Box>
+            <Box position='relative' display='flex'>
+              <Box width='100%' height='10px' borderRadius={2} backgroundColor='white' />
+              <Box
+                position='absolute'
+                left='0px'
+                borderRadius={2}
+                height='10px'
+                width={`${Number(etherRaised / data.hardCap * 100)}%`}
+                backgroundColor='#56C5FF'
+              />
+            </Box>
+          </Grid>
+          <Grid item container marginTop='50px'>
+            <Grid item sm={3} color='#56C5FF'>
+              Your Contribution
+            </Grid>
+            <Grid item sm={3} color='#56C5FF'>
+              Personal Min
+            </Grid>
+            <Grid item sm={3} color='#56C5FF'>
+              Personal Max
+            </Grid>
+            <Grid item sm={3} color='#56C5FF'>
+              Token Price
+            </Grid>
+            <Grid item sm={3} fontSize={28} color='white'>
+              {myCollaboration} {getNetworkSymbol(chainId)}
+            </Grid>
+            <Grid item sm={3} fontSize={28} color='white'>
+              {data?.minAllocationPerUser} {getNetworkSymbol(chainId)}
+            </Grid>
+            <Grid item sm={3} fontSize={28} color='white'>
+              {data?.maxAllocationPerUser} {getNetworkSymbol(chainId)}
+            </Grid>
+            <Grid item sm={3} fontSize={28} color='white'>
+              {Number(1 / data?.presaleRate)} {getNetworkSymbol(chainId)}
+            </Grid>
+          </Grid>
 
+          {!started &&
+            <Grid item sm={12}>
+              <h5>Project is not started! {remainingHours} hour left. Your staked amount: {stakingamount}</h5>
+            </Grid>
+          }
+          {!started && (stakingamount > 0) &&
+            (
+              approved ?
+                <Box
+                  component='button'
+                  style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6, marginRight: '10px', marginTop: '20px', cursor: 'no-drop' }}
+                  color='white'
+                  padding='10px 28px 10px 28px'
+                >
+                  Already Approved
+                </Box> :
+                <Box
+                  component='button'
+                  style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6, marginRight: '10px', marginTop: '20px', cursor: 'pointer' }}
+                  color='white'
+                  padding='10px 28px 10px 28px'
+                  onClick={() => preapprove()}
+                >
+                  PreApprove
+                </Box>
+            )
+          }
 
+          {started && (buyCondition ? (
+            <>
+              <Grid item container marginTop='20px'>
+                <Grid item sm={12} color='#56C5FF'>
+                  Your BNB balance: {tokenBalance}
+                </Grid>
+                <Grid item container sm={6} bgcolor='#232323' position='relative' display='flex'>
+                  <Box
+                    component='input'
+                    padding='5px'
+                    width='100%'
+                    height='50px'
+                    placeholder='0.0'
+                    style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', border: 'none', borderRadius: 5 }}
+                    type="number"
+                    value={buyingAmount}
+                    onChange={(e) => setBuyingAmount(e.target.value)}
+                  ></Box>
+                  <Box
+                    component='button'
+                    position='absolute'
+                    right='8px'
+                    top='7px'
+                    style={{ backgroundColor: '#56C5FF', height: '70%', border: 'none', borderRadius: 6 }}
+                    color='white'
+                    paddingLeft='20px'
+                    paddingRight='20px'
+                    onClick={() => setBuyingAmount(tokenBalance)}
+                  >
+                    MAX
+                  </Box>
+                </Grid>
+              </Grid>
+              <Grid marginTop='20px'>
+
+                <Box
+                  component='button'
+                  style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6 }}
+                  color='white'
+                  padding='10px 28px 10px 28px'
+                  onClick={() => buy()}
+                >
+                  BUY
+                </Box>
+              </Grid>
+            </>
+          ) : <Grid item sm={12}><p>Project is started. But you are not able to participate.</p>  </Grid>)}
+        </Grid>
+      </MHidden>
+
+      {/* Mobile view */}
+      <MHidden width='mdUp'>
+        <Grid
+          container
+          border='1px solid #56C5FF'
+          borderRadius={1}
+          backgroundColor='#232323'
+          padding='20px'
+          rowSpacing={2}
+        >
+          <Grid item xs={12} color='#56C5FF' fontSize={20} justifyContent='center' display='flex'>
+            Project Information
+          </Grid>
+          <Grid fontSize={16}>
+            <Grid item xs={12} color='white' marginTop='20px'>
+              HARDCAP
+            </Grid>
+            <Grid item xs={12} color='#56C5FF'>
+              {data?.hardCap} {getNetworkSymbol(chainId)}
+            </Grid>
+            <Grid item xs={12} color='white' marginTop='15px'>
+              OPEN TIME
+            </Grid>
+            <Grid item xs={12} color='#56C5FF'>
+              {formattedDate(data?.startDateTime)}
+            </Grid>
+            <Grid item xs={12} color='white' marginTop='15px'>
+              CLOSE TIME
+            </Grid>
+            <Grid item xs={12} color='#56C5FF'>
+              {formattedDate(data?.endDateTime)}
+            </Grid>
+            <Grid item xs={12} color='white' marginTop='15px'>
+              LISTING DATE
+            </Grid>
+            <Grid item xs={12} color='#56C5FF'>
+              {formattedDate(data?.listDateTime)}
+            </Grid>
+            <Grid item xs={12} color='white' marginTop='15px'>
+              DEAL
+            </Grid>
+            <Grid item xs={12} color='#56C5FF' marginBottom='30px'>
+              {data?.whitelistable ? 'VC' : 'IDO'}
+            </Grid>
+          </Grid>
+          <Grid item xs={12} color='#56C5FF' fontSize={20} justifyContent='center' display='flex'>
+            Token Information
+          </Grid>
+          <Grid item xs={12} color='#56C5FF' marginTop='15px' marginBottom='20px'>
+            PRGC
+          </Grid>
+          <Grid item xs={6}>
+            <Box color='white'>CATEGORY</Box>
+            <Box color='#56C5FF' marginTop='2px'>
+              {data?.category}
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Box color='white'>TGI</Box>
+            <Box color='#56C5FF' marginTop='2px'>
+              {data?.tgi}
+            </Box>
+          </Grid>
+          <Grid item xs={6} marginTop='10px'>
+            <Box color='white'>BLOCKCHAIN</Box>
+            <Box color='#56C5FF' marginTop='2px'>
+              {data?.blockchain}
+            </Box>
+          </Grid>
+          <Grid item xs={6} marginTop='10px'>
+            <Box color='white'>TYPE</Box>
+            <Box color='#56C5FF' marginTop='2px'>
+              {data?.type}
+            </Box>
+          </Grid>
+          <Grid item xs={12} marginTop='30px' width='100%'>
+            <Box color='#56C5FF'>{etherRaised}/{data?.hardCap} {getNetworkSymbol(chainId)}</Box>
+            <Box position='relative' display='flex'>
+              <Box width='100%' height='10px' borderRadius={2} backgroundColor='white' />
+              <Box
+                position='absolute'
+                left='0px'
+                borderRadius={2}
+                height='10px'
+                width={`${Number(etherRaised / data.hardCap * 100)}%`}
+                backgroundColor='#56C5FF'
+              />
+            </Box>
+          </Grid>
+          <Grid item container marginTop='50px'>
+            <Grid item xs={6} fontSize={16} color='#56C5FF'>
+              Your Contribution
+            </Grid>
+            <Grid item xs={6} fontSize={22} color='white' display='flex' justifyContent='flex-end'>
+              {myCollaboration} {getNetworkSymbol(chainId)}
+            </Grid>
+            <Grid item xs={6} fontSize={16} color='#56C5FF'>
+              Personal Min
+            </Grid>
+            <Grid item xs={6} fontSize={22} color='white' display='flex' justifyContent='flex-end'>
+              {data?.minAllocationPerUser} {getNetworkSymbol(chainId)}
+            </Grid>
+            <Grid item xs={6} fontSize={16} color='#56C5FF'>
+              Personal Max
+            </Grid>
+            <Grid item xs={6} fontSize={22} color='white' display='flex' justifyContent='flex-end'>
+              {data?.maxAllocationPerUser} {getNetworkSymbol(chainId)}
+            </Grid>
+            <Grid item xs={6} fontSize={16} color='#56C5FF'>
+              Token Price
+            </Grid>
+            <Grid item xs={6} fontSize={22} color='white' display='flex' justifyContent='flex-end'>
+              {Number(1 / data?.presaleRate)} {getNetworkSymbol(chainId)}
+            </Grid>
+          </Grid>
+          {!started &&
+            <Grid item sm={12}>
+              <h5>Project is not started! {remainingHours} hour left.</h5>
+            </Grid>
+          }
+          {!started && (stakingamount > 0) &&
+            (
+              approved ?
+                <Box
+                  component='button'
+                  style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6, marginRight: '10px', marginTop: '20px', cursor: 'no-drop' }}
+                  color='white'
+                  padding='10px 28px 10px 28px'
+                >
+                  Already Approved
+                </Box> :
+                <Box
+                  component='button'
+                  style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6, marginRight: '10px', marginTop: '20px', cursor: 'pointer' }}
+                  color='white'
+                  padding='10px 28px 10px 28px'
+                  onClick={() => preapprove()}
+                >
+                  PreApprove
+                </Box>
+            )
+          }
+
+          {started && (buyCondition ? (
+            <>
+              <Grid item container marginTop='20px'>
+                <Grid item sm={12} color='#56C5FF'>
+                  Your BNB balance: {tokenBalance}
+                </Grid>
+                <Grid item container sm={6} bgcolor='#232323' position='relative' display='flex'>
+                  <Box
+                    component='input'
+                    padding='5px'
+                    width='100%'
+                    height='50px'
+                    placeholder='0.0'
+                    style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', border: 'none', borderRadius: 5 }}
+                    type="number"
+                    value={buyingAmount}
+                    onChange={(e) => setBuyingAmount(e.target.value)}
+                  ></Box>
+                  <Box
+                    component='button'
+                    position='absolute'
+                    right='8px'
+                    top='7px'
+                    style={{ backgroundColor: '#56C5FF', height: '70%', border: 'none', borderRadius: 6 }}
+                    color='white'
+                    paddingLeft='20px'
+                    paddingRight='20px'
+                    onClick={() => setBuyingAmount(tokenBalance)}
+                  >
+                    MAX
+                  </Box>
+                </Grid>
+              </Grid>
+              <Grid marginTop='20px'>
+                <Box
+                  component='button'
+                  style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6 }}
+                  color='white'
+                  padding='10px 28px 10px 28px'
+                  onClick={() => buy()}
+                >
+                  BUY
+                </Box>
+              </Grid>
+            </>
+          ) : <Grid item sm={12}><p>Project is started. But you are not able to participate.</p>  </Grid>)}
+
+        </Grid>
+      </MHidden>
     </>
   );
 }

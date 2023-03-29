@@ -25,12 +25,17 @@ const createBackendServer = (baseURL) => {
   const createBscIdo = (body) => api.post('api/create-bsc-ido', body);
   const updateIDOWeiRaised = (body) => api.post('api/update-ido-weiraiased', body);
   const saveEvent = async (body) => api.post('api/calender/save-event', body);
+  const setApproval = async (body) => api.post('api/approval/set', body);
+  const getApproval = async (body) => api.post('api/approval/get', body);
 
   /*==========    DELETE REQUESTS    ==========*/
 
   /*==========    PUT REQUESTS    ==========*/
 
-  return { createBscIdo, updateIDOWeiRaised, getBscIdo, getVCDeals, getProjectDetails, getDeals, getEvent, saveEvent, getFollowers, getRandomImages, ipfs };
+  return {
+    createBscIdo, updateIDOWeiRaised, getBscIdo, getVCDeals, getProjectDetails, getDeals, getEvent, saveEvent, getFollowers, getRandomImages, ipfs,
+    setApproval, getApproval,
+  };
 };
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;

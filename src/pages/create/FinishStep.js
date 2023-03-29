@@ -128,9 +128,15 @@ const FinishStep = ({ goBack, goComplete }) => {
         };
 
         /**deploy ipfs */
-        const cid = await client.add(JSON.stringify(extraData));
-        const cid_path = cid.path;
-        // const cid_path = 'QmYDVpAS9PBa9qCgUK36T8z98yecasXN4D2xaeGorQao7X';
+        var cid_path
+        if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+          cid_path = 'QmYDVpAS9PBa9qCgUK36T8z98yecasXN4D2xaeGorQao7X';
+        } else {
+          const cid = await client.add(JSON.stringify(extraData));
+          cid_path = cid.path;
+        }
+
+
 
         const poolFixedFee = await idoContract.poolFixedFee(POOL_TIER.findIndex((ele) => ele === tier));
         console.log('poolFixedFee', formatEther(poolFixedFee))
@@ -217,7 +223,7 @@ const FinishStep = ({ goBack, goComplete }) => {
               twitter_followers,
             },
             logo,
-            projectName,         
+            projectName,
             poster,
             category, blockchain, tgi, type,
           };
