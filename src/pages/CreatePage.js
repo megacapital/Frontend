@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   setAddress,
+  setDeal,
   setProjectName,
   setError,
   setParsed,
@@ -79,6 +80,7 @@ function Create() {
   const network = useSelector((state) => state.network.chainId);
   const projectName = useSelector((state) => state.tokenListing.projectName);
   const address = useSelector((state) => state.tokenListing.address);
+  const deal = useSelector((state) => state.tokenListing.deal);
   const error = useSelector((state) => state.tokenListing.error);
   const symbol = useSelector((state) => state.tokenListing.symbol);
   const name = useSelector((state) => state.tokenListing.name);
@@ -96,6 +98,10 @@ function Create() {
 
   const handleProjectName = async (e) => {
     dispatch(setProjectName(e.target.value));
+  };
+
+  const handleDeal = async (e) => {
+    dispatch(setDeal(e.target.value));
   };
 
   const handleTokenAddress = async (e) => {
@@ -168,6 +174,20 @@ function Create() {
                   helperText={error}
                   value={projectName}
                   onChange={handleProjectName}
+                  sx={{
+                    width: 1
+                  }}
+                />
+              </Stack>
+              <Stack sx={{ marginTop: '30px' }}>
+                <TextField
+                  fullWidth
+                  label="Deal"
+                  type="text"
+                  error={Boolean(error)}
+                  helperText={error}
+                  value={deal}
+                  onChange={handleDeal}
                   sx={{
                     width: 1
                   }}

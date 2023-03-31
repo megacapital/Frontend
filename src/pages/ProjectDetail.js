@@ -14,6 +14,7 @@ import useGetBnbBalance from 'hooks/useTokenBalance';
 import { formatUnits, parseUnits, formatEther, parseEther } from '@ethersproject/units';
 import { atcb_action } from 'add-to-calendar-button';
 import 'add-to-calendar-button/assets/css/atcb.css';
+import { number } from 'yup';
 
 export default function ProjectDetail(props) {
   const { chainId = 0 } = useSelector((store) => store.network);
@@ -674,8 +675,10 @@ function ProjectInformation({ data, roadmapdata }) {
   const { account, library } = useActiveWeb3React();
   const [approved, setApproved] = useState(false); //user approving status
   const [buyCondition, setBuyCondition] = useState(false); //condition for user buying
+  const [started, setStarted] = useState(false);
   const idoContract = useIDOContract();
   const poolContract = usePoolContract(data?.address);
+
   useEffect(() => {
     (async () => {
       if (account && data) {
@@ -687,6 +690,8 @@ function ProjectInformation({ data, roadmapdata }) {
   }, [account, data, approved]);
 
   //approved
+
+  const [numberofApproving, setNumberofApproving] = useState(0); //number of pool approvings
   useEffect(() => {
     (async () => {
       try {
@@ -704,7 +709,33 @@ function ProjectInformation({ data, roadmapdata }) {
         console.log(error.message)
       }
     })();
+
+    //count approval
+    (async () => {
+      try {
+        const response = await apis.countApproval({
+          pool_address: data.address
+        });
+        if (response.data.result) {
+          setNumberofApproving(response.data.data)
+        }
+        else {
+          alert(response.data.message)
+        }
+      } catch (error) {
+        console.log(error.message)
+      }
+    })();
   }, [account, data]);
+
+  //max allocation 
+  const [maxAllocationHere, setmaxAllocationhere] = useState(0);
+  useEffect(() => {
+    if (data && started && numberofApproving > 0)
+      if (numberofApproving > 0) setmaxAllocationhere(Number(data?.hardCap) / Number(numberofApproving))
+
+  }, [started, data, numberofApproving])
+
 
   //Wallet token balance
   const [tokenBalance, setTokenBalance] = useState(0);
@@ -752,7 +783,16 @@ function ProjectInformation({ data, roadmapdata }) {
   //buy function
   const buy = async () => {
     try {
-      console.log(parseEther(String(buyingAmount)))
+      if (buyingAmount < data.minAllocationPerUser) {
+        alert('Should be greater than min allocation');
+        return;
+      }
+      if (buyingAmount > maxAllocationHere) {
+        alert('Should be less than max allocation');
+        return;
+      }
+
+        console.log(parseEther(String(buyingAmount)))
       const tx = await idoContract.deposit(data?.address, {
         value: parseEther(String(buyingAmount))
       });
@@ -834,7 +874,6 @@ function ProjectInformation({ data, roadmapdata }) {
 
 
   //started or not
-  const [started, setStarted] = useState(false);
   const [remainingHours, setRemainingHours] = useState(0);
   useEffect(() => {
     var startingTime = new Date(data.startDateTime).getTime()
@@ -902,7 +941,7 @@ function ProjectInformation({ data, roadmapdata }) {
                 {formattedDate(data?.listDateTime)}
               </Grid>
               <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {data?.whitelistable ? 'VC' : 'IDO'}
+                {data?.deal}
               </Grid>
             </Grid>
             <Grid item sm={2}></Grid>
@@ -976,7 +1015,7 @@ function ProjectInformation({ data, roadmapdata }) {
               {data?.minAllocationPerUser} {getNetworkSymbol(chainId)}
             </Grid>
             <Grid item sm={3} fontSize={28} color='white'>
-              {data?.maxAllocationPerUser} {getNetworkSymbol(chainId)}
+              {maxAllocationHere} {getNetworkSymbol(chainId)}
             </Grid>
             <Grid item sm={3} fontSize={28} color='white'>
               {Number(1 / data?.presaleRate)} {getNetworkSymbol(chainId)}
@@ -1057,7 +1096,7 @@ function ProjectInformation({ data, roadmapdata }) {
                 </Box>
               </Grid>
             </>
-          ) : <Grid item sm={12}><p>Project is started. But you are not able to participate.</p>  </Grid>)}
+          ) : <></>)}
         </Grid>
       </MHidden>
 
@@ -1103,7 +1142,7 @@ function ProjectInformation({ data, roadmapdata }) {
               DEAL
             </Grid>
             <Grid item xs={12} color='#56C5FF' marginBottom='30px'>
-              {data?.whitelistable ? 'VC' : 'IDO'}
+              {data?.deal}
             </Grid>
           </Grid>
           <Grid item xs={12} color='#56C5FF' fontSize={20} justifyContent='center' display='flex'>
@@ -1167,7 +1206,7 @@ function ProjectInformation({ data, roadmapdata }) {
               Personal Max
             </Grid>
             <Grid item xs={6} fontSize={22} color='white' display='flex' justifyContent='flex-end'>
-              {data?.maxAllocationPerUser} {getNetworkSymbol(chainId)}
+              {maxAllocationHere} {getNetworkSymbol(chainId)}
             </Grid>
             <Grid item xs={6} fontSize={16} color='#56C5FF'>
               Token Price
@@ -1249,8 +1288,7 @@ function ProjectInformation({ data, roadmapdata }) {
                 </Box>
               </Grid>
             </>
-          ) : <Grid item sm={12}><p>Project is started. But you are not able to participate.</p>  </Grid>)}
-
+          ) : <></>)}
         </Grid>
       </MHidden>
     </>
@@ -1291,7 +1329,7 @@ function Detail({ data }) {
                   padding: '5px 10px'
                 }}
               >
-                {data?.whitelistable ? 'VC' : 'IDO'}
+                {data?.deal}
               </Box>
             </Grid>
           </Grid>
@@ -1351,7 +1389,7 @@ function Detail({ data }) {
               padding: '7px 13px'
             }}
           >
-            {data?.whitelistable ? 'VC' : 'IDO'}
+            {data?.deal}
           </Box>
           <Grid item sm={12} justifyContent='center' display='flex'>
             <Box component='img' src={isValidImage(data?.logo)} />

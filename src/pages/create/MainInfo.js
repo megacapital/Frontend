@@ -311,11 +311,12 @@ const MainInfo = ({ goBack, goNext }) => {
               <Stack spacing={1} flexGrow={1}>
                 <TextField
                   fullWidth
-                  label={network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'Maximum Buy(ETH)' : 'Maximum Buy(BNB)'}
+                  label={network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'Maximum Buy(ETH)' : 'Maximum Buy(BNB)-automatically calculated'}
                   type="number"
-                  {...getFieldProps('max_buy')}
+                  // {...getFieldProps('max_buy')}
                   error={Boolean(touched.max_buy && errors.max_buy)}
                   helperText={touched.max_buy && errors.max_buy}
+                  disabled
                 />
               </Stack>
             </Stack>
@@ -325,65 +326,30 @@ const MainInfo = ({ goBack, goNext }) => {
                 <Stack component="span" fontSize="0.7rem">
                   Start Date (Local)
                 </Stack>
-                <DesktopDateTimePickerStyle
-                  value={startDate}
-                  minDate={new Date('2017-01-01')}
-                  onChange={(newValue) => {
-                    setStartDate(newValue);
-                  }}
-                  PaperProps={{
-                    sx: {
-                      '& .MuiPickersDay-root': {
-                        color: 'red !important',
-                        width: '100%'
-                      }
-                    }
-                  }}
-                  renderInput={(params) => <TextField fullWidth {...params} margin="normal" />}
-                />
+                <input type='datetime-local'
+                  onChange={(e) => {
+                    setStartDate(new Date(e.target.value).getTime());
+                  }} />
               </Stack>
               <Stack spacing={1} flexGrow={1}>
                 <Stack component="span" fontSize="0.7rem">
                   End Date (Local)
                 </Stack>
-                <DesktopDateTimePickerStyle
-                  value={endDate}
-                  minDate={new Date('2017-01-01')}
-                  onChange={(newValue) => {
-                    setEndDate(newValue);
-                  }}
-                  PaperProps={{
-                    sx: {
-                      '& .MuiPickersDay-root': {
-                        color: 'red !important'
-                      }
-                    }
-                  }}
-                  renderInput={(params) => <TextField fullWidth {...params} margin="normal" />}
-                />
+                <input type='datetime-local'
+                  onChange={(e) => {
+                    setEndDate(new Date(e.target.value).getTime());
+                  }} />
               </Stack>
             </Stack>
             <Stack direction="row" spacing={3} alignItems="flex-start">
               <Stack spacing={1} flex={1}>
                 <Stack component="span" fontSize="0.7rem">
-                  Estimated Dex Listing Date (Local)
+                  Estimated Listing Date
                 </Stack>
-                <DesktopDateTimePickerStyle
-                  value={listDate}
-                  minDate={new Date('2017-01-01')}
-                  onChange={(newValue) => {
-                    setListDate(newValue);
-                  }}
-                  PaperProps={{
-                    sx: {
-                      '& .MuiPickersDay-root': {
-                        color: 'red !important',
-                        width: '100%'
-                      }
-                    }
-                  }}
-                  renderInput={(params) => <TextField fullWidth {...params} margin="normal" />}
-                />
+                <input type='datetime-local'
+                  onChange={(e) => {
+                    setListDate(new Date(e.target.value).getTime());
+                  }} />
               </Stack>
               <Stack spacing={1} flex={1}>
                 <Stack component="span" fontSize="0.7rem">
@@ -402,8 +368,8 @@ const MainInfo = ({ goBack, goNext }) => {
                     }
                   }}
                 >
-                  <MenuItem value="whiteListable">Whitelist</MenuItem>
                   <MenuItem value="all">Public</MenuItem>
+                  <MenuItem value="whiteListable">Whitelist</MenuItem>                  
                 </Select>
               </Stack>
 

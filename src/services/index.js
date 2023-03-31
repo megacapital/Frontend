@@ -27,6 +27,7 @@ const createBackendServer = (baseURL) => {
   const saveEvent = async (body) => api.post('api/calender/save-event', body);
   const setApproval = async (body) => api.post('api/approval/set', body);
   const getApproval = async (body) => api.post('api/approval/get', body);
+  const countApproval = async (body) => api.post('api/approval/count', body);
 
   /*==========    DELETE REQUESTS    ==========*/
 
@@ -34,7 +35,7 @@ const createBackendServer = (baseURL) => {
 
   return {
     createBscIdo, updateIDOWeiRaised, getBscIdo, getVCDeals, getProjectDetails, getDeals, getEvent, saveEvent, getFollowers, getRandomImages, ipfs,
-    setApproval, getApproval,
+    setApproval, getApproval, countApproval,
   };
 };
 

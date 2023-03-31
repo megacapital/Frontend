@@ -53,6 +53,7 @@ const FinishStep = ({ goBack, goComplete }) => {
   const totalSupply = useSelector((state) => state.tokenListing.totalSupply);
   const symbol = useSelector((state) => state.tokenListing.symbol);
   const projectName = useSelector((state) => state.tokenListing.projectName);
+  const deal = useSelector((state) => state.tokenListing.deal);
   const decimals = useSelector((state) => state.tokenListing.decimals);
   const presale_rate = useSelector((state) => state.tokenListing.presale_rate);
   const soft_cap = useSelector((state) => state.tokenListing.soft_cap);
@@ -155,9 +156,9 @@ const FinishStep = ({ goBack, goComplete }) => {
           Math.round(new Date(end_date).getTime() / 1000),
           Math.round(new Date(list_date).getTime() / 1000),
           parseEther(String(min_buy)),
-          parseEther(String(max_buy)),
+          // parseEther(String(max_buy)), //maximum buy per user
+          parseEther(String(hard_cap)), //maximum buy per user - will be calculated automatically
           dex_lockup,
-          // refund == 'refund' ? true : false,
           whiteListable === 'whiteListable' ? true : false
         ];
         let _vesting;
@@ -222,7 +223,7 @@ const FinishStep = ({ goBack, goComplete }) => {
               tokenomics_url,
               twitter_followers,
             },
-            logo,
+            logo, deal,
             projectName,
             poster,
             category, blockchain, tgi, type,
@@ -345,6 +346,13 @@ const FinishStep = ({ goBack, goComplete }) => {
           </Stack>
           <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
           <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
+            <span>Deal</span>
+            <Stack component="span" color="success.main" marginLeft="15px">
+              {deal}
+            </Stack>
+          </Stack>
+          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
+          <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
             <span>Description</span>
             <Stack component="span" color="success.main" marginLeft="15px" wordwrap="word-break">
               {description}
@@ -389,7 +397,8 @@ const FinishStep = ({ goBack, goComplete }) => {
           <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
             <span>Maximum Buy</span>
             <Stack component="span" color="success.main" marginLeft="15px">
-              {max_buy} {network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'ETH' : 'BNB'}
+              {/* {max_buy} {network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'ETH' : 'BNB'} */}
+              automatically
             </Stack>
           </Stack>
           {/* <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
@@ -413,8 +422,9 @@ const FinishStep = ({ goBack, goComplete }) => {
               <Moment format="YYYY-MM-DD HH:mm">{new Date(end_date)}</Moment>
             </Stack>
           </Stack>
+          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
           <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
-            <span>Estimated DEX Listing Time</span>
+            <span>Estimated Listing Time</span>
             <Stack component="span" color="success.main" marginLeft="15px">
               <Moment format="YYYY-MM-DD HH:mm">{new Date(list_date)}</Moment>
             </Stack>
@@ -654,7 +664,8 @@ const FinishStep = ({ goBack, goComplete }) => {
           </Stack>
         ) : (
           // <Loader type="TailSpin" color="#00BFFF" height={50} width={50} />
-          <HashLoader color="#59f1f6" size={50} />
+          // <HashLoader color="#59f1f6" size={50} />
+          <h6>It will take some seconds, please hold on.</h6>
         )}
       </Paper>
     </>

@@ -4,7 +4,8 @@ const initialState = {
   category: 'Startup',
   blockchain: 'Binance',
   tgi: 'Solana',
-  type: 'Unlocked',
+  type: 'Unlocked', 
+  deal: 'IDO', 
   totalSupply: 0,
   address: '',
   error: '',
@@ -14,18 +15,17 @@ const initialState = {
   allowance: '',
   approved: false,
   presale_rate: '1',
-  soft_cap: '',
-  hard_cap: '',
-  min_buy: '',
-  max_buy: '',
-  // refund: "refund",
+  soft_cap: 1,
+  hard_cap: 100,
+  min_buy: 1,
+  max_buy: 100,
   whiteListable: 'whiteListable',
   dex_amount: '60',
   dex_rate: '1',
   dex_lockup: '31',
-  endDate: '',
   startDate: '',
-  listDate: '',
+  endDate: '',
+  listDate: '', // token listing date, when team sends token to admin, it is just information
   poster: 'https://snipboard.io/F0wMfL.jpg',
   logo: 'https://snipboard.io/SJgPjt.jpg',
   website: 'https://website.com',
@@ -68,6 +68,9 @@ const slice = createSlice({
     },
     setProjectName(state, action) {
       state.projectName = action.payload;
+    },
+    setDeal(state, action) {
+      state.deal = action.payload;
     },
     setCategory(state, action) {
       state.category = action.payload;
@@ -152,6 +155,11 @@ export default slice.reducer;
 export function setTotalSupply(totalSupply) {
   return (dispatch) => {
     dispatch(slice.actions.setTotalSupply(totalSupply));
+  };
+}
+export function setDeal(value) {
+  return (dispatch) => {
+    dispatch(slice.actions.setDeal(value));
   };
 }
 export function setProjectName(value) {

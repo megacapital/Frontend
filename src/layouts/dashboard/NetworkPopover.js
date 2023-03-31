@@ -67,31 +67,7 @@ export default function NetworkPopover() {
 
   return (
     <>
-      <MHidden width="mdDown">
-        {/* <Box
-          component="select"
-          marginRight="10px"
-          variant="outlined"
-          ref={anchorRef}
-          height="40px"
-          onClick={handleOpen}
-          fontSize={'12px'}
-          onChange={() => alert('Coming Soon')}
-          sx={{ color: 'primary.light', borderColor: 'primary.light', fontSize: '12px !important' }}
-          className="p-2 rounded bg-dark btn text-white shadow-0 position-relative"
-          id="cars"
-        > */}
-        {/* {(process.env.REACT_APP_MODE == 'testnet' ? TEST_CHAINS : CHAINS).find((ele) => ele.value == network)?.label} */}
-        {/* <option>Networks</option>
-          <option>
-            <Box component={'image'} src={imageURL('angle_down.png')} sx={{ width: 20 }} /> BSC
-          </option>
-          <option>ETH</option>
-          <option>FTM</option>
-          <option>AVAX</option>
-          <option>MATIC</option>
-        </Box> */}
-
+      {/* <MHidden width="mdDown">
         <Box
           component="button"
           width={'100%'}
@@ -101,11 +77,8 @@ export default function NetworkPopover() {
           onClick={handleOpen}
           className="p-2 rounded bg-dark btn text-white shadow-0 position-relative justify-content-center"
           display="flex"
-          // onChange={() => alert('Coming Soon')}
-          // width="100px" height="42px"
         >
           <Stack direction="row" alignItems="center" spacing={1} display="flex" justifyContent="center">
-            {/* <Box component="img" src={CHAINS.find((ele) => ele.index === curID)?.icon} sx={{ width: 20 }} /> */}
             <MHidden width="mdDown">
               <Box variant="body2" fontSize={'12px'}>
                 Networks
@@ -120,105 +93,21 @@ export default function NetworkPopover() {
             {CHAINS.map((option) => (
               <MenuItem
                 key={option.value}
-                // selected={option.value === network}
                 backgroundColor="#232323"
                 onClick={() => handleClose(option.index)}
                 sx={{ py: 1, px: 2.5 }}
               >
                 <Stack direction="row" alignItems="center">
                   <Box component="img" alt={option.label} src={option.icon} sx={{ width: 20 }} />
-                  {/* <MHidden width="mdDown"> */}
                   <Box variant="body2" marginLeft="8px" fontSize={'12px'}>
                     {option.label}
                   </Box>
-                  {/* </MHidden> */}
                 </Stack>
               </MenuItem>
             ))}
           </Box>
         </MenuPopover>
-      </MHidden>
-      {/* <MHidden width="mdUp">
-        <Box
-          component="select"
-          variant="outlined"
-          ref={anchorRef}
-          height="40px"
-          width="100%"
-          // onClick={handleOpen}
-          sx={{ color: 'primary.light', borderColor: 'primary.light', fontSize: '12px !important' }}
-          className="p-2 rounded bg-dark btn text-white shadow-0 position-relative"
-          id="cars"
-        > */}
-      {/* {(process.env.REACT_APP_MODE == 'testnet' ? TEST_CHAINS : CHAINS).find((ele) => ele.value == network)?.label} */}
-      {/* <option sx={{ fontSize: '12px' }}>Networks</option>
-          <option>
-            <Box component={'image'} src={imageURL('angle_down.png')} sx={{ width: 20 }} /> BSC
-          </option>
-          <option>ETH</option>
-          <option>FTM</option>
-          <option>AVAX</option>
-          <option>MATIC</option>
-        </Box>
-      </MHidden> */}
-      {/* <Button
-        variant="outlined"
-        ref={anchorRef}
-        onClick={handleOpen}
-        // sx={{ color: 'primary.light', borderColor: 'primary.light' }}
-        className="p-2 rounded bg-dark btn text-white shadow-0 position-relative"
-      >
-        {CHAINS.find((ele) => ele.value == network)?.label}
-      </Button>
-
-      <MenuPopover open={open} onClose={handleClose} anchorEl={anchorRef.current}>
-        <Box sx={{ py: 1 }}>
-          {CHAINS.map((option) => (
-            <MenuItem
-              key={option.value}
-              selected={option.value === network}
-              onClick={() => handleClose(option.value)}
-              sx={{ py: 1, px: 2.5 }}
-            >
-              <Stack direction="row" alignItems="center" spacing={1}>
-                <Box component="img" alt={option.label} src={option.icon} sx={{ width: 20 }} />
-                <Typography variant="body2">{option.label}</Typography>
-              </Stack>
-            </MenuItem>
-          ))} */}
-      {/* <Divider />
-          {(CHAINS).map((option) => (
-            <MenuItem
-              key={option.value}
-              selected={option.value === network}
-              onClick={() => handleClose(option.value)}
-              sx={{ py: 1, px: 2.5 }}
-            >
-              <Stack direction="row" alignItems="center" spacing={1}>
-                <Box component="img" alt={option.label} src={option.icon} sx={{ width: 20 }} />
-                <Typography variant="body2">{option.label}</Typography>
-              </Stack>
-            </MenuItem>
-          ))}
-          <Divider />
-          <MenuItem sx={{ py: 1, px: 2.5 }}>
-            <Stack direction="row" alignItems="center" spacing={1}>
-              <Link
-                href={
-                  process.env.REACT_APP_MODE == 'testnet'
-                    ? process.env.REACT_APP_MAINNET_URL
-                    : process.env.REACT_APP_TESTNET_URL
-                }
-                target="_blank"
-                color="primary"
-                fontSize={16}
-              >
-                {process.env.REACT_APP_MODE == 'testnet' ? 'Switch to Mainnet' : 'Switch to Testnet'}
-              </Link>
-            </Stack>
-          </MenuItem>
-        </Box>
-      </MenuPopover> */}
+      </MHidden>    */}
     </>
   );
 }

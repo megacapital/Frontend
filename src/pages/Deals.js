@@ -124,7 +124,8 @@ const Deals = () => {
           <Grid container spacing={2}>
             {pools.length > 0 &&
               pools.map((pool, poolIdx) => {
-                const [privacy, tag] = pool?.whitelistable ? ['Private', 'VC'] : ['Public', 'IDO'];
+                const privacy = pool?.whitelistable ? 'Private' : 'Public';
+                const tag = pool?.deal;
                 return <LaunchCard key={poolIdx} privacy={privacy} tag={tag} {...pool}></LaunchCard>;
               })}
           </Grid>

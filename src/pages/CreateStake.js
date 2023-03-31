@@ -60,6 +60,7 @@ export default function CreateStake() {
   //input
   const [token, setToken] = useState('');
   const [tokenError, setTokenError] = useState('');
+  const [logo, setLogo] = useState('https://snipboard.io/QnhTJZ.jpg');
   const [rewardRate, setRewardRate] = useState(3);
   const [amount, setAmount] = useState(1000);
   const [amountError, setAmountError] = useState('');
@@ -246,6 +247,7 @@ export default function CreateStake() {
             tokenSymbol: tokenInfo.symbol,
             tokenAddress: token,
             rewardRate: rewardRate,
+            logo: logo,
             tvl: amount,
             startAt: date
           });
@@ -348,6 +350,16 @@ export default function CreateStake() {
               sx={{
                 width: 1
               }}
+            />
+            <TextField
+              fullWidth
+              label="Token Logo URL"          
+              value={logo}
+              onChange={(e) => setLogo(e.target.value)}
+              sx={{
+                width: 1
+              }}
+              placeholder="https://tokenlogo.url"
             />
             <TextField
               fullWidth
