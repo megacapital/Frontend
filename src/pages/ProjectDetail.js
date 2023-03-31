@@ -1027,7 +1027,7 @@ function ProjectInformation({ data, roadmapdata }) {
               <h5>Project is not started! {remainingHours} hour left. Your staked amount: {stakingamount}</h5>
             </Grid>
           }
-          {!started && (stakingamount > 0) &&
+          {!started && (stakingamount > 0) && account &&
             (
               approved ?
                 <Box
@@ -1220,7 +1220,7 @@ function ProjectInformation({ data, roadmapdata }) {
               <h5>Project is not started! {remainingHours} hour left.</h5>
             </Grid>
           }
-          {!started && (stakingamount > 0) &&
+          {!started && (stakingamount > 0) && account &&
             (
               approved ?
                 <Box
