@@ -650,7 +650,7 @@ function CustomCard(props) {
     <>
       <MHidden width='mdDown'>
         <Grid style={{ backgroundColor: '#232323', borderRadius: 10, padding: '20px' }}>
-          <Box style={{ fontSize: '15px', color: '#24B6E6' }}>{props.name}</Box>
+          <Box style={{ fontSize: '15px', color: '#24B6E6' }}>{props.projectName}</Box>
           <Box marginTop='20px' style={{ fontSize: '20px', color: 'white' }}>
             {props.number}
           </Box>
@@ -792,7 +792,7 @@ function ProjectInformation({ data, roadmapdata }) {
         return;
       }
 
-        console.log(parseEther(String(buyingAmount)))
+      console.log(parseEther(String(buyingAmount)))
       const tx = await idoContract.deposit(data?.address, {
         value: parseEther(String(buyingAmount))
       });
@@ -889,7 +889,7 @@ function ProjectInformation({ data, roadmapdata }) {
 
   //staking staus
   const [stakingamount, setStakingAmount] = useState(true); //user staking status, it is condition for user approving
-  const stakingContract = useStakingContract('0xC9F2b512Dc996609436958300DAA5Afc5cA0C23b');
+  const stakingContract = useStakingContract('0x28847a4C42D11E56b15BBA2Bb619889F4b3a97EC'); //MGV token
   useEffect(() => {
     (async () => {
       const staked = await stakingContract.balances(account);
@@ -1316,7 +1316,7 @@ function Detail({ data }) {
                   padding: '8px 10px'
                 }}
               >
-                <img src={getNetworkImage(chainId)} alt={data?.name} width={25} />
+                <img src={getNetworkImage(chainId)} alt={data?.projectName} width={25} />
               </Box>
               <Box
                 component='button'
@@ -1335,7 +1335,7 @@ function Detail({ data }) {
           </Grid>
           <Grid marginTop='20px'>
             <Typography component='p' style={{ fontFamily: 'Segoe UI', fontSize: '48px', color: '#56C5FF' }}>
-              {data?.name}
+              {data?.projectName}
             </Typography>
             <Typography
               marginTop='15px'
@@ -1372,7 +1372,7 @@ function Detail({ data }) {
               padding: '7px 13px'
             }}
           >
-            <img src={getNetworkImage(chainId)} alt={data?.name} width={25} />
+            <img src={getNetworkImage(chainId)} alt={data?.projectName} width={25} />
           </Box>
           <Box
             component='button'
@@ -1400,7 +1400,7 @@ function Detail({ data }) {
               marginTop='20px'
               style={{ fontFamily: 'Segoe UI', fontSize: '20px', color: '#56C5FF' }}
             >
-              {data?.name}
+              {data?.projectName}
             </Typography>
           </Grid>
           <Box
