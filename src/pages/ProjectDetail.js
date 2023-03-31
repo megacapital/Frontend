@@ -670,24 +670,25 @@ function CustomCard(props) {
   );
 }
 
-function ProjectInformation({ data, roadmapdata }) {
+function ProjectInformation({ data: poolInfo, roadmapdata }) {
   const chainId = useSelector((store) => store.network.chainId);
   const { account, library } = useActiveWeb3React();
   const [approved, setApproved] = useState(false); //user approving status
   const [buyCondition, setBuyCondition] = useState(false); //condition for user buying
   const [started, setStarted] = useState(false);
+  const [ended, setEnded] = useState(false);
   const idoContract = useIDOContract();
-  const poolContract = usePoolContract(data?.address);
+  const poolContract = usePoolContract(poolInfo?.address);
 
   useEffect(() => {
     (async () => {
-      if (account && data) {
-        var shouldBeWhitelisted = !data?.whitelistable || data?.whiteLists?.includes(account); // if pool is public or account is whitelisted, user can buy token
+      if (account && poolInfo) {
+        var shouldBeWhitelisted = !poolInfo?.whitelistable || poolInfo?.whiteLists?.includes(account); // if pool is public or account is whitelisted, user can buy token
         console.log('wowwowoowow', approved, shouldBeWhitelisted, approved & shouldBeWhitelisted)
         setBuyCondition(approved & shouldBeWhitelisted);
       }
     })();
-  }, [account, data, approved]);
+  }, [account, poolInfo, approved]);
 
   //approved
 
@@ -696,7 +697,7 @@ function ProjectInformation({ data, roadmapdata }) {
     (async () => {
       try {
         const response = await apis.getApproval({
-          pool_address: data.address,
+          pool_address: poolInfo.address,
           user_address: account
         });
         if (response.data.result) {
@@ -714,7 +715,7 @@ function ProjectInformation({ data, roadmapdata }) {
     (async () => {
       try {
         const response = await apis.countApproval({
-          pool_address: data.address
+          pool_address: poolInfo.address
         });
         if (response.data.result) {
           setNumberofApproving(response.data.data)
@@ -726,15 +727,15 @@ function ProjectInformation({ data, roadmapdata }) {
         console.log(error.message)
       }
     })();
-  }, [account, data]);
+  }, [account, poolInfo]);
 
   //max allocation 
   const [maxAllocationHere, setmaxAllocationhere] = useState(0);
   useEffect(() => {
-    if (data && started && numberofApproving > 0)
-      if (numberofApproving > 0) setmaxAllocationhere(Number(data?.hardCap) / Number(numberofApproving))
+    if (poolInfo && started && numberofApproving > 0)
+      if (numberofApproving > 0) setmaxAllocationhere(Number(poolInfo?.hardCap) / Number(numberofApproving))
 
-  }, [started, data, numberofApproving])
+  }, [started, poolInfo, numberofApproving])
 
 
   //Wallet token balance
@@ -757,7 +758,7 @@ function ProjectInformation({ data, roadmapdata }) {
         }
       }
     })();
-  }, [account, data])
+  }, [account, poolInfo])
 
 
 
@@ -778,12 +779,12 @@ function ProjectInformation({ data, roadmapdata }) {
         }
       }
     })();
-  }, [account, data])
+  }, [account, poolInfo])
 
   //buy function
   const buy = async () => {
     try {
-      if (buyingAmount < data.minAllocationPerUser) {
+      if (buyingAmount < poolInfo.minAllocationPerUser) {
         alert('Should be greater than min allocation');
         return;
       }
@@ -793,7 +794,7 @@ function ProjectInformation({ data, roadmapdata }) {
       }
 
       console.log(parseEther(String(buyingAmount)))
-      const tx = await idoContract.deposit(data?.address, {
+      const tx = await idoContract.deposit(poolInfo?.address, {
         value: parseEther(String(buyingAmount))
       });
       await tx.wait();
@@ -804,7 +805,7 @@ function ProjectInformation({ data, roadmapdata }) {
       var value = await poolContract._weiRaised()
       setEtherRaised(formatEther(value))
       await apis.updateIDOWeiRaised({
-        address: data?.address,
+        address: poolInfo?.address,
         weiRaised: formatEther(value)
       });
     } catch (error) {
@@ -815,7 +816,7 @@ function ProjectInformation({ data, roadmapdata }) {
   const preapprove = async () => {
     try {
       const response = await apis.setApproval({
-        pool_address: data.address,
+        pool_address: poolInfo.address,
         user_address: account
       });
       if (response.data.result) {
@@ -873,10 +874,11 @@ function ProjectInformation({ data, roadmapdata }) {
   }, [poolContract])
 
 
-  //started or not
+  //started, ended
   const [remainingHours, setRemainingHours] = useState(0);
   useEffect(() => {
-    var startingTime = new Date(data.startDateTime).getTime()
+    var startingTime = new Date(poolInfo.startDateTime).getTime()
+    var endingTime = new Date(poolInfo.endDateTime).getTime()
     var nowTime = Date.now();
     console.log(startingTime, nowTime)
     if (startingTime > nowTime) {
@@ -885,7 +887,13 @@ function ProjectInformation({ data, roadmapdata }) {
       setRemainingHours(Math.ceil(diff / 60 / 60 / 1000))
     }
     else setStarted(true)
-  }, [data])
+
+    if (nowTime > endingTime) {
+      setEnded(true);
+    } else {
+      setEnded(false)
+    }
+  }, [poolInfo])
 
   //staking staus
   const [stakingamount, setStakingAmount] = useState(true); //user staking status, it is condition for user approving
@@ -897,6 +905,33 @@ function ProjectInformation({ data, roadmapdata }) {
     })();
   }, [account, stakingContract])
 
+  const handleFinalize = async () => {
+    try {
+      const tx = await idoContract.endPool(poolInfo?.address);
+      await tx.wait();
+      console.log('Successfully Finalized!', {
+        variant: 'success'
+      });
+    } catch (err) {
+      console.log(err?.message);
+      if (err?.data?.message?.includes(`already existed!`) || err?.message?.includes(`already existed!`))
+        console.log('Already listed on DEX!', {
+          variant: 'error'
+        });
+      else if (err?.data?.message?.includes(`not finalized!`) || err?.message?.includes(`not finalized!`))
+        console.log('Not ready to finalize the pool!', {
+          variant: 'error'
+        });
+      else if (err?.data?.message?.includes(`remove tax`) || err?.message?.includes(`remove tax`))
+        console.log('You should remove the tax for the IDO and Presale address! Check Docs', {
+          variant: 'error'
+        });
+      else
+        console.log('Oops, Something went wrong, Failed in Finalizing!', {
+          variant: 'error'
+        });
+    }
+  }
 
   return (
     <>
@@ -929,19 +964,19 @@ function ProjectInformation({ data, roadmapdata }) {
             </Grid>
             <Grid item sm={3} >
               <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {data?.hardCap} {getNetworkSymbol(chainId)}
+                {poolInfo?.hardCap} {getNetworkSymbol(chainId)}
               </Grid>
               <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {formattedDate(data?.startDateTime)}
+                {formattedDate(poolInfo?.startDateTime)}
               </Grid>
               <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {formattedDate(data?.endDateTime)}
+                {formattedDate(poolInfo?.endDateTime)}
               </Grid>
               <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {formattedDate(data?.listDateTime)}
+                {formattedDate(poolInfo?.listDateTime)}
               </Grid>
               <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {data?.deal}
+                {poolInfo?.deal}
               </Grid>
             </Grid>
             <Grid item sm={2}></Grid>
@@ -964,25 +999,25 @@ function ProjectInformation({ data, roadmapdata }) {
             </Grid>
             <Grid item sm={2} >
               <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {data?.symbol}
+                {poolInfo?.symbol}
               </Grid>
               <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {data?.category}
+                {poolInfo?.category}
               </Grid>
               <Grid item color='#56C5FF' justifyContent='right' display='flex'>
                 {/* {getNetworkSymbol(chainId, true)} */}
-                {data?.blockchain}
+                {poolInfo?.blockchain}
               </Grid>
               <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {data?.tgi}
+                {poolInfo?.tgi}
               </Grid>
               <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {data?.type}
+                {poolInfo?.type}
               </Grid>
             </Grid>
           </Grid>
           <Grid item sm={12} marginTop='50px'>
-            <Box color='#56C5FF'>{etherRaised}/{data?.hardCap} {getNetworkSymbol(chainId)}</Box>
+            <Box color='#56C5FF'>{etherRaised}/{poolInfo?.hardCap} {getNetworkSymbol(chainId)}</Box>
             <Box position='relative' display='flex'>
               <Box width='100%' height='10px' borderRadius={2} backgroundColor='white' />
               <Box
@@ -990,7 +1025,7 @@ function ProjectInformation({ data, roadmapdata }) {
                 left='0px'
                 borderRadius={2}
                 height='10px'
-                width={`${Number(etherRaised / data.hardCap * 100)}%`}
+                width={`${Number(etherRaised / poolInfo.hardCap * 100)}%`}
                 backgroundColor='#56C5FF'
               />
             </Box>
@@ -1012,19 +1047,19 @@ function ProjectInformation({ data, roadmapdata }) {
               {myCollaboration} {getNetworkSymbol(chainId)}
             </Grid>
             <Grid item sm={3} fontSize={28} color='white'>
-              {data?.minAllocationPerUser} {getNetworkSymbol(chainId)}
+              {poolInfo?.minAllocationPerUser} {getNetworkSymbol(chainId)}
             </Grid>
             <Grid item sm={3} fontSize={28} color='white'>
               {maxAllocationHere} {getNetworkSymbol(chainId)}
             </Grid>
             <Grid item sm={3} fontSize={28} color='white'>
-              {Number(1 / data?.presaleRate)} {getNetworkSymbol(chainId)}
+              {Number(1 / poolInfo?.presaleRate)} {getNetworkSymbol(chainId)}
             </Grid>
           </Grid>
 
           {!started &&
             <Grid item sm={12}>
-              <h5>Project is not started! {remainingHours} hour left. Your staked amount: {stakingamount}</h5>
+              {/* <h5>Project is not started! {remainingHours} hour left. Your staked amount: {stakingamount}</h5> */}
             </Grid>
           }
           {!started && (stakingamount > 0) && account &&
@@ -1050,7 +1085,8 @@ function ProjectInformation({ data, roadmapdata }) {
             )
           }
 
-          {started && (buyCondition ? (
+          {/* started not ended */}
+          {started && !ended && (buyCondition ? (
             <>
               <Grid item container marginTop='20px'>
                 <Grid item sm={12} color='#56C5FF'>
@@ -1097,6 +1133,18 @@ function ProjectInformation({ data, roadmapdata }) {
               </Grid>
             </>
           ) : <></>)}
+
+          {
+            ended && <Box
+              component='button'
+              style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6, marginRight: '10px', marginTop: '20px', cursor: 'pointer' }}
+              color='white'
+              padding='10px 28px 10px 28px'
+              onClick={() => handleFinalize()}
+            >
+              Finalize
+            </Box>
+          }
         </Grid>
       </MHidden>
 
@@ -1118,31 +1166,31 @@ function ProjectInformation({ data, roadmapdata }) {
               HARDCAP
             </Grid>
             <Grid item xs={12} color='#56C5FF'>
-              {data?.hardCap} {getNetworkSymbol(chainId)}
+              {poolInfo?.hardCap} {getNetworkSymbol(chainId)}
             </Grid>
             <Grid item xs={12} color='white' marginTop='15px'>
               OPEN TIME
             </Grid>
             <Grid item xs={12} color='#56C5FF'>
-              {formattedDate(data?.startDateTime)}
+              {formattedDate(poolInfo?.startDateTime)}
             </Grid>
             <Grid item xs={12} color='white' marginTop='15px'>
               CLOSE TIME
             </Grid>
             <Grid item xs={12} color='#56C5FF'>
-              {formattedDate(data?.endDateTime)}
+              {formattedDate(poolInfo?.endDateTime)}
             </Grid>
             <Grid item xs={12} color='white' marginTop='15px'>
               LISTING DATE
             </Grid>
             <Grid item xs={12} color='#56C5FF'>
-              {formattedDate(data?.listDateTime)}
+              {formattedDate(poolInfo?.listDateTime)}
             </Grid>
             <Grid item xs={12} color='white' marginTop='15px'>
               DEAL
             </Grid>
             <Grid item xs={12} color='#56C5FF' marginBottom='30px'>
-              {data?.deal}
+              {poolInfo?.deal}
             </Grid>
           </Grid>
           <Grid item xs={12} color='#56C5FF' fontSize={20} justifyContent='center' display='flex'>
@@ -1154,29 +1202,29 @@ function ProjectInformation({ data, roadmapdata }) {
           <Grid item xs={6}>
             <Box color='white'>CATEGORY</Box>
             <Box color='#56C5FF' marginTop='2px'>
-              {data?.category}
+              {poolInfo?.category}
             </Box>
           </Grid>
           <Grid item xs={6}>
             <Box color='white'>TGI</Box>
             <Box color='#56C5FF' marginTop='2px'>
-              {data?.tgi}
+              {poolInfo?.tgi}
             </Box>
           </Grid>
           <Grid item xs={6} marginTop='10px'>
             <Box color='white'>BLOCKCHAIN</Box>
             <Box color='#56C5FF' marginTop='2px'>
-              {data?.blockchain}
+              {poolInfo?.blockchain}
             </Box>
           </Grid>
           <Grid item xs={6} marginTop='10px'>
             <Box color='white'>TYPE</Box>
             <Box color='#56C5FF' marginTop='2px'>
-              {data?.type}
+              {poolInfo?.type}
             </Box>
           </Grid>
           <Grid item xs={12} marginTop='30px' width='100%'>
-            <Box color='#56C5FF'>{etherRaised}/{data?.hardCap} {getNetworkSymbol(chainId)}</Box>
+            <Box color='#56C5FF'>{etherRaised}/{poolInfo?.hardCap} {getNetworkSymbol(chainId)}</Box>
             <Box position='relative' display='flex'>
               <Box width='100%' height='10px' borderRadius={2} backgroundColor='white' />
               <Box
@@ -1184,7 +1232,7 @@ function ProjectInformation({ data, roadmapdata }) {
                 left='0px'
                 borderRadius={2}
                 height='10px'
-                width={`${Number(etherRaised / data.hardCap * 100)}%`}
+                width={`${Number(etherRaised / poolInfo.hardCap * 100)}%`}
                 backgroundColor='#56C5FF'
               />
             </Box>
@@ -1200,7 +1248,7 @@ function ProjectInformation({ data, roadmapdata }) {
               Personal Min
             </Grid>
             <Grid item xs={6} fontSize={22} color='white' display='flex' justifyContent='flex-end'>
-              {data?.minAllocationPerUser} {getNetworkSymbol(chainId)}
+              {poolInfo?.minAllocationPerUser} {getNetworkSymbol(chainId)}
             </Grid>
             <Grid item xs={6} fontSize={16} color='#56C5FF'>
               Personal Max
@@ -1212,12 +1260,12 @@ function ProjectInformation({ data, roadmapdata }) {
               Token Price
             </Grid>
             <Grid item xs={6} fontSize={22} color='white' display='flex' justifyContent='flex-end'>
-              {Number(1 / data?.presaleRate)} {getNetworkSymbol(chainId)}
+              {Number(1 / poolInfo?.presaleRate)} {getNetworkSymbol(chainId)}
             </Grid>
           </Grid>
           {!started &&
             <Grid item sm={12}>
-              <h5>Project is not started! {remainingHours} hour left.</h5>
+              {/* <h5>Project is not started! {remainingHours} hour left.</h5> */}
             </Grid>
           }
           {!started && (stakingamount > 0) && account &&
@@ -1243,7 +1291,7 @@ function ProjectInformation({ data, roadmapdata }) {
             )
           }
 
-          {started && (buyCondition ? (
+          {started && !ended && (buyCondition ? (
             <>
               <Grid item container marginTop='20px'>
                 <Grid item sm={12} color='#56C5FF'>
@@ -1289,6 +1337,18 @@ function ProjectInformation({ data, roadmapdata }) {
               </Grid>
             </>
           ) : <></>)}
+
+          {
+            ended && <Box
+              component='button'
+              style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6, marginRight: '10px', marginTop: '20px', cursor: 'pointer' }}
+              color='white'
+              padding='10px 28px 10px 28px'
+              onClick={() => handleFinalize()}
+            >
+              Finalize
+            </Box>
+          }
         </Grid>
       </MHidden>
     </>
