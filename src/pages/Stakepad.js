@@ -127,8 +127,8 @@ export function StakingPool(props) {
               </Box>
             </Grid>
           )}
-          {pools.map((item, key) => (
-            <PoolBox pool={item} />
+          {pools.map((item, index) => (
+            <PoolBox pool={item} key={index} />
           ))}
         </Grid>
       </MHidden>
@@ -142,8 +142,8 @@ export function StakingPool(props) {
               <ViewAllPools to="#" title="View All Pools" />
             </Box>
           </Grid>
-          {pools.map((item, key) => (
-            <PoolsCardPhone pool={item} />
+          {pools.map((item, index) => (
+            <PoolsCardPhone pool={item} key={index} />
           ))}
         </Grid>
       </MHidden>
@@ -174,7 +174,6 @@ function PoolBox(poolInfo) {
   useEffect(() => {
     // let unmounted = false;
     if (openedPool) {
-      console.log(pool.tokenName);
 
       (async () => {
         setProcessing(true);
@@ -184,9 +183,24 @@ function PoolBox(poolInfo) {
           const decimals = await tokenContract.decimals();
           const staked = await stakingContract.balances(account);
           const rewards = await stakingContract.earned(account);
+
+          let locktime = await stakingContract.locktime();
+          locktime = Number(formatUnits(locktime, 0));
+          let locktime_indays = locktime / 60 / 60 / 24;
+
           let lockingReleaseTime = await stakingContract.lockingReleaseTime(account);
           lockingReleaseTime = formatUnits(lockingReleaseTime, 0);
-          lockingReleaseTime = new Date(Number(lockingReleaseTime) * 1000).toString();
+          if (Number(lockingReleaseTime) > 0) {
+            lockingReleaseTime = new Date(Number(lockingReleaseTime) * 1000);
+            var year = lockingReleaseTime.getFullYear();
+            var month = ("0" + (lockingReleaseTime.getMonth() + 1)).slice(-2);
+            var day = ("0" + lockingReleaseTime.getDate()).slice(-2);
+            var formattedDate = `${year}-${month}-${day}`;
+            lockingReleaseTime = formattedDate;
+          } else {
+            lockingReleaseTime = "~"
+          }
+
 
           setData({
             ...data,
@@ -195,11 +209,11 @@ function PoolBox(poolInfo) {
             staked: formatUnits(staked, decimals),
             rewards: formatUnits(rewards, decimals),
             tvl: formatUnits(pool_tvl, decimals),
+            locktime_indays,
             lockingReleaseTime,
           });
           setLoader(true);
         } catch (error) {
-          console.log(error);
           setLoader(true);
         }
         setProcessing(false);
@@ -214,7 +228,6 @@ function PoolBox(poolInfo) {
     // check allowance
     try {
       const allowance = await tokenContract.allowance(account, pool.address);
-      console.log('asdasdasd', allowance.toString());
       if (allowance.lt(bignumber_staking_amount)) {
         const tx = await tokenContract.approve(pool.address, bignumber_staking_amount);
         let result = await tx.wait();
@@ -287,19 +300,19 @@ function PoolBox(poolInfo) {
           <Grid container item sm={8} display="flex" justifyContent="right" direction="row">
             <Grid item sx={{ marginRight: '20px' }}>
               <Box sx={{ fontSize: 15, color: 'white' }}> Duration</Box>
-              <Box sx={{ fontSize: 20 }} color="white" gutterBottom>
-                8 Weeks
+              <Box sx={{ fontSize: 20 }} color="white" >
+                {data.locktime_indays} days
               </Box>
             </Grid>
             <Grid item sx={{ marginRight: '20px' }}>
               <Box sx={{ fontSize: 15, color: 'white' }}>Staked</Box>
-              <Box sx={{ fontSize: 20, minWidth: '3em' }} color="white" gutterBottom>
+              <Box sx={{ fontSize: 20, minWidth: '3em' }} color="white" >
                 {Number(data.tvl).toFixed(2)}
               </Box>
             </Grid>
             <Grid item sx={{ marginRight: '20px' }}>
               <Box sx={{ fontSize: 15, color: 'white' }}>bonus</Box>
-              <Box sx={{ fontSize: 20 }} color="white" gutterBottom>
+              <Box sx={{ fontSize: 20 }} color="white" >
                 {pool.rewardRate}%
               </Box>
             </Grid>
@@ -341,13 +354,13 @@ function PoolBox(poolInfo) {
             rowSpacing={2}
             width="100%"
           >
-            <Grid sm="6" item color="#56C5FF">
+            <Grid sm={6} item color="#56C5FF">
               Your wallet {pool.tokenSymbol} balance: {data.wallet_balance}
             </Grid>
-            <Grid sm="6" item color="#56C5FF">
+            <Grid sm={6} item color="#56C5FF">
               your staked amount: {data.staked}
             </Grid>
-            <Grid container item sm="6" display="flex" position="relative" height="60px">
+            <Grid container item sm={6} display="flex" position="relative" height="60px">
               <Box
                 component="input"
                 type="number"
@@ -374,7 +387,7 @@ function PoolBox(poolInfo) {
                 MAX
               </Box>
             </Grid>
-            <Grid container item sm="6" display="flex" position="relative" height="60px">
+            <Grid container item sm={6} display="flex" position="relative" height="60px">
               <Box
                 component="input"
                 padding="5px"
@@ -399,12 +412,12 @@ function PoolBox(poolInfo) {
                 MAX
               </Box>
             </Grid>
-            <Grid sm="6" item >
+            <Grid sm={6} item >
               <Button className="btn btn-info mx-1 px-4 text-light" onClick={() => handleStake()}>
                 STAKE
               </Button>
             </Grid>
-            <Grid sm="6" item >
+            <Grid sm={6} item >
               <Button className="btn btn-outline-secondary mx-1 px-4 text-info" onClick={() => handleUnstake()}>
                 UNSTAKE
               </Button>
@@ -417,7 +430,7 @@ function PoolBox(poolInfo) {
               >
                 HARVEST {data.rewards} {pool.tokenSymbol}
               </Button>
-              <Box marginTop="8px">Harvesting will reset the lock time. Your Lock time: {data.lockingReleaseTime}</Box>
+              <Box marginTop="8px">Your Lock time: {data.lockingReleaseTime}. Harvesting will reset the lock time. </Box>
             </Grid>
           </Grid>
         ))}

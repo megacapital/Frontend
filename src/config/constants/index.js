@@ -96,3 +96,8 @@ export const PROJECT_STATUS = {
   inProcess: 'IN-PROCESS',
   completed: 'COMPLETED'
 };
+
+export const ADMIN_WALLETS = [
+  '0x791320012C079fDF833244C65c343cbAB34C6ab6', //main
+  '0xecFA21cfFcb7BDeE55D137486Dea0d7984c72619', //dev
+]

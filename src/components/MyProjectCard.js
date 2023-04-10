@@ -4,7 +4,7 @@ import {
   } from '@mui/material';
 import { isValidImage } from '../utils';
 export default function MyProjectCard(props){
-    const { privacy, tag, name, ipfs, participantsAddresses } = props;
+    const { privacy, tag, name, ipfs, participantsAddresses, poster } = props;
 
     // console.log(props);
 
@@ -12,7 +12,7 @@ export default function MyProjectCard(props){
         <>
         <Grid container borderRadius={1} direction="row" bgcolor={"#232323"} padding="15px" marginTop="20px" display="flex" >
             <Grid item md="1" mx={1}>
-                <Box component="img" src={isValidImage(ipfs?.logo)} ></Box>
+                <Box component="img" src={isValidImage(poster)} ></Box>
             </Grid>
             <Grid item container md="1.5" align="center" justifyContent="center" spacing={1} direction="column">
                 <Grid item><Box padding="4px 5px 4px 5px" style={{backgroundColor:"rgba(255, 255, 255, 0.1)"}} color="white">{privacy}</Box></Grid>

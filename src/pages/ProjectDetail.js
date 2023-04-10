@@ -15,6 +15,7 @@ import { formatUnits, parseUnits, formatEther, parseEther } from '@ethersproject
 import { atcb_action } from 'add-to-calendar-button';
 import 'add-to-calendar-button/assets/css/atcb.css';
 import { number } from 'yup';
+import { ADMIN_WALLETS } from 'config/constants';
 
 export default function ProjectDetail(props) {
   const { chainId = 0 } = useSelector((store) => store.network);
@@ -650,7 +651,7 @@ function CustomCard(props) {
     <>
       <MHidden width='mdDown'>
         <Grid style={{ backgroundColor: '#232323', borderRadius: 10, padding: '20px' }}>
-          <Box style={{ fontSize: '15px', color: '#24B6E6' }}>{props.projectName}</Box>
+          <Box style={{ fontSize: '15px', color: '#24B6E6' }}>{props.name}</Box>
           <Box marginTop='20px' style={{ fontSize: '20px', color: 'white' }}>
             {props.number}
           </Box>
@@ -670,7 +671,7 @@ function CustomCard(props) {
   );
 }
 
-function ProjectInformation({ data: poolInfo, roadmapdata }) {
+function ProjectInformation({ data: poolInfo }) {
   const chainId = useSelector((store) => store.network.chainId);
   const { account, library } = useActiveWeb3React();
   const [approved, setApproved] = useState(false); //user approving status
@@ -1135,7 +1136,7 @@ function ProjectInformation({ data: poolInfo, roadmapdata }) {
           ) : <></>)}
 
           {
-            ended && <Box
+            ended && ADMIN_WALLETS.includes(account) && <Box
               component='button'
               style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6, marginRight: '10px', marginTop: '20px', cursor: 'pointer' }}
               color='white'

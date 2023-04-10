@@ -249,8 +249,7 @@ const MainInfo = ({ goBack, goNext }) => {
                 helperText={touched.presale_rate && errors.presale_rate}
               />
               <Stack component="span" color="success.main">
-                If I spend 1 {network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'ETH' : 'BNB'} how many tokens will I
-                receive?
+                If user spend 1 {network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'ETH' : 'BNB'}, user wil get {values.presale_rate} tokens. So token price is {1 / values.presale_rate} BNB.
               </Stack>
             </Stack>
             {/* <Stack direction="row" spacing={3} alignItems="flex-start">
@@ -369,7 +368,7 @@ const MainInfo = ({ goBack, goNext }) => {
                   }}
                 >
                   <MenuItem value="all">Public</MenuItem>
-                  <MenuItem value="whiteListable">Whitelist</MenuItem>                  
+                  <MenuItem value="whiteListable">Whitelist</MenuItem>
                 </Select>
               </Stack>
 

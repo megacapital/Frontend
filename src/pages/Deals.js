@@ -16,7 +16,6 @@ import apis from '../services';
 
 const Deals = () => {
   const [open, setOpen] = useState(false);
-  const [completedProject, setCompletedProjects] = useState(0);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { pathname } = useLocation();
@@ -42,6 +41,18 @@ const Deals = () => {
 
       if (response.statusText === 'OK') {
         const _pools = response.data.pools;
+        _pools.map((pool) => {
+          pool.privacy = pool?.whitelistable ? 'Private' : 'Public';
+          pool.tag = pool?.deal;
+
+          var startDateTime = new Date(pool.startDateTime)
+          var endDateTime = new Date(pool.endDateTime)
+          var nowDateTime = new Date();
+
+          if (nowDateTime < startDateTime) pool.status = 1; //upcoming
+          else if (nowDateTime <= endDateTime) pool.status = 2; //open
+          else if (nowDateTime > endDateTime) pool.status = 3; //closed
+        })
         setPools(_pools);
         console.log(pools);
       }
@@ -116,41 +127,42 @@ const Deals = () => {
               </Box>
             </Grid>
           </Grid>
-          {pools.length > 0 && (
-            <Box component="h2" color="#00BFFF" marginTop="20px">
-              Next To Launch
-            </Box>
-          )}
+
+          {/* Projects open */}
+          <Box component="h2" color="#00BFFF" marginTop="40px">
+            Projects Open Now
+          </Box>
+          <Grid container spacing={2}>
+            {pools.map((pool, poolIdx) => {
+              if (pool.status == 2)
+                return <LaunchCard key={poolIdx} {...pool}></LaunchCard>;
+            })}
+          </Grid>
+
+
+          {/* Next to launch */}
+          <Box component="h2" color="#00BFFF" marginTop="40px">
+            Projects Upcoming
+          </Box>
           <Grid container spacing={2}>
             {pools.length > 0 &&
               pools.map((pool, poolIdx) => {
-                const privacy = pool?.whitelistable ? 'Private' : 'Public';
-                const tag = pool?.deal;
-                return <LaunchCard key={poolIdx} privacy={privacy} tag={tag} {...pool}></LaunchCard>;
+                if (pool.status == 1)
+                  return <LaunchCard key={poolIdx} {...pool}></LaunchCard>;
               })}
           </Grid>
 
-          {completedProject > 0 && (
-            <Grid marginTop="50px" dispay="flex" position="relative" container direction="row">
-              <Box component="h4" position="relative" color="#56C5FF" fontSize={34}>
-                Completed Projects
-              </Box>
-              <Box component="p" position="absolute" right="0px" top="10px" fontSize={24} color="white">
-                View All Pools
-              </Box>
-            </Grid>
-          )}
-
-          {pools.length > 0 &&
-            pools.map((pool, poolIdx) => {
-              const isCompleted = getProjectStatus(pool?.startDateTime, pool?.endDateTime) === PROJECT_STATUS.completed;
-              const [privacy, tag] = pool?.whitelistable ? ['Private', 'VC'] : ['Public', 'IDO'];
-
-              if (isCompleted) {
-                if (completedProject === 0) setCompletedProjects((prevState) => prevState + 1);
-                return <MyProjectCard key={poolIdx} privacy={privacy} tag={tag} {...pool} />;
-              }
+          {/* Closed projects */}
+          <Box component="h2" color="#00BFFF" marginTop="40px">
+            Projects Closed
+          </Box>
+          <Grid container spacing={2}>
+            {pools.map((pool, poolIdx) => {
+              if (pool.status == 3)
+                return <LaunchCard key={poolIdx} {...pool}></LaunchCard>;
             })}
+          </Grid>
+
         </Grid>
       </MHidden>
 

@@ -61,6 +61,7 @@ export default function CreateStake() {
   const [token, setToken] = useState('');
   const [tokenError, setTokenError] = useState('');
   const [logo, setLogo] = useState('https://snipboard.io/QnhTJZ.jpg');
+  const [lockingdays, setLockingDays] = useState(56);
   const [rewardRate, setRewardRate] = useState(3);
   const [amount, setAmount] = useState(1000);
   const [amountError, setAmountError] = useState('');
@@ -212,9 +213,8 @@ export default function CreateStake() {
         var poolAddress;
         try {
           const bytecode = STAKE_CONTRACT_BYTECODE.object;
-          console.log(bytecode);
           const factory = new ethers.ContractFactory(STAKE_CONTRACT_ABI, bytecode, signer);
-          const contract = await factory.deploy(token, token, rewardRate);
+          const contract = await factory.deploy(token, token, rewardRate, lockingdays);
           console.log(contract.address);
           poolAddress = contract.address;
           await contract.deployTransaction.wait();
@@ -248,6 +248,7 @@ export default function CreateStake() {
             tokenAddress: token,
             rewardRate: rewardRate,
             logo: logo,
+            lockingdays: lockingdays,
             tvl: amount,
             startAt: date
           });
@@ -341,7 +342,7 @@ export default function CreateStake() {
             )}
             <TextField
               fullWidth
-              label="Amount"
+              label="Amount(You will send this amount to staking contract for rewards to users.)"
               type="number"
               error={Boolean(amountError)}
               helperText={amountError}
@@ -356,6 +357,16 @@ export default function CreateStake() {
               label="Token Logo URL"          
               value={logo}
               onChange={(e) => setLogo(e.target.value)}
+              sx={{
+                width: 1
+              }}
+              placeholder="https://tokenlogo.url"
+            />
+            <TextField
+              fullWidth
+              label="Locked Duration(days)"          
+              value={lockingdays}
+              onChange={(e) => setLockingDays(e.target.value)}
               sx={{
                 width: 1
               }}

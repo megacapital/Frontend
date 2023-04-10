@@ -10,7 +10,7 @@ import { atcb_action } from 'add-to-calendar-button';
 
 export default function LaunchCard(props) {
   const navigate = useNavigate();
-  const { name = '', weiRaised, address = '', tag = '', privacy = '', ipfs, startDateTime = 'TBA', endDateTime, sm = 4, logo, poster, projectName } = props;
+  const { name = '', weiRaised, hardCap, address = '', tag = '', privacy = '', ipfs, startDateTime = 'TBA', endDateTime, sm = 4, logo, poster, projectName } = props;
 
   const { chainId = 0 } = useSelector((store) => store.network);
   console.log(chainId);
@@ -69,7 +69,7 @@ export default function LaunchCard(props) {
                     Total Raise
                   </Box>
                   <Box component="p" position="absolute" right="0px" fontSize="24px">
-                    {weiRaised} {getNetworkSymbol(chainId)}
+                    {hardCap} {getNetworkSymbol(chainId)}
                   </Box>
                 </Grid>
               </Grid>
