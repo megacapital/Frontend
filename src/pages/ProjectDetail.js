@@ -9,7 +9,7 @@ import { useSelector } from 'redux/store';
 import useActiveWeb3React from 'hooks/useActiveWeb3React';
 import { displayFollowers, formattedDate, imageURL, isValidImage } from '../utils';
 import { useIDOContract, usePoolContract } from 'hooks/useContract';
-import { useStakingContract, useTokenContract } from '../hooks/useContract';
+import { useMainStakingContract } from '../hooks/useContract';
 import useGetBnbBalance from 'hooks/useTokenBalance';
 import { formatUnits, parseUnits, formatEther, parseEther } from '@ethersproject/units';
 import { atcb_action } from 'add-to-calendar-button';
@@ -898,7 +898,7 @@ function ProjectInformation({ data: poolInfo }) {
 
   //staking staus
   const [stakingamount, setStakingAmount] = useState(true); //user staking status, it is condition for user approving
-  const stakingContract = useStakingContract('0x28847a4C42D11E56b15BBA2Bb619889F4b3a97EC'); //MGV token
+  const stakingContract = useMainStakingContract(); //MGV token
   useEffect(() => {
     (async () => {
       const staked = await stakingContract.balances(account);

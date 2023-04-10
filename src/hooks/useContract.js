@@ -5,7 +5,7 @@ import IDO_ABI from 'config/abi/ido.json';
 import LOCK_ABI from 'config/abi/lock.json';
 import POOL_ABI from 'config/abi/pool.json';
 import STAKING_ABI from 'config/abi/staking.json';
-import { IDO_ADDRESS, LOCK_ADDRESS, STAKING_ADDRESS } from 'config/constants';
+import { IDO_ADDRESS, LOCK_ADDRESS, MAIN_STAKING_ADDRESS } from 'config/constants';
 // Imports below migrated from Exchange useContract.ts
 import { Contract } from '@ethersproject/contracts';
 import { useSelector } from 'react-redux';
@@ -47,6 +47,14 @@ export function useLockContract(withSignerIfPossible = true) {
 
 export function useStakingContract(contractAddress, withSignerIfPossible = true) {
   const network = useSelector((state) => state.network.chainId);
- 
+
   return useContract(contractAddress, STAKING_ABI, withSignerIfPossible);
 }
+
+// Main staking contract that determines IDO tier system
+export function useMainStakingContract(contractAddress, withSignerIfPossible = true) {
+  const network = useSelector((state) => state.network.chainId);
+
+  return useContract(MAIN_STAKING_ADDRESS[network], STAKING_ABI, withSignerIfPossible);
+}
+

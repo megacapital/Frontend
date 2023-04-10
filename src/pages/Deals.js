@@ -183,12 +183,6 @@ const Deals = () => {
           </Grid>
 
           <Grid container marginBottom="20px">
-            {pools.length > 0 && (
-              <Grid item xs={8} component="h2" color="#00BFFF" fontSize={18} marginTop="20px">
-                Next To Launch
-              </Grid>
-            )}
-
             <Grid item xs={2} marginTop="15px">
               <a href="/src/pages/PhoneCalendar">
                 <Box
@@ -215,22 +209,39 @@ const Deals = () => {
               </Box>
             </Grid>
           </Grid>
+
+
+          <Grid item xs={8} component="h2" color="#00BFFF" fontSize={18} marginTop="20px" marginBottom="20px">
+            Projects Open Now
+          </Grid>
           <Grid container spacing={2}>
-            {pools.length > 0 &&
-              pools.map((pool, poolIdx) => {
-                const [privacy, tag] = pool?.whitelistable ? ['Private', 'VC'] : ['Public', 'IDO'];
-                return <LaunchCard key={poolIdx} privacy={privacy} tag={tag} {...pool} />;
-              })}
+            {pools.map((pool, poolIdx) => {
+              if (pool.status == 2)
+                return <LaunchCard key={poolIdx} {...pool} />;
+            })}
           </Grid>
-          <Grid marginTop="30px" display="flex" justifyContent="center">
-            <Box component="p" fontSize={16} color="white">
-              View All Pools
-            </Box>
+
+          <Grid item xs={8} component="h2" color="#00BFFF" fontSize={18} marginTop="20px" marginBottom="20px">
+            Projects Upcoming
           </Grid>
-          <PhoneProjectCard angle="up"></PhoneProjectCard>
-          <PhoneProjectCard angle="down"></PhoneProjectCard>
-          <PhoneProjectCard angle="down"></PhoneProjectCard>
-          <PhoneProjectCard angle="down"></PhoneProjectCard>
+          <Grid container spacing={2}>
+            {pools.map((pool, poolIdx) => {
+              if (pool.status == 1)
+                return <LaunchCard key={poolIdx} {...pool} />;
+            })}
+          </Grid>
+
+
+          <Grid item xs={8} component="h2" color="#00BFFF" fontSize={18} marginTop="20px" marginBottom="20px">
+            Projects Closed
+          </Grid>
+          <Grid container spacing={2}>
+            {pools.map((pool, poolIdx) => {
+              if (pool.status == 3)
+                return <LaunchCard key={poolIdx} {...pool} />;
+            })}
+          </Grid>
+
         </Grid>
       </MHidden>
       {/* </Container> */}

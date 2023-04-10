@@ -77,7 +77,6 @@ export default function Router() {
         { path: '/liquidity-lock-detail/:token/:owner', element: <LiquidityLockDetailPage /> },
         { path: '/presales', element: <Presales /> },
 
-        { path: '/staking/:address', element: <StakingCard /> },
         // { path: '/admin-presales', element: account === ADMIN_ADDRESS[network] ? <AdminPresales /> : '' }
         { path: '/admin-presales', element: <AdminPresales /> },
         { path: '/admin', element: <Admin /> },
@@ -109,7 +108,6 @@ export default function Router() {
 // Dashboard
 const Presales = Loadable(lazy(() => import('pages/Presales')));
 const Stakepad = Loadable(lazy(() => import('pages/Stakepad')));
-const StakingCard = Loadable(lazy(() => import('pages/StakingCard')));
 const HomePage = Loadable(lazy(() => import('pages/HomePage')));
 const IdoDeals = Loadable(lazy(() => import('pages/IdoDeals')));
 const Deals = Loadable(lazy(() => import('pages/Deals')));

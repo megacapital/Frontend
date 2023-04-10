@@ -156,7 +156,6 @@ function PoolBox(poolInfo) {
 
   const { pool } = poolInfo;
   const { library, account } = useActiveWeb3React();
-  const [loader, setLoader] = useState(false);
   const tokenContract = useTokenContract(pool.tokenAddress);
   const stakingContract = useStakingContract(pool.address);
   const [data, setData] = useState({
@@ -169,7 +168,7 @@ function PoolBox(poolInfo) {
     tvl: 0, //pool information
     lockingReleaseTime: '', //user information
   });
-  const [openedPool, setOpenedPool] = useState(true);
+  const [openedPool, setOpenedPool] = useState(false);
   const [processing, setProcessing] = useState(false);
   useEffect(() => {
     // let unmounted = false;
@@ -183,10 +182,6 @@ function PoolBox(poolInfo) {
           const decimals = await tokenContract.decimals();
           const staked = await stakingContract.balances(account);
           const rewards = await stakingContract.earned(account);
-
-          let locktime = await stakingContract.locktime();
-          locktime = Number(formatUnits(locktime, 0));
-          let locktime_indays = locktime / 60 / 60 / 24;
 
           let lockingReleaseTime = await stakingContract.lockingReleaseTime(account);
           lockingReleaseTime = formatUnits(lockingReleaseTime, 0);
@@ -209,19 +204,16 @@ function PoolBox(poolInfo) {
             staked: formatUnits(staked, decimals),
             rewards: formatUnits(rewards, decimals),
             tvl: formatUnits(pool_tvl, decimals),
-            locktime_indays,
             lockingReleaseTime,
           });
-          setLoader(true);
         } catch (error) {
-          setLoader(true);
         }
         setProcessing(false);
       })();
     }
-  }, [account, tokenContract, pool, loader, openedPool]);
+  }, [account, tokenContract, pool, openedPool]);
 
-  const toggleOpenedPool = () => setOpenedPool((prevState) => !prevState);
+  const toggleOpenedPool = () => { setProcessing(true); setOpenedPool((prevState) => !prevState) };
 
   const handleStake = async () => {
     var bignumber_staking_amount = parseUnits(String(data.staking_amount), data.token_decimal);
@@ -285,8 +277,8 @@ function PoolBox(poolInfo) {
     <>
       <Box
         borderRadius={1}
-        sx={{ cursor: 'pointer', bgcolor: '#272727', p: '10px', marginBottom: '5px' }}
-      // onClick={toggleOpenedPool}
+        sx={{ cursor: 'pointer', bgcolor: '#272727', p: '10px', marginBottom: '5px', marginTop: '30px' }}
+        onClick={toggleOpenedPool}
       >
         <Grid container spacing={2}>
           <Grid item sm={4}>
@@ -301,7 +293,7 @@ function PoolBox(poolInfo) {
             <Grid item sx={{ marginRight: '20px' }}>
               <Box sx={{ fontSize: 15, color: 'white' }}> Duration</Box>
               <Box sx={{ fontSize: 20 }} color="white" >
-                {data.locktime_indays} days
+                {pool.lockingdays} days
               </Box>
             </Grid>
             <Grid item sx={{ marginRight: '20px' }}>
@@ -324,7 +316,7 @@ function PoolBox(poolInfo) {
       </Box>
       {openedPool &&
         (processing ? (
-          <></>
+          <>loading...</>
           // <Grid
           //   container
           //   borderRadius={1}
@@ -347,7 +339,6 @@ function PoolBox(poolInfo) {
             borderRadius={1}
             bgcolor={'#232323'}
             marginTop="5px"
-            marginBottom="40px"
             paddingBottom={'20px'}
             marginLeft="0px"
             columnSpacing={4}
@@ -430,7 +421,7 @@ function PoolBox(poolInfo) {
               >
                 HARVEST {data.rewards} {pool.tokenSymbol}
               </Button>
-              <Box marginTop="8px">Your Lock time: {data.lockingReleaseTime}. Harvesting will reset the lock time. </Box>
+              <Box marginTop="8px">Your Lock time: {data.lockingReleaseTime} Harvesting will reset the lock time. </Box>
             </Grid>
           </Grid>
         ))}
