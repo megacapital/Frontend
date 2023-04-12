@@ -85,7 +85,7 @@ export default function Calender() {
   };
 
   return (
-    <Page title='Megacapital' style={{ backgroundColor: '#171819' }}>
+    <Page style={{ backgroundColor: '#171819' }}>
       <div id='myModal' className='modal'>
         <div className='modal-content'>
           <span className='close'>&times;</span>

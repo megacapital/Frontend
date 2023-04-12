@@ -115,7 +115,7 @@ export default function HomePage(props) {
   }));
   return (
     <>
-      <Page title='Megacapital' style={{ backgroundColor: '#171819' }}>
+      <Page style={{ backgroundColor: '#171819' }}>
         <>
           <Heading></Heading>
           <Invest></Invest>

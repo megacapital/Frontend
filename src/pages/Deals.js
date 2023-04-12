@@ -63,7 +63,7 @@ const Deals = () => {
   }, [account, dispatch, network, tab]);
 
   return (
-    <Page title="Megacapital" style={{ backgroundColor: '#171819' }}>
+    <Page  style={{ backgroundColor: '#171819' }}>
       <MHidden width="mdDown">
         <Grid paddingLeft={'14%'} paddingRight={'14%'} paddingTop="30px">
           <Modal

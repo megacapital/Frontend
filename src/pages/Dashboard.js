@@ -127,7 +127,7 @@ export default function Stakepad() {
         }
     }
     return (
-        <Page title="Megacapital" style={{ backgroundColor: "#171819" }} >
+        <Page  style={{ backgroundColor: "#171819" }} >
             {/* <Container maxWidth='md'> */}
             <MHidden width="mdDown">
 

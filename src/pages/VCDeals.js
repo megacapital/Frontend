@@ -71,7 +71,7 @@ export default function IdoDeals() {
   }, [account, network, tab]);
 
   return (
-    <Page title="Megacapital" style={{ backgroundColor: "#171819" }}>
+    <Page  style={{ backgroundColor: "#171819" }}>
       {/* <Container maxWidth='md'> */}
       {/* <Modal show={show} onHide={() => setShow(true)}> */}
       <Grid paddingLeft={'14%'} paddingRight={'14%'} paddingTop="30px">

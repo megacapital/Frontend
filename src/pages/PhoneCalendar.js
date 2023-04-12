@@ -157,7 +157,7 @@ export default function PhoneCalendar() {
   ]
   return (
     <> 
-    <Page title="Megacapital"  style={{backgroundColor:"#171819"}} paddingLeft="5px" paddingRight="5px">
+    <Page   style={{backgroundColor:"#171819"}} paddingLeft="5px" paddingRight="5px">
       <Box justifyContent="center" display="flex" marginBottom="30px">
           <Calendar
           onClickMonth={handleMonthChange}

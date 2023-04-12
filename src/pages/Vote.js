@@ -65,7 +65,7 @@ export default function Vote() {
   }, [hash]);
 
   return (
-    <Page title='Megacapital' style={{ backgroundColor: '#171819' }}>
+    <Page  style={{ backgroundColor: '#171819' }}>
       {/* <Container maxWidth='md'> */}
       <MHidden width='mdDown'>
         <Grid paddingLeft={'10%'} paddingRight={'10%'} paddingTop='70px'>

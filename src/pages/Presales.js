@@ -190,7 +190,7 @@ export default function Presales() {
   );
 
   return (
-    <Page title="Megacapital">
+    <Page >
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Hidden smDown>
           <Tabs

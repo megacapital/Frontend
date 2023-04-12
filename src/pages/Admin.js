@@ -10,7 +10,7 @@ import { Link, useNavigate } from 'react-router-dom'
 export default function Admin() {
   const navigate = useNavigate();
   return (
-    <Page title="Megacapital" style={{ backgroundColor: '#171819' }}>
+    <Page  style={{ backgroundColor: '#171819' }}>
       <Grid container paddingLeft={'5%'} paddingRight={'5%'} paddingTop="30px">
         <Grid container direction="row" position="relative" display="flex" borderRadius={2}>
           <Grid item md={3} sm={3} xs={12} padding="5px">

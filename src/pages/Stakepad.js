@@ -22,7 +22,7 @@ import apis from 'services';
 
 export default function Stakepad() {
   return (
-    <Page title="Megacapital" style={{ backgroundColor: '#171819' }}>
+    <Page  style={{ backgroundColor: '#171819' }}>
       <Grid>
         <MHidden width="mdDown">
           <Grid paddingLeft={'10%'} paddingRight={'10%'} paddingTop="30px">

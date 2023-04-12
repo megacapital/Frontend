@@ -52,7 +52,7 @@ export default function IdoDeals(){
   }, [account, dispatch, network,tab]);
 
   return (
-    <Page title="Megacapital" style={{backgroundColor:"#171819"}}>
+    <Page  style={{backgroundColor:"#171819"}}>
       {/* <Container maxWidth='md'> */}
         {isLoading ? (
           <Loader type="ThreeDots" color="#00BFFF" height={30} width={30} />
