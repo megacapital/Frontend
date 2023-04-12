@@ -9,7 +9,6 @@ import { useSelector } from 'redux/store';
 import useActiveWeb3React from 'hooks/useActiveWeb3React';
 import { displayFollowers, formattedDate, imageURL, isValidImage } from '../utils';
 import { useIDOContract, usePoolContract } from 'hooks/useContract';
-import { useMainStakingContract } from '../hooks/useContract';
 import useBalanceStatus from 'hooks/useTokenBalance';
 import { useMainStakingStatus } from 'hooks/useMyStatus';
 import { formatUnits, parseUnits, formatEther, parseEther } from '@ethersproject/units';

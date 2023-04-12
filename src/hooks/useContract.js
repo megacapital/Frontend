@@ -52,7 +52,7 @@ export function useStakingContract(contractAddress, withSignerIfPossible = true)
 }
 
 // Main staking contract that determines IDO tier system
-export function useMainStakingContract(contractAddress, withSignerIfPossible = true) {
+export function useMainStakingContract( withSignerIfPossible = true) {
   const network = useSelector((state) => state.network.chainId);
 
   return useContract(MAIN_STAKING_ADDRESS[network], STAKING_ABI, withSignerIfPossible);

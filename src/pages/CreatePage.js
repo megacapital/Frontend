@@ -89,7 +89,6 @@ function Create() {
   const approved = useSelector((state) => state.tokenListing.approved);
   const dispatch = useDispatch();
   const [activeStep, setActiveStep] = useState(0); // 0 default
-  // 0xD556Be2846DC9da80C3551D83c42A7Ad94bdADD8
   const [isApproving, setIsApproving] = useState(false);
   const [isParsing, setIsParsing] = useState(false);
   const params = useParams();
