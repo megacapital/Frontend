@@ -59,7 +59,7 @@ export default function DashboardFooter() {
               display="flex"
             >
               <Grid>Want to launch your project</Grid>
-              <Grid> on MegaCapital</Grid>
+              <Grid> on  {process.env.REACT_APP_PROJECT_NAME}</Grid>
             </Grid>
             <Grid
               item
@@ -320,7 +320,7 @@ export default function DashboardFooter() {
           <Box borderRadius={'30%'} sx={{ width: '100%', height: '4px', bgcolor: '#3b3b3b' }} marginTop="20px" />
           <Grid container marginTop="20px">
             <Grid item lg={9}>
-              <Box color="white">copyright @ 2022, megacapital . All Right Reserved</Box>
+              <Box color="white">copyright @ 2023,  {process.env.REACT_APP_PROJECT_NAME} . All Right Reserved</Box>
             </Grid>
             <Grid item lg={3}>
               <Box position="relative" justifyContent={'flex-end'} color="white">
@@ -385,7 +385,7 @@ export default function DashboardFooter() {
               sm={12}
               marginTop="30px"
               padding="0 10px"
-              component="h4"           
+              component="h4"
               color="white"
               alignItems={'center'}
               justifyContent="center"
@@ -415,10 +415,10 @@ export default function DashboardFooter() {
             {/* </div> */}
           </Grid>
         </Grid>
-        <Grid item  xs={12} marginTop="40px" display="flex" justifyContent="center">
+        <Grid item xs={12} marginTop="40px" display="flex" justifyContent="center">
           <Box component="img" src={imageURL('logo.png')}></Box>
         </Grid>
-        <Grid item  xs={12} marginTop="20px" padding="0px 20px">
+        <Grid item xs={12} marginTop="20px" padding="0px 20px">
           <Box textAlign="center" color="white">
             Lorem ipsum dolor sit amet consectetur adipiscing elit Pharetra tortor nec
           </Box>
@@ -655,7 +655,7 @@ export default function DashboardFooter() {
           </Box>
         </Grid>
         <Grid padding="0 15px" marginTop="30px" color="white" fontSize={14}>
-          copyright @ 2022, <span style={{ color: '#56C5FF' }}>megacapital</span>.
+          copyright @ 2023, <span style={{ color: '#56C5FF' }}>{process.env.REACT_APP_PROJECT_NAME}</span>.
           <span style={{ fontStyle: 'italic' }}>All Right Reserved</span>
         </Grid>
       </MHidden>

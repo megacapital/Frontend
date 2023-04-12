@@ -46,7 +46,7 @@ export default function Token() {
               style={{ marginBottom: '25px' }}
               color="white"
             >
-              MegaCapital Token Is developed on Binance Smart Chain to serve as a native token for our $MGV Ecosystem.
+               {process.env.REACT_APP_PROJECT_NAME} Token Is developed on Binance Smart Chain to serve as a native token for our $MGV Ecosystem.
               The features & use cases includes as follows : <br />
             </Box>
           </Typography>
@@ -204,7 +204,7 @@ export default function Token() {
               style={{ marginBottom: '25px', padding: '0 8%' }}
               color="white"
             >
-              MegaCapital Token Is developed on Binance Smart Chain to serve as a native token for our $MGV Ecosystem.
+               {process.env.REACT_APP_PROJECT_NAME} Token Is developed on Binance Smart Chain to serve as a native token for our $MGV Ecosystem.
               The features & use cases includes as follows :
             </Box>
           </Typography>

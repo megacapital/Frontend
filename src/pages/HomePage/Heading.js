@@ -99,7 +99,7 @@ export default function Heading() {
                 target="_blank"
                 marginBottom="5px"
                 style={{ boxShadow: 'inset -1px -1px 3px rgba(224, 229, 230, 0.29)' }}
-                href={'https://twitter.com/Megacapitals'}
+                href={`https://twitter.com/Megacapitals`}
                 alignItems="center"
                 sx={{ width: 42, height: 42, bgcolor: '#232323', borderRadius: '50%', padding: '10px' }}
               >
@@ -144,14 +144,13 @@ export default function Heading() {
           <Grid item sm={5.4} marginLeft="10px" width="50%" marginTop='40px'>
             <Grid>
               <h3 style={{ color: 'white' }} >
-                MegaCapital
+                {process.env.REACT_APP_PROJECT_NAME}
               </h3>
               <h3 className="mb-5 mt-1"> An Advance Launchpad & Community based Venture Capital Ecosystem </h3>
             </Grid>
-            {/* <p style={{ fontSize: '20px', marginBottom: '20px' }}>Megacapital  is a decentr alized venture capital community-based with all-in-one Multichain & Multi-Launchpad investment ecosystem for Metaverse, GamiFI and DEFI .</p> */}
             <Grid marginTop={3}>
               <p className="mb-7 " fontFamily={font_Family} align="justify">
-                <span style={{ color: '#4EB4E2' }}>MegaCapital</span> is a decentralized community based Venture Capital
+                <span style={{ color: '#4EB4E2' }}> {process.env.REACT_APP_PROJECT_NAME}</span> is a decentralized community based Venture Capital
                 & Launchpad with Multi-Chain interoperability and core focus in incubating projects that are developed
                 on <span style={{ color: '#4EB4E2' }}>Metaverse, Web 3.0, GamiFi, NFTs and DeFi Technologies</span> .
               </p>
@@ -200,11 +199,11 @@ export default function Heading() {
 
         <Grid paddingLeft="13%" paddingRight="13%" marginTop="20px" display="flex" justifyContent="center">
           <h4 style={{ fontSize: '28px', color: 'white' }} className="mb-5 ">
-            MegaCapital - An Advance Launchpad & Community based Venture Capital Ecosystem
+            {process.env.REACT_APP_PROJECT_NAME} - An Advance Launchpad & Community based Venture Capital Ecosystem
           </h4>
         </Grid>
         <Grid paddingLeft="10%" paddingRight="10%" textAlign="center">
-          <span style={{ color: '#4EB4E2' }}>{t('Megacapital')}</span>&nbsp;
+          <span style={{ color: '#4EB4E2' }}>{t(process.env.REACT_APP_PROJECT_NAME)}</span>&nbsp;
           <span style={{ color: 'white' }}>{t('is_a_decentralized')} </span>
           <span style={{ color: '#4EB4E2' }}>
             &nbsp;{t('venture')}

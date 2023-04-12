@@ -103,12 +103,12 @@ export default function Invest() {
                   sx={{ color: '#56C5FF', borderBottom: '2px solid #56C5FF' }}
                   paddingBottom="20px"
                 >
-                  MegaCapital’s Project Insurance Fund
+                   {process.env.REACT_APP_PROJECT_NAME}’s Project Insurance Fund
                 </Box>
               </Box>
               <Box padding="0 8%" textAlign="center">
                 <Box component="span" style={{ color: '#56C5FF', marginTop: '40px', fontSize: 12 }}>
-                  To ensure the safety & growth of its Community & Investors, Megacapital offers Project Insurance
+                  To ensure the safety & growth of its Community & Investors,  {process.env.REACT_APP_PROJECT_NAME} offers Project Insurance
                   Protection Fund
                 </Box>
               </Box>
@@ -135,7 +135,7 @@ export default function Invest() {
                   </Box>
                 </Box>
                 <Box component="p" color="white" fontFamily={'Segoe UI'} marginLeft="20px">
-                  To ensure the safety and growth of its community, Megacapital Offer insurance protection fund.
+                  To ensure the safety and growth of its community,  {process.env.REACT_APP_PROJECT_NAME} Offer insurance protection fund.
                 </Box>
               </Grid>
             </Grid>
