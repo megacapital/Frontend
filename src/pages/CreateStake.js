@@ -21,16 +21,13 @@ import { useWeb3React } from '@web3-react/core';
 import useActiveWeb3React from 'hooks/useActiveWeb3React';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router';
-import Label from 'components/Label';
 import Page from 'components/Page';
 import { BigNumber } from 'ethers';
-import { LOCK_ADDRESS } from '../config/constants';
 import { formatUnits, parseUnits, commify } from '@ethersproject/units';
 import { useSnackbar } from 'notistack';
 import { useLockContract } from 'hooks/useContract';
 import Loader from 'react-loader-spinner';
 import HashLoader from 'react-spinners/HashLoader';
-import CopyClipboard from 'components/CopyToClipboard';
 import axios from '../utils/axios';
 import { ethers } from 'ethers';
 import STAKE_CONTRACT_BYTECODE from '../config/bytecode/staking.json';
@@ -394,7 +391,6 @@ export default function CreateStake() {
             />
           </Stack>
           <Stack sx={{ mt: 2 }} alignItems="center" spacing={1}>
-            {/* <Typography>You will pay: 0.1BNB</Typography> */}
             <Button size="large" variant="contained" className="btn btn-info text-light mt-2 mx-4" onClick={handleCreate}>
               {processing ? <HashLoader color="#59f1f6" size={30} /> : 'Create Pool'}
             </Button>

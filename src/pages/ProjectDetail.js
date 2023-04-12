@@ -4,7 +4,7 @@ import MHidden from 'components/@material-extend/MHidden';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import apis from 'services';
 import { useLocation } from 'react-router-dom';
-import { getNetworkImage, getNetworkSymbol } from 'utils/networkSymbol';
+import { getNetworkImage } from 'utils/networkSymbol';
 import { useSelector } from 'redux/store';
 import useActiveWeb3React from 'hooks/useActiveWeb3React';
 import { displayFollowers, formattedDate, imageURL, isValidImage } from '../utils';
@@ -18,9 +18,12 @@ import 'add-to-calendar-button/assets/css/atcb.css';
 import { number } from 'yup';
 import { ADMIN_WALLETS } from 'config/constants';
 import { TIER_DEPOSIT_PERCENT } from 'config/constants';
+import { CURRENCY_SYMBOL } from 'config/constants';
 
 export default function ProjectDetail() {
-  const { chainId = 0 } = useSelector((store) => store.network);
+  // const { chainId = 0 } = useSelector((store) => store.network);
+
+  const { account, chainId } = useActiveWeb3React();
   const { balance } = useBalanceStatus();
   const { pathname, hash } = useLocation();
 
@@ -81,13 +84,13 @@ export default function ProjectDetail() {
           <Grid paddingLeft='13%' paddingRight='13%'>
             <Grid container spacing={1} paddingTop='30px'>
               <Grid item sm={3}>
-                <CustomCard name='Token Price' number={`${Number(1 / data?.presaleRate) || 0} ${getNetworkSymbol(chainId)}`}></CustomCard>
+                <CustomCard name='Token Price' number={`${Number(1 / data?.presaleRate) || 0} ${CURRENCY_SYMBOL[chainId]}`}></CustomCard>
               </Grid>
               <Grid item sm={3}>
-                <CustomCard name='Soft Cap' number={`${data?.softCap || 0} ${getNetworkSymbol(chainId)}`}></CustomCard>
+                <CustomCard name='Soft Cap' number={`${data?.softCap || 0} ${CURRENCY_SYMBOL[chainId]}`}></CustomCard>
               </Grid>
               <Grid item sm={3}>
-                <CustomCard name='Hard Cap' number={`${data?.hardCap || 0} ${getNetworkSymbol(chainId)}`}></CustomCard>
+                <CustomCard name='Hard Cap' number={`${data?.hardCap || 0} ${CURRENCY_SYMBOL[chainId]}`}></CustomCard>
               </Grid>
               <Grid item sm={3}>
                 <CustomCard name='Type' number={data?.type}></CustomCard>
@@ -355,13 +358,13 @@ export default function ProjectDetail() {
           <Grid paddingLeft='5%' paddingRight='5%'>
             <Grid container spacing={1} paddingTop='30px'>
               <Grid item xs={6}>
-                <CustomCard name='Token Price' number={`${Number(1 / data?.presaleRate) || 0} ${getNetworkSymbol(chainId)}`}></CustomCard>
+                <CustomCard name='Token Price' number={`${Number(1 / data?.presaleRate) || 0} ${CURRENCY_SYMBOL[chainId]}`}></CustomCard>
               </Grid>
               <Grid item xs={6}>
-                <CustomCard name='Soft Cap' number={`${data?.softCap || 0} ${getNetworkSymbol(chainId)}`}></CustomCard>
+                <CustomCard name='Soft Cap' number={`${data?.softCap || 0} ${CURRENCY_SYMBOL[chainId]}`}></CustomCard>
               </Grid>
               <Grid item xs={6}>
-                <CustomCard name='Hard Cap' number={`${data?.hardCap || 0} ${getNetworkSymbol(chainId)}`}></CustomCard>
+                <CustomCard name='Hard Cap' number={`${data?.hardCap || 0} ${CURRENCY_SYMBOL[chainId]}`}></CustomCard>
               </Grid>
               <Grid item xs={6}>
                 <CustomCard name='Type' number={data?.type}></CustomCard>
@@ -654,8 +657,8 @@ function CustomCard(props) {
 }
 
 function ProjectInformation({ data: poolInfo }) {
-  const chainId = useSelector((store) => store.network.chainId);
-  const { account, library } = useActiveWeb3React();
+  // const chainId = useSelector((store) => store.network.chainId); //TO_DO check 
+  const { account, library, chainId } = useActiveWeb3React();
   const [approved, setApproved] = useState(false); //user preapproving status
   const [buyCondition, setBuyCondition] = useState(false); //condition for user buying
   const [started, setStarted] = useState(false);
@@ -936,7 +939,7 @@ function ProjectInformation({ data: poolInfo }) {
             </Grid>
             <Grid item sm={3} >
               <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {poolInfo?.hardCap} {getNetworkSymbol(chainId)}
+                {poolInfo?.hardCap} {CURRENCY_SYMBOL[chainId]}
               </Grid>
               <Grid item color='#56C5FF' justifyContent='right' display='flex'>
                 {formattedDate(poolInfo?.startDateTime)}
@@ -977,7 +980,6 @@ function ProjectInformation({ data: poolInfo }) {
                 {poolInfo?.category}
               </Grid>
               <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {/* {getNetworkSymbol(chainId, true)} */}
                 {poolInfo?.blockchain}
               </Grid>
               <Grid item color='#56C5FF' justifyContent='right' display='flex'>
@@ -989,7 +991,7 @@ function ProjectInformation({ data: poolInfo }) {
             </Grid>
           </Grid>
           <Grid item sm={12} marginTop='50px'>
-            <Box color='#56C5FF'>{etherRaised}/{poolInfo?.hardCap} {getNetworkSymbol(chainId)}</Box>
+            <Box color='#56C5FF'>{etherRaised}/{poolInfo?.hardCap} {CURRENCY_SYMBOL[chainId]}</Box>
             <Box position='relative' display='flex'>
               <Box width='100%' height='10px' borderRadius={2} backgroundColor='white' />
               <Box
@@ -1016,16 +1018,16 @@ function ProjectInformation({ data: poolInfo }) {
               Token Price
             </Grid>
             <Grid item sm={3} fontSize={28} color='white'>
-              {myCollaboration} {getNetworkSymbol(chainId)}
+              {myCollaboration} {CURRENCY_SYMBOL[chainId]}
             </Grid>
             <Grid item sm={3} fontSize={28} color='white'>
-              {poolInfo?.minAllocationPerUser} {getNetworkSymbol(chainId)}
+              {poolInfo?.minAllocationPerUser} {CURRENCY_SYMBOL[chainId]}
             </Grid>
             <Grid item sm={3} fontSize={28} color='white'>
-              {maxAllocationHere} {getNetworkSymbol(chainId)}
+              {maxAllocationHere} {CURRENCY_SYMBOL[chainId]}
             </Grid>
             <Grid item sm={3} fontSize={28} color='white'>
-              {Number(1 / poolInfo?.presaleRate)} {getNetworkSymbol(chainId)}
+              {Number(1 / poolInfo?.presaleRate)} {CURRENCY_SYMBOL[chainId]}
             </Grid>
           </Grid>
 
@@ -1057,7 +1059,7 @@ function ProjectInformation({ data: poolInfo }) {
             <>
               <Grid item container marginTop='20px'>
                 <Grid item sm={12} color='#56C5FF'>
-                  Your BNB balance: {tokenBalance}
+                  Your {CURRENCY_SYMBOL[chainId]} balance: {tokenBalance}  . Max deposit {myMaxDeposit}
                   <br />
                   Max Deposit For Your Tier({tier}, {myTierLevelCount} users): {myMaxDeposit}
                 </Grid>
@@ -1135,7 +1137,7 @@ function ProjectInformation({ data: poolInfo }) {
               HARDCAP
             </Grid>
             <Grid item xs={12} color='#56C5FF'>
-              {poolInfo?.hardCap} {getNetworkSymbol(chainId)}
+              {poolInfo?.hardCap} {CURRENCY_SYMBOL[chainId]}
             </Grid>
             <Grid item xs={12} color='white' marginTop='15px'>
               OPEN TIME
@@ -1193,7 +1195,7 @@ function ProjectInformation({ data: poolInfo }) {
             </Box>
           </Grid>
           <Grid item xs={12} marginTop='30px' width='100%'>
-            <Box color='#56C5FF'>{etherRaised}/{poolInfo?.hardCap} {getNetworkSymbol(chainId)}</Box>
+            <Box color='#56C5FF'>{etherRaised}/{poolInfo?.hardCap} {CURRENCY_SYMBOL[chainId]}</Box>
             <Box position='relative' display='flex'>
               <Box width='100%' height='10px' borderRadius={2} backgroundColor='white' />
               <Box
@@ -1211,25 +1213,25 @@ function ProjectInformation({ data: poolInfo }) {
               Your Contribution
             </Grid>
             <Grid item xs={6} fontSize={22} color='white' display='flex' justifyContent='flex-end'>
-              {myCollaboration} {getNetworkSymbol(chainId)}
+              {myCollaboration} {CURRENCY_SYMBOL[chainId]}
             </Grid>
             <Grid item xs={6} fontSize={16} color='#56C5FF'>
               Personal Min
             </Grid>
             <Grid item xs={6} fontSize={22} color='white' display='flex' justifyContent='flex-end'>
-              {poolInfo?.minAllocationPerUser} {getNetworkSymbol(chainId)}
+              {poolInfo?.minAllocationPerUser} {CURRENCY_SYMBOL[chainId]}
             </Grid>
             <Grid item xs={6} fontSize={16} color='#56C5FF'>
               Personal Max
             </Grid>
             <Grid item xs={6} fontSize={22} color='white' display='flex' justifyContent='flex-end'>
-              {maxAllocationHere} {getNetworkSymbol(chainId)}
+              {maxAllocationHere} {CURRENCY_SYMBOL[chainId]}
             </Grid>
             <Grid item xs={6} fontSize={16} color='#56C5FF'>
               Token Price
             </Grid>
             <Grid item xs={6} fontSize={22} color='white' display='flex' justifyContent='flex-end'>
-              {Number(1 / poolInfo?.presaleRate)} {getNetworkSymbol(chainId)}
+              {Number(1 / poolInfo?.presaleRate)} {CURRENCY_SYMBOL[chainId]}
             </Grid>
           </Grid>
 
@@ -1260,7 +1262,7 @@ function ProjectInformation({ data: poolInfo }) {
             <>
               <Grid item container marginTop='20px'>
                 <Grid item sm={12} color='#56C5FF'>
-                  Your BNB balance: {tokenBalance}  . Max deposit {myMaxDeposit}
+                  Your {CURRENCY_SYMBOL[chainId]} balance: {tokenBalance}  . Max deposit {myMaxDeposit}
                 </Grid>
                 <Grid item container sm={6} bgcolor='#232323' position='relative' display='flex'>
                   <Box

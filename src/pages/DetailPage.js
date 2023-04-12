@@ -55,6 +55,8 @@ import CopyClipboard from 'components/CopyToClipboard';
 import minAddress from 'utils/addressHelper';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { CURRENCY_SYMBOL } from 'config/constants';
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 const client = create({
   host: 'ipfs.infura.io',
@@ -95,7 +97,7 @@ export default function DetailPage() {
   const { enqueueSnackbar } = useSnackbar();
   const dispatch = useDispatch();
   const params = useParams();
-  const { account, library } = useActiveWeb3React();
+  const { account, library , chainId} = useActiveWeb3React();
   //amount to deposit
   const [amountToDeposit, setAmountToDeposit] = useState(0);
   const [maxAmountDeposit, setMaxAmountDeposit] = useState(0);
@@ -286,7 +288,7 @@ export default function DetailPage() {
             .gte(parseEther(String(minAllocationPerUser)))
         ) {
           enqueueSnackbar(
-            `Please contribute more than ${minAllocationPerUser} ${network == Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'
+            `Please contribute more than ${minAllocationPerUser} ${CURRENCY_SYMBOL[chainId]
             }!`,
             {
               variant: 'error'
@@ -300,7 +302,7 @@ export default function DetailPage() {
             .gt(parseEther(String(maxAmountDeposit)))
         ) {
           enqueueSnackbar(
-            `Please contribute less than ${maxAmountDeposit} ${network == Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'
+            `Please contribute less than ${maxAmountDeposit} ${CURRENCY_SYMBOL[chainId]
             }!`,
             {
               variant: 'error'
@@ -1029,7 +1031,7 @@ export default function DetailPage() {
                     <Typography>Soft Cap</Typography>
                     <Typography>
                       {commify(pool?.softCap)}
-                      {network == Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
+                      {CURRENCY_SYMBOL[chainId]}
                     </Typography>
                   </Stack>
                   <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.1)' }} />
@@ -1037,7 +1039,7 @@ export default function DetailPage() {
                     <Typography>Hard Cap</Typography>
                     <Typography>
                       {commify(pool?.hardCap)}
-                      {network == Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
+                      {CURRENCY_SYMBOL[chainId]}
                     </Typography>
                   </Stack>
                   {/* <Divider sx={{ my: 1.5, borderColor: "rgba(255, 255, 255, 0.1)" }} /> */}
@@ -1183,11 +1185,11 @@ export default function DetailPage() {
                   <Stack direction="row" justifyContent="space-between" marginTop="5px" padding="0 10px">
                     <Stack component="span" fontSize="0.7rem">
                       {commify(pool?.weiRaised)}
-                      {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
+                      {CURRENCY_SYMBOL[chainId]}
                     </Stack>
                     <Stack component="span" fontSize="0.7rem">
                       {commify(pool?.hardCap)}
-                      {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
+                      {CURRENCY_SYMBOL[chainId]}
                     </Stack>
                   </Stack>
                   {/* <Stack marginTop="10px">
@@ -1221,7 +1223,7 @@ export default function DetailPage() {
                           ) : (
                             <Button variant="contained" disabled style={{ marginTop: 20 }}>
                               Refunded ({depositedAmount} / {depositedAmount} {pool?.symbol}
-                              {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'})
+                              {CURRENCY_SYMBOL[chainId]})
                             </Button>
                           )
                         ) : (
@@ -1327,7 +1329,7 @@ export default function DetailPage() {
                     <span>Minimum Buy</span>
                     <span>
                       {commify(pool?.minAllocationPerUser)}
-                      {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
+                      {CURRENCY_SYMBOL[chainId]}
                     </span>
                   </Stack>
                   <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.1)' }} />
@@ -1335,7 +1337,7 @@ export default function DetailPage() {
                     <span>Maximum Buy</span>
                     <span>
                       {commify(pool?.maxAllocationPerUser)}
-                      {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
+                      {CURRENCY_SYMBOL[chainId]}
                     </span>
                   </Stack>
                   <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.1)' }} />
@@ -1347,7 +1349,7 @@ export default function DetailPage() {
                   <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
                     <span>My Contribution</span>
                     <Typography color={Number(depositedAmount) > 0 && 'primary'}>
-                      {depositedAmount} {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
+                      {depositedAmount} {CURRENCY_SYMBOL[chainId]}
                     </Typography>
                   </Stack>
                   <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
@@ -1657,11 +1659,11 @@ export default function DetailPage() {
                   <Stack direction="row" justifyContent="space-between" marginTop="5px" padding="0 10px">
                     <Stack component="span" fontSize="0.7rem">
                       {commify(pool?.weiRaised)}
-                      {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
+                      {CURRENCY_SYMBOL[chainId]}
                     </Stack>
                     <Stack component="span" fontSize="0.7rem">
                       {commify(pool?.hardCap)}
-                      {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
+                      {CURRENCY_SYMBOL[chainId]}
                     </Stack>
                   </Stack>
                   {/* <Stack marginTop="10px">
@@ -1695,7 +1697,7 @@ export default function DetailPage() {
                           ) : (
                             <Button variant="contained" disabled style={{ marginTop: 20 }}>
                               Refunded ({depositedAmount} / {depositedAmount} {pool?.symbol}
-                              {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'})
+                              {CURRENCY_SYMBOL[chainId]})
                             </Button>
                           )
                         ) : (
@@ -1801,7 +1803,7 @@ export default function DetailPage() {
                     <span>Minimum Buy</span>
                     <span>
                       {commify(pool?.minAllocationPerUser)}
-                      {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
+                      {CURRENCY_SYMBOL[chainId]}
                     </span>
                   </Stack>
                   <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.1)' }} />
@@ -1809,7 +1811,7 @@ export default function DetailPage() {
                     <span>Maximum Buy</span>
                     <span>
                       {commify(pool?.maxAllocationPerUser)}
-                      {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
+                      {CURRENCY_SYMBOL[chainId]}
                     </span>
                   </Stack>
                   <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.1)' }} />
@@ -1821,7 +1823,7 @@ export default function DetailPage() {
                   <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
                     <span>My Contribution</span>
                     <Typography color={Number(depositedAmount) > 0 && 'primary'}>
-                      {depositedAmount} {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
+                      {depositedAmount} {CURRENCY_SYMBOL[chainId]}
                     </Typography>
                   </Stack>
                   <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">

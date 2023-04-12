@@ -1,15 +1,12 @@
 import { Suspense, lazy } from 'react';
 import { Navigate, useRoutes, useLocation } from 'react-router-dom';
 // layouts
-// import MainLayout from 'layouts/main';
 import DashboardLayout from 'layouts/dashboard';
 import LogoOnlyLayout from 'layouts/LogoOnlyLayout';
 // components
 import LoadingScreen from 'components/LoadingScreen';
 import { useSelector } from 'react-redux';
 import { useWeb3React } from '@web3-react/core';
-import { ADMIN_ADDRESS } from 'config/constants';
-import Calender from 'pages/calender/Calender';
 
 // ----------------------------------------------------------------------
 

@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react';
 import { Box, Grid, Card, CardContent, CardActionArea } from '@mui/material';
 import { useSelector } from 'redux/store';
-import { getNetworkImage, getNetworkSymbol } from '../utils/networkSymbol';
+import { getNetworkImage } from '../utils/networkSymbol';
 import { useNavigate } from 'react-router-dom';
 import { formattedDate, imageURL, isValidImage } from '../utils';
 // import { atcb_init } from 'add-to-calendar-button';
 import 'add-to-calendar-button/assets/css/atcb.css';
 import { atcb_action } from 'add-to-calendar-button';
+import useActiveWeb3React from 'hooks/useActiveWeb3React';
+import { CURRENCY_SYMBOL } from 'config/constants';
 
 export default function LaunchCard(props) {
   const navigate = useNavigate();
   const { name = '', weiRaised, hardCap, address = '', tag = '', privacy = '', ipfs, startDateTime = 'TBA', endDateTime, sm = 4, logo, poster, projectName } = props;
 
-  const { chainId = 0 } = useSelector((store) => store.network);
-  console.log(chainId);
+  const { account, chainId } = useActiveWeb3React();
   const handleGoogleCalander = (e) => {
     e.stopPropagation();
     atcb_action({
@@ -69,7 +70,7 @@ export default function LaunchCard(props) {
                     Total Raise
                   </Box>
                   <Box component="p" position="absolute" right="0px" fontSize="24px">
-                    {hardCap} {getNetworkSymbol(chainId)}
+                    {hardCap} {CURRENCY_SYMBOL[chainId]}
                   </Box>
                 </Grid>
               </Grid>

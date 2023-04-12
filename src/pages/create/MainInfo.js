@@ -33,6 +33,8 @@ import { DesktopDateTimePicker } from '@mui/lab';
 // import { BigNumber } from '@ethersproject/bignumber';
 import { useSnackbar } from 'notistack';
 import { useIDOContract } from 'hooks/useContract';
+import useActiveWeb3React from 'hooks/useActiveWeb3React';
+import { CURRENCY_SYMBOL } from 'config/constants';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -45,6 +47,8 @@ const DesktopDateTimePickerStyle = styled(DesktopDateTimePicker)(({ theme }) => 
   }
 }));
 const MainInfo = ({ goBack, goNext }) => {
+  const { account, chainId } = useActiveWeb3React();
+
   const teamVesting_amount = useSelector((state) => state.tokenListing.teamVesting_amount);
   const teamVesting_first_percent = useSelector((state) => state.tokenListing.teamVesting_first_percent);
   const teamVesting_first_period = useSelector((state) => state.tokenListing.teamVesting_first_period);
@@ -249,7 +253,7 @@ const MainInfo = ({ goBack, goNext }) => {
                 helperText={touched.presale_rate && errors.presale_rate}
               />
               <Stack component="span" color="success.main">
-                If user spend 1 {network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'ETH' : 'BNB'}, user wil get {values.presale_rate} tokens. So token price is {1 / values.presale_rate} BNB.
+                If user spend 1 {CURRENCY_SYMBOL[chainId]}, user wil get {values.presale_rate} tokens. So token price is {1 / values.presale_rate} {CURRENCY_SYMBOL[chainId]}.
               </Stack>
             </Stack>
             {/* <Stack direction="row" spacing={3} alignItems="flex-start">
@@ -278,7 +282,7 @@ const MainInfo = ({ goBack, goNext }) => {
               <Stack spacing={1} flexGrow={1}>
                 <TextField
                   fullWidth
-                  label={network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'Soft Cap(ETH)' : 'Soft Cap(BNB)'}
+                  label={`Soft Cap(${CURRENCY_SYMBOL[chainId]})`}
                   type="number"
                   {...getFieldProps('soft_cap')}
                   error={Boolean(touched.soft_cap && errors.soft_cap)}
@@ -288,7 +292,7 @@ const MainInfo = ({ goBack, goNext }) => {
               <Stack spacing={1} flexGrow={1}>
                 <TextField
                   fullWidth
-                  label={network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'Hard Cap(ETH)' : 'Hard Cap(BNB)'}
+                  label={`Hard Cap(${CURRENCY_SYMBOL[chainId]})`}
                   type="number"
                   {...getFieldProps('hard_cap')}
                   error={Boolean(touched.hard_cap && errors.hard_cap)}
@@ -300,7 +304,7 @@ const MainInfo = ({ goBack, goNext }) => {
               <Stack spacing={1} flexGrow={1}>
                 <TextField
                   fullWidth
-                  label={network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'Minimum Buy(ETH)' : 'Minimum Buy(BNB)'}
+                  label={`Minimum Buy(${CURRENCY_SYMBOL[chainId]})`}
                   type="number"
                   {...getFieldProps('min_buy')}
                   error={Boolean(touched.min_buy && errors.min_buy)}
@@ -310,7 +314,7 @@ const MainInfo = ({ goBack, goNext }) => {
               <Stack spacing={1} flexGrow={1}>
                 <TextField
                   fullWidth
-                  label={network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'Maximum Buy(ETH)' : 'Maximum Buy(BNB)-automatically calculated'}
+                  label={`Maximum Buy(${CURRENCY_SYMBOL[chainId]})`}
                   type="number"
                   // {...getFieldProps('max_buy')}
                   error={Boolean(touched.max_buy && errors.max_buy)}

@@ -26,6 +26,7 @@ import Page from 'components/Page';
 import MHidden from 'components/@material-extend/MHidden'
 import { imageURL } from '../utils';
 import apis from 'services';
+import { CURRENCY_SYMBOL } from 'config/constants';
 
 // ----------------------------------------------------------------------
 
@@ -129,6 +130,7 @@ export default function Stakepad() {
         <Page title="Megacapital" style={{ backgroundColor: "#171819" }} >
             {/* <Container maxWidth='md'> */}
             <MHidden width="mdDown">
+
                 <Grid paddingLeft={'10%'} paddingRight={'10%'} paddingTop="30px"  >
                     <Grid container direction="row" position="relative" display="flex">
                         <Grid item height="60px" display="flex">
@@ -228,8 +230,14 @@ function ProgressCard() {
             <Grid item container md={3} direction="column" style={{ backgroundColor: "#232323", borderRadius: 5 }}>
                 <Grid item padding="10px"><Box component="img" width="100%" height="100px" position="relative" src={imageURL('bit.png')} ></Box></Grid>
                 <Grid item padding="10px" display="flex" position="relative" marginTop="10px">
-                    <Box fontSize="19px">Your Tier</Box>
+                    <Box fontSize="19px" color={'white'}>Your Tier</Box>
                     <Box position="absolute" padding="5px 10px 5px 10px" borderRadius={0.5} right="12px" style={{ backgroundColor: "rgba(255, 255, 255, 0.1)", color: "white" }}>{tier}</Box>
+                </Grid>
+                <Grid item padding="10px" display="flex" position="relative" marginTop="10px">
+                    <Box fontSize="19px" color={'white'}> Staked Amount</Box>
+                    <Box position="absolute" padding="5px 10px 5px 10px" borderRadius={0.5} right="12px" style={{ backgroundColor: "rgba(255, 255, 255, 0.1)", color: "white" }}>
+                        {staked_amount}
+                    </Box>
                 </Grid>
                 {/* <Grid item marginTop="10px"><Box component="button" border="none" borderRadius={1} height="30px" width="100%" style={{ backgroundColor: "#56C5FF", color: "white" }}>INFO</Box></Grid> */}
             </Grid>
@@ -391,7 +399,7 @@ function MyProjectCard(props) {
     );
 }
 function YourParticipationBox() {
-    const { account } = useActiveWeb3React();
+    const { account, chainId } = useActiveWeb3React();
     const [dealsStatus, setDealsStatus] = useState([])
     const [totalParticipate, setTotalParticipate] = useState(0)
     useEffect(() => {
@@ -406,7 +414,7 @@ function YourParticipationBox() {
                     total += Number(item.deposit_amount)
                 })
                 setTotalParticipate(total)
-               
+
             } else {
                 console.log('getUserParticipations: ', response.data.message)
             }
@@ -424,7 +432,7 @@ function YourParticipationBox() {
             </Grid>
             <Grid container direction={"row"} marginTop="10px" spacing={2} >
                 <Grid item md={6}><ProjectCard title="Allocated Projects" amount={dealsStatus.length}></ProjectCard></Grid>
-                <Grid item md={6}><ProjectCard title="Total Allocated" amount={totalParticipate + " "+"BNB"}></ProjectCard></Grid>
+                <Grid item md={6}><ProjectCard title="Total Allocated" amount={totalParticipate + " " + CURRENCY_SYMBOL[chainId]}></ProjectCard></Grid>
             </Grid>
 
             <Grid container direction="row" bgcolor="#232323" width="100%" marginTop="30px" borderRadius={1}>
@@ -448,7 +456,7 @@ function YourParticipationBox() {
                         <Grid item md={1.5} display="flex" justifyContent="center" color="white">{item.projectName}</Grid>
                         <Grid item md={1.5} display="flex" justifyContent="center" color="white">{item.deal}</Grid>
                         <Grid item md={3} display="flex" justifyContent="center" color="white">{new Date(item.updatedAt).toDateString()}</Grid>
-                        <Grid item md={3} display="flex" justifyContent="center" color="white">{item.deposit_amount}</Grid>
+                        <Grid item md={3} display="flex" justifyContent="center" color="white">{item.deposit_amount} {CURRENCY_SYMBOL[chainId]}</Grid>
                         <Grid item md={1.5} display="flex" justifyContent="center" color="white">0.0000</Grid>
                         <Grid item md={1} display="flex" justifyContent="center" bgColor="#303030" width="100%" color="#56C5FF">
                             <Box display="flex" justifyContent="center" backgroundColor="rgba(255, 255, 255, 0.1)" width="70px" height="30px">Claim</Box>

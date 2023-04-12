@@ -9,44 +9,42 @@ import { nodes } from "./getRpcUrl";
  * Prompt the user to add BSC as a network on Metamask, or switch to BSC if the wallet is on a different network
  * @returns {boolean} true if the setup succeeded, false otherwise
  */
-export const setupNetwork = async (network) => {
+export const setupNetwork = async (network) => { 
   const provider = window.ethereum;
   if (provider) {
-    const chainId = Number(network);
-    try {
-      if (chainId === Number(process.env.REACT_APP_BSC_CHAINID)){
-        await provider.request({
-          method: "wallet_addEthereumChain",
-          params: [
-            {
-              chainId: `0x${chainId.toString(16)}`,
-              chainName: NETWORK_NAME[process.env.REACT_APP_BSC_CHAINID],
-              nativeCurrency: {
-                name: CURRENCY_NAME[process.env.REACT_APP_BSC_CHAINID],
-                symbol: CURRENCY_SYMBOL[process.env.REACT_APP_BSC_CHAINID],
-                decimals: 18,
-              },
-              rpcUrls: nodes[chainId],
-              blockExplorerUrls: [`${SCAN_URL[process.env.REACT_APP_BSC_CHAINID]}/`],
-            },
-          ],
-        });
-      }else if (chainId === Number(process.env.REACT_APP_ETHEREUM_CHAINID)){
+    const requested_chainId_str = `0x${Number(network).toString(16)}`;
+    if (provider.chainId != requested_chainId_str) {
+      try {
         await provider.request({
           method: "wallet_switchEthereumChain",
           params: [
             {
-              chainId: `0x${chainId.toString(16)}`              
+              chainId: requested_chainId_str
             },
           ],
         });
+      } catch (switchError) {
+        console.log('$$$$$$$$$$$$$$$$',switchError)
+        if (switchError.code === 4902) { // You can make a request to add the chain to wallet here     
+          await provider.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: requested_chainId_str,
+                chainName: NETWORK_NAME[network],
+                nativeCurrency: {
+                  name: CURRENCY_NAME[network],
+                  symbol: CURRENCY_SYMBOL[network],
+                  decimals: 18,
+                },
+                rpcUrls: nodes[network],
+                blockExplorerUrls: [`${SCAN_URL[network]}/`],
+              },
+            ],
+          });
+        }
+        return 0;
       }
-      
-
-      return 1;
-    } catch (error) {
-      console.error(error);
-      return 0;
     }
   } else {
     console.error(

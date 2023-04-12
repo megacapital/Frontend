@@ -25,6 +25,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setPoolStatusChanged } from '../redux/slices/pools';
 import { BigNumber } from 'ethers';
 import { useSnackbar } from 'notistack';
+import useActiveWeb3React from 'hooks/useActiveWeb3React';
+import { CURRENCY_SYMBOL } from 'config/constants';
 
 const TitleStyle = styled(Typography)(({ theme }) => ({
   ...theme.typography.subtitle2,
@@ -106,6 +108,7 @@ function PromotionCardWrapper({ type, children }) {
 }
 
 export default function PoolCard({ pool, account }) {
+  const { account, chainId } = useActiveWeb3React();
   const [alarmMode, setAlarmMode] = useState(false);
   const navigate = useNavigate();
   const network = useSelector((state) => state.network.chainId);
@@ -113,7 +116,7 @@ export default function PoolCard({ pool, account }) {
   const rate = pool.presaleRate;
   const softCap = pool.softCap;
   const hardCap = pool.hardCap;
-  const progressHard = (100 * pool.weiRaised) /pool.hardCap;
+  const progressHard = (100 * pool.weiRaised) / pool.hardCap;
   const progressSoft = (100 * pool.weiRaised) / pool.softCap;
   const raised = pool.weiRaised;
   const [status, setStatus] = useState('presale');
@@ -145,12 +148,12 @@ export default function PoolCard({ pool, account }) {
     return () => clearInterval(interval);
   }, [pool]);
   const postAlarm = async (time) => {
-    if (!account){
+    if (!account) {
       enqueueSnackbar('Please login with your wallet to set the alarm!', {
         variant: 'error'
       });
       return;
-    }      
+    }
     try {
       const response = await axios.post(`/webpush`, {
         network: network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'eth' : 'bsc',
@@ -178,14 +181,14 @@ export default function PoolCard({ pool, account }) {
           time
         }));
         dispatch(setAlarm({
-          extraData:pool.extraData,
-          name:pool.name,
-          symbol:pool.symbol,
+          extraData: pool.extraData,
+          name: pool.name,
+          symbol: pool.symbol,
           address: pool.address,
           status,
           time,
-          startDateTime:pool.startDateTime,
-          listDateTime:pool.listDateTime
+          startDateTime: pool.startDateTime,
+          listDateTime: pool.listDateTime
         }))
       }
       // try {
@@ -209,7 +212,7 @@ export default function PoolCard({ pool, account }) {
       return;
     try {
       const response = await axios.delete(`/webpush`, {
-        data:{
+        data: {
           network: network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'eth' : 'bsc',
           pool: {
             address: pool.address,
@@ -218,7 +221,7 @@ export default function PoolCard({ pool, account }) {
           },
           wallet: account,
           subscription: global.subscription
-        }        
+        }
       });
       let message = response.data.message;
       if (message == 'no existed') {
@@ -286,18 +289,18 @@ export default function PoolCard({ pool, account }) {
               )}
               {Number(pool.status) === 0 ? (
                 new Date(pool.listDateTime).getTime() + 86400 * 21 * 1000 < Date.now() &&
-                pool.softCap<=pool.weiRaised ? (
+                  pool.softCap <= pool.weiRaised ? (
                   <Label color="success">Cancelled</Label>
                 ) : new Date(pool.listDateTime).getTime() + 86400 * 21 * 1000 < Date.now() &&
-                  pool.softCap>pool.weiRaised ? (
+                  pool.softCap > pool.weiRaised ? (
                   <Label color="success">Sale Failed</Label>
-                ) : pool.hardCap===pool.weiRaised ? (
+                ) : pool.hardCap === pool.weiRaised ? (
                   <Label color="success">Sale Finished</Label>
                 ) : new Date(pool.endDateTime).getTime() < Date.now() &&
-                  pool.softCap<=pool.weiRaised ? (
+                  pool.softCap <= pool.weiRaised ? (
                   <Label color="success">Sale Ended</Label>
                 ) : new Date(pool.endDateTime).getTime() < Date.now() &&
-                  pool.softCap>pool.weiRaised ? (
+                  pool.softCap > pool.weiRaised ? (
                   <Label color="error">Sale Failed</Label>
                 ) : new Date(pool.startDateTime).getTime() < Date.now() ? (
                   <Label color="success">Sale Live</Label>
@@ -318,8 +321,7 @@ export default function PoolCard({ pool, account }) {
             <Typography variant="h4">{pool.name}</Typography>
             <Typography>
               Max Contribution: {pool.maxAllocationPerUser}
-              {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
-              {/* 1 {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'} = {Number(rate).toLocaleString('en')} {pool.symbol} */}
+              {CURRENCY_SYMBOL[chainId]}
             </Typography>
           </Stack>
 
@@ -333,17 +335,17 @@ export default function PoolCard({ pool, account }) {
             />
             <Stack direction="row" alignItems="center" justifyContent="space-between">
               <Typography variant="span" fontSize="0.8rem" color="text.secondary">
-                {raised} {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
+                {raised} {CURRENCY_SYMBOL[chainId]}
               </Typography>
               <Typography variant="span" fontSize="0.8rem" color="text.secondary">
-                {hardCap} {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
+                {hardCap} {CURRENCY_SYMBOL[chainId]}
               </Typography>
             </Stack>
           </Stack>
           <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mt: 1 }}>
             <Typography variant="h5">Hard Cap:</Typography>
             <Typography variant="span" color="primary.main" fontWeight="bold">
-              {hardCap} {network === Number(process.env.REACT_APP_ETHEREUM_CHAINID) ? 'ETH' : 'BNB'}
+              {hardCap} {CURRENCY_SYMBOL[chainId]}
             </Typography>
           </Stack>
           <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mt: 1 }}>
@@ -365,26 +367,26 @@ export default function PoolCard({ pool, account }) {
             <Stack>
               {Number(pool.status) === 0 ? (
                 new Date(pool.listDateTime).getTime() + 86400 * 21 * 1000 < Date.now() &&
-                  pool.softCap<=pool.weiRaised ? (
+                  pool.softCap <= pool.weiRaised ? (
                   <Typography variant="span" fontSize="0.7rem">
                     Cancelled
                   </Typography>
                 ) : new Date(pool.listDateTime).getTime() + 86400 * 21 * 1000 < Date.now() &&
-                  pool.softCap>pool.weiRaised ? (
+                  pool.softCap > pool.weiRaised ? (
                   <Typography variant="span" fontSize="0.7rem">
                     Sale Failed
                   </Typography>
-                ) : pool.hardCap===pool.weiRaised ? (
+                ) : pool.hardCap === pool.weiRaised ? (
                   <Typography variant="span" fontSize="0.7rem">
                     Sale Finished
                   </Typography>
                 ) : new Date(pool.endDateTime).getTime() < Date.now() &&
-                  pool.softCap<=pool.weiRaised ? (
+                  pool.softCap <= pool.weiRaised ? (
                   <Typography variant="span" fontSize="0.7rem">
                     Sale Ended
                   </Typography>
                 ) : new Date(pool.endDateTime).getTime() < Date.now() &&
-                  pool.softCap>pool.weiRaised ? (
+                  pool.softCap > pool.weiRaised ? (
                   <Typography variant="span" fontSize="0.7rem">
                     Sale Failed
                   </Typography>

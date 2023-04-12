@@ -289,7 +289,6 @@ export default function CreateLock() {
             from Fees, Max Transaction and Rewards.
           </Alert>
           <Stack sx={{ mt: 2 }} alignItems="center" spacing={1}>
-            {/* <Typography>You will pay: 0.1BNB</Typography> */}
             <Button size="large" variant="contained" sx={{ bgcolor: 'primary.dark', width: 200 }} onClick={handleLock}>
               {isLocking ? <HashLoader color="#59f1f6" size={30} /> : 'Lock'}
             </Button>

@@ -4,6 +4,8 @@ import { setAdditionalInfo } from '../../redux/slices/tokenListing';
 import { useSnackbar } from 'notistack';
 import { commify, formatEther } from '@ethersproject/units';
 import { useIDOContract } from '../../hooks/useContract';
+import useActiveWeb3React from 'hooks/useActiveWeb3React';
+import { CURRENCY_SYMBOL } from 'config/constants';
 
 import * as Yup from 'yup';
 import { useFormik, FormikProvider } from 'formik';
@@ -152,7 +154,7 @@ const AdditionalInfo = ({ goBack, goNext }) => {
       }
     }
   });
-  const network = useSelector((state) => state.network.chainId);
+  const { account, chainId } = useActiveWeb3React();
 
   const { errors, touched, handleSubmit, getFieldProps } = formik;
   return (
@@ -277,31 +279,7 @@ const AdditionalInfo = ({ goBack, goNext }) => {
                 }}
               />
             </Grid>
-            {/* <Grid item xs={12} sm={12} md={6}>
-                            <TextField
-                                fullWidth
-                                label="Facebook"
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start" sx={{ color: 'text.secondary' }}>
-                                            <ImFacebook />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                                {...getFieldProps("facebook")}
-                                error={Boolean(touched.facebook && errors.facebook)}
-                                helperText={touched.facebook && errors.facebook}
-                                sx={{
-                                    width: 1,
-                                    color: "white",
-                                    "& .MuiInputLabel-root": { color: "white" },
-                                    "& .MuiOutlinedInput-root": { color: "white" },
-                                    "& .MuiOutlinedInput-notchedOutline": {
-                                        borderColor: "white",
-                                    },
-                                }}
-                            />
-                        </Grid> */}
+
             <Grid item xs={12} sm={12} md={6}>
               <TextField
                 fullWidth
@@ -363,31 +341,6 @@ const AdditionalInfo = ({ goBack, goNext }) => {
               />
             </Grid>
 
-            {/* <Grid item xs={12} sm={12} md={6}>
-              <TextField
-                fullWidth
-                label="Instagram"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start" sx={{ color: 'text.secondary' }}>
-                      <ImInstagram />
-                    </InputAdornment>
-                  )
-                }}
-                {...getFieldProps('instagram')}
-                error={Boolean(touched.instagram && errors.instagram)}
-                helperText={touched.instagram && errors.instagram}
-                sx={{
-                  width: 1,
-                  color: 'white',
-                  '& .MuiInputLabel-root': { color: 'white' },
-                  '& .MuiOutlinedInput-root': { color: 'white' },
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderColor: 'white'
-                  }
-                }}
-              />
-            </Grid> */}
             <Grid item xs={12} sm={12} md={6}>
               <TextField
                 fullWidth
@@ -408,51 +361,6 @@ const AdditionalInfo = ({ goBack, goNext }) => {
                 }}
               />
             </Grid>
-            {/* <Grid item xs={12} sm={12} md={12}>
-              <TextField
-                fullWidth
-                label="Twitter Followers"
-                type='number'
-                placeholder="Followers Number"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start" sx={{ color: 'text.secondary' }}>
-                      <ImTwitter />
-                    </InputAdornment>
-                  )
-                }}
-                {...getFieldProps('twitter_followers')}
-                sx={{
-                  width: 1
-                }}
-              />
-            </Grid> */}
-            {/* <Grid item xs={12} sm={12} md={12}>
-                            <TextField
-                                fullWidth
-                                label="Reddit"
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start" sx={{ color: 'text.secondary' }}>
-                                            <IoLogoReddit />
-                                        </InputAdornment>
-                                    ),
-                                }}
-                                {...getFieldProps("reddit")}
-                                error={Boolean(touched.reddit && errors.reddit)}
-                                helperText={touched.reddit && errors.reddit}
-                                sx={{
-                                    width: 1,
-                                    color: "white",
-                                    "& .MuiInputLabel-root": { color: "white" },
-                                    "& .MuiOutlinedInput-root": { color: "white" },
-                                    "& .MuiOutlinedInput-notchedOutline": {
-                                        borderColor: "white",
-                                    },
-                                }}
-                            />
-                        </Grid> */}
-
 
 
 
@@ -652,7 +560,7 @@ const AdditionalInfo = ({ goBack, goNext }) => {
                               </Stack>
                               <Typography align="center" variant="h5">
                                 FEE: {poolFixedFees[0] ? commify(formatEther(poolFixedFees[0])) : 0}
-                                {network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'ETH' : 'BNB'}
+                                {CURRENCY_SYMBOL[chainId]}
                               </Typography>
                             </Box>
                           </Paper>
@@ -692,7 +600,7 @@ const AdditionalInfo = ({ goBack, goNext }) => {
                             </Stack>
                             <Typography align="center" variant="h5">
                               FEE: {poolFixedFees[1] ? commify(formatEther(poolFixedFees[1])) : 0}
-                              {network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'ETH' : 'BNB'}
+                              {CURRENCY_SYMBOL[chainId]}
                             </Typography>
                           </Paper>
                           <FormControlLabel

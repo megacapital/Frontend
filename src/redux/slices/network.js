@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-  chainId: Number(process.env.REACT_APP_BSC_CHAINID),
+  chainId: Number(process.env.REACT_APP_PROJECT_CHAINID),
 };
 const slice = createSlice({
   name: 'network',

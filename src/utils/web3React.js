@@ -7,24 +7,37 @@ import { ethers } from "ethers";
 
 const POLLING_INTERVAL = 12000;
 
-const injected = new InjectedConnector({ supportedChainIds: [Number(process.env.REACT_APP_ETHEREUM_CHAINID),Number(process.env.REACT_APP_BSC_CHAINID)] });
+const injected = new InjectedConnector({
+  supportedChainIds: [
+    Number(process.env.REACT_APP_ETHEREUM_CHAINID),
+    Number(process.env.REACT_APP_BSC_CHAINID),
+    Number(process.env.REACT_APP_SHM2X_CHAINID),
+  ]
+});
 
 const walletconnect = new WalletConnectConnector({
-    rpc: {
-      [Number(process.env.REACT_APP_ETHEREUM_CHAINID)]: getNodeUrl(Number(process.env.REACT_APP_ETHEREUM_CHAINID)),
-      [Number(process.env.REACT_APP_BSC_CHAINID)]: getNodeUrl(Number(process.env.REACT_APP_BSC_CHAINID))
-    },
-    qrcode: true,
-    pollingInterval: POLLING_INTERVAL,
-  });
+  rpc: {
+    [Number(process.env.REACT_APP_ETHEREUM_CHAINID)]: getNodeUrl(Number(process.env.REACT_APP_ETHEREUM_CHAINID)),
+    [Number(process.env.REACT_APP_BSC_CHAINID)]: getNodeUrl(Number(process.env.REACT_APP_BSC_CHAINID)),
+    [Number(process.env.REACT_APP_SHM2X_CHAINID)]: getNodeUrl(Number(process.env.REACT_APP_SHM2X_CHAINID))
+  },
+  qrcode: true,
+  pollingInterval: POLLING_INTERVAL,
+});
 
-const bscConnector = new BscConnector({ supportedChainIds: [Number(process.env.REACT_APP_ETHEREUM_CHAINID),Number(process.env.REACT_APP_BSC_CHAINID)] });
+const bscConnector = new BscConnector({
+  supportedChainIds: [
+    Number(process.env.REACT_APP_ETHEREUM_CHAINID),
+    Number(process.env.REACT_APP_BSC_CHAINID),
+    Number(process.env.REACT_APP_SHM2X_CHAINID),
+  ]
+});
 
-export const connectorsByName ={
-      [ConnectorNames.Injected]: injected,
-      [ConnectorNames.WalletConnect]: walletconnect,
-      [ConnectorNames.BSC]: bscConnector,
-    };
+export const connectorsByName = {
+  [ConnectorNames.Injected]: injected,
+  [ConnectorNames.WalletConnect]: walletconnect,
+  [ConnectorNames.BSC]: bscConnector,
+};
 
 export const getLibrary = (provider) => {
   const library = new ethers.providers.Web3Provider(provider);

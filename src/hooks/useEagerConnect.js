@@ -5,7 +5,6 @@ import {
 } from "redrum-pancake-uikit";
 import useAuth from "./useAuth";
 import { useSelector, useDispatch } from "react-redux";
-import { switchNetwork } from "redux/slices/network";
 
 const _binanceChainListener = async () =>
   new Promise((resolve) =>

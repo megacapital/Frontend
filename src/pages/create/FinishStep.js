@@ -27,6 +27,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import apis from '../../services';
 import useActiveWeb3React from '../../hooks/useActiveWeb3React';
 // import { set } from 'date-fns';
+import { CURRENCY_SYMBOL } from 'config/constants';
 
 const projectId = '2DGg3pQzKiRprxvjRddH37hP6Nd';   // <---------- your Infura Project ID
 
@@ -48,6 +49,8 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 const FinishStep = ({ goBack, goComplete }) => {
+  const { account, chainId } = useActiveWeb3React();
+
   const network = useSelector((state) => state.network.chainId);
   const [complete, setComplete] = useState(false);
   const totalSupply = useSelector((state) => state.tokenListing.totalSupply);
@@ -109,7 +112,6 @@ const FinishStep = ({ goBack, goComplete }) => {
   const [isConfirming, setIsConfirming] = useState(false);
   const [error, setError] = useState(false);
 
-  const { account } = useActiveWeb3React();
 
   const handleConfirm = async () => {
     if (!isConfirming) {
@@ -369,35 +371,35 @@ const FinishStep = ({ goBack, goComplete }) => {
           <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
             <span>Presale Rate</span>
             <Stack component="span" color="success.main" marginLeft="15px">
-              {presale_rate} {symbol}
+              {presale_rate} {CURRENCY_SYMBOL[chainId]}
             </Stack>
           </Stack>
           <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
           <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
             <span>SoftCap</span>
             <Stack component="span" color="success.main" marginLeft="15px">
-              {soft_cap} {network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'ETH' : 'BNB'}
+              {soft_cap} {CURRENCY_SYMBOL[chainId]}
             </Stack>
           </Stack>
           <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
           <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
             <span>HardCap</span>
             <Stack component="span" color="success.main" marginLeft="15px">
-              {hard_cap} {network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'ETH' : 'BNB'}
+              {hard_cap} {CURRENCY_SYMBOL[chainId]}
             </Stack>
           </Stack>
           <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
           <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
             <span>Minimum Buy</span>
             <Stack component="span" color="success.main" marginLeft="15px">
-              {min_buy} {network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'ETH' : 'BNB'}
+              {min_buy} {CURRENCY_SYMBOL[chainId]}
             </Stack>
           </Stack>
           <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
           <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
             <span>Maximum Buy</span>
             <Stack component="span" color="success.main" marginLeft="15px">
-              {/* {max_buy} {network === process.env.REACT_APP_ETHEREUM_CHAINID ? 'ETH' : 'BNB'} */}
+              {/* {max_buy} {CURRENCY_SYMBOL[chainId]} */}
               automatically
             </Stack>
           </Stack>
