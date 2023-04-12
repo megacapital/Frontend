@@ -27,12 +27,9 @@ export default function App() {
   useInactiveListener();
 
   const provider = window.ethereum;
-  provider.on('chainChanged', (id) => {
-    dispatch(switchNetwork(id));
-  });
   useEffect(() => {
-    if (!chainId) {
-      if (provider && provider.chainId && (Number(provider.chainId) !== Number(process.env.REACT_APP_PROJECT_CHAINID))) {
+    if (provider) {
+      if (provider.chainId && (Number(provider.chainId) !== Number(process.env.REACT_APP_PROJECT_CHAINID))) {
         setupNetwork(process.env.REACT_APP_PROJECT_CHAINID);
       }
       dispatch(switchNetwork(provider.chainId));
@@ -40,13 +37,12 @@ export default function App() {
   }, [dispatch, chainId, network, provider]);
 
 
-  // useEffect(() => {
-  //   if (provider)
-  //     provider.on('chainChanged', (id) => {
-  //       alert(id)
-  //       dispatch(switchNetwork(id));
-  //     });
-  // }, [dispatch, provider]);
+  useEffect(() => {
+    if (provider)
+      provider.on('chainChanged', (id) => {      
+        dispatch(switchNetwork(id));
+      });
+  }, [dispatch, provider]);
 
   return (
     <ThemeConfig>
