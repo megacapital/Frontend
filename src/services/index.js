@@ -27,7 +27,14 @@ const createBackendServer = (baseURL) => {
   const saveEvent = async (body) => api.post('api/calender/save-event', body);
   const setApproval = async (body) => api.post('api/approval/set', body);
   const getApproval = async (body) => api.post('api/approval/get', body);
+  const updateUserDeposit = async (body) => api.post('api/update-user-deposit', body);
   const countApproval = async (body) => api.post('api/approval/count', body);
+
+  const updateUserStaking = async (body) => api.post('api/stake/updateUserStaking', body);
+  const getCountForTierLevel = async (body) => api.post('api/stake/getCountForTierLevel', body);
+  const getUserInfo = async (body) => api.post('api/user/getInfo', body);
+  const setUserEmail = async (body) => api.post('api/user/setEmail', body);
+  const getUserParticipations = async (body) => api.post('api/user/getParticipations', body);
 
   /*==========    DELETE REQUESTS    ==========*/
 
@@ -35,7 +42,8 @@ const createBackendServer = (baseURL) => {
 
   return {
     createBscIdo, updateIDOWeiRaised, getBscIdo, getVCDeals, getProjectDetails, getDeals, getEvent, saveEvent, getFollowers, getRandomImages, ipfs,
-    setApproval, getApproval, countApproval,
+    setApproval, getApproval, updateUserDeposit, countApproval, updateUserStaking, getCountForTierLevel,
+    getUserInfo, setUserEmail, getUserParticipations
   };
 };
 

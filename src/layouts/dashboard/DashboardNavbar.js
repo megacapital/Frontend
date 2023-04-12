@@ -91,7 +91,7 @@ export default function DashboardNavbar({ onOpenSidebar }) {
               <Box component="img" src="/logo.png" sx={{ width: '80px' }}></Box>
             </Box>
             <Box component="div">
-              {/* <NavMenuItem onClick={handleClose} title="Dashbaord" link="/dashboard" /> */}
+              <NavMenuItem onClick={handleClose} title="Dashbaord" link="/dashboard" />
               <NavMenuItem onClick={handleClose} title="Deals" link="/deals" />
               <NavMenuItem onClick={handleClose} title="Pools" link="/stakepad" />
 

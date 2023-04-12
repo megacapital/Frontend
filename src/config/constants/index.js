@@ -102,3 +102,27 @@ export const ADMIN_WALLETS = [
   '0x791320012C079fDF833244C65c343cbAB34C6ab6', //main
   '0xecFA21cfFcb7BDeE55D137486Dea0d7984c72619', //dev
 ]
+
+/** Tier System */
+export const TIER_LEVEL = {
+  none_0: 'None',
+  amber_1: 'Amber',
+  chrome_2: 'Chrome',
+  jade_3: 'Jade',
+  topaz_4: 'Topaz',
+};
+
+export const TIER_STAKING_AMOUNT = {
+  amber_1: 1000,
+  chrome_2: 2000,
+  jade_3: 3000,
+  topaz_4: 4000,
+};
+
+export const TIER_DEPOSIT_PERCENT = {
+  'None': 0,
+  'Amber': 5, // all amber users can deposit total 5%
+  'Chrome': 15,
+  'Jade': 30,
+  'Topaz': 50,
+};

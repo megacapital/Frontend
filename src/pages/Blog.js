@@ -182,20 +182,20 @@ export default function Stakepad() {
 function VoteCard(props){
     return(
             <Grid container bgcolor={'#272727'} direction="row" sx={{width:"100%"}} padding="5px" marginTop="40px">
-                <Grid item container md="7" sm="12" direction="row" >
+                <Grid item container md={7} sm="12" direction="row" >
                     <Box component="img" src="img/catecoin.webp"></Box>
                     <Box marginTop='13px' marginLeft="10px"> {props.name}</Box>
                 </Grid>
-                <Grid item md="1"sm="3" >
+                <Grid item md="1"sm={3} >
                     <Box marginTop='13px'>NFT</Box>
                 </Grid>
-                <Grid item md="1.5" sm="3">
+                <Grid item md={1.5} sm={3}>
                     <Button className="btn btn-info text-light mx-2 px-5 mt-2">YES</Button>
                 </Grid>
-                <Grid item md="1.5" sm="3">
+                <Grid item md={1.5} sm={3}>
                     <Button className="btn btn-outline-info mx-2 px-5 mt-2">NO</Button>
                 </Grid>
-                <Grid item md="1" sm="3">
+                <Grid item md="1" sm={3}>
                     <Button><i className="Nft-arrow fa-solid fa-angle-down text-info mx-5 pt-3"></i></Button>
                 </Grid>
             </Grid>

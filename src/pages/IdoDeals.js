@@ -104,7 +104,7 @@ export default function IdoDeals() {
           <Grid align='center' justifyContent={'center'}><Box component='img' marginTop='30px'
                                                               src={imageURL('projects.png')}></Box></Grid>
           <Grid container direction="row" marginTop="90px" marginBottom="50px" gap={1}>
-            <Grid item container md="8" justifyContent='flex-end'>
+            <Grid item container md={8} justifyContent='flex-end'>
               <Box component="button" className="btn btn-dark text-info mx-1">
                 <Box component={'a'} href="/calender" sx={{ textDecoration: 'none' }}>
                   <Box component="img" src={imageURL('Calendar.png')} />

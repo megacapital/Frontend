@@ -16,6 +16,8 @@ import MHidden from 'components/@material-extend/MHidden';
 import axios from '../utils/axios';
 import { useSnackbar } from 'notistack';
 import { imageURL } from '../utils';
+
+import apis from 'services';
 // ----------------------------------------------------------------------
 
 export default function Stakepad() {
@@ -206,6 +208,7 @@ function PoolBox(poolInfo) {
             tvl: formatUnits(pool_tvl, decimals),
             lockingReleaseTime,
           });
+
         } catch (error) {
         }
         setProcessing(false);
@@ -231,6 +234,13 @@ function PoolBox(poolInfo) {
       } else {
         const tx = await stakingContract.stake(bignumber_staking_amount);
         await tx.wait();
+
+        await apis.updateUserStaking({
+          staking_address: pool.address,
+          wallet_address: account,
+          changing_amount: Number(data.staking_amount)
+        });
+
         window.location.reload()
       }
     } catch (err) {
@@ -257,6 +267,13 @@ function PoolBox(poolInfo) {
       }
       const tx = await stakingContract.withdraw(parseUnits(String(data.unstaking_amount), data.token_decimal));
       await tx.wait();
+
+      await apis.updateUserStaking({
+        staking_address: pool.address,
+        wallet_address: account,
+        changing_amount: 0 - Number(data.unstaking_amount)
+      });
+
       window.location.reload()
     } catch (err) {
       console.log(err);

@@ -10,20 +10,22 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React';
 import { displayFollowers, formattedDate, imageURL, isValidImage } from '../utils';
 import { useIDOContract, usePoolContract } from 'hooks/useContract';
 import { useMainStakingContract } from '../hooks/useContract';
-import useGetBnbBalance from 'hooks/useTokenBalance';
+import useBalanceStatus from 'hooks/useTokenBalance';
+import { useMainStakingStatus } from 'hooks/useMyStatus';
 import { formatUnits, parseUnits, formatEther, parseEther } from '@ethersproject/units';
 import { atcb_action } from 'add-to-calendar-button';
 import 'add-to-calendar-button/assets/css/atcb.css';
 import { number } from 'yup';
 import { ADMIN_WALLETS } from 'config/constants';
+import { TIER_DEPOSIT_PERCENT } from 'config/constants';
 
-export default function ProjectDetail(props) {
+export default function ProjectDetail() {
   const { chainId = 0 } = useSelector((store) => store.network);
-
+  const { balance } = useBalanceStatus();
   const { pathname, hash } = useLocation();
 
   const tokenAddress = pathname.split('/')[pathname.split('/').length - 1];
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const [randomImages, setRandomImages] = useState([imageURL('avatar1.png'), imageURL('avatar2.png'), imageURL('avatar3.png')]);
 
   const { name = '', description, startDateTime, endDateTime } = data;
@@ -70,27 +72,7 @@ export default function ProjectDetail(props) {
       window.scrollTo({ top: (pos - 300) });
     }, 200);
 
-    // setTimeout(( ) => {
-    //   const pos = window.pageYOffset || document.documentElement.scrollTop;
-    //   window.scrollTo({top: (pos - 300)});
-    // }, 300)
   }, [hash]);
-
-  /*useEffect(() => {
-    console.log('#########', hash);
-
-
-    setTimeout(( ) => {
-      const pos = window.pageYOffset || document.documentElement.scrollTop;
-      window.scrollTo({top: (pos - 300)});
-    }, 300)
-
-
-  }, [hash]);*/
-
-
-
-
 
   return (
     <>
@@ -674,19 +656,27 @@ function CustomCard(props) {
 function ProjectInformation({ data: poolInfo }) {
   const chainId = useSelector((store) => store.network.chainId);
   const { account, library } = useActiveWeb3React();
-  const [approved, setApproved] = useState(false); //user approving status
+  const [approved, setApproved] = useState(false); //user preapproving status
   const [buyCondition, setBuyCondition] = useState(false); //condition for user buying
   const [started, setStarted] = useState(false);
   const [ended, setEnded] = useState(false);
   const idoContract = useIDOContract();
   const poolContract = usePoolContract(poolInfo?.address);
 
+  //staking staus
+  const { tier, staked_amount, myTierLevelCount } = useMainStakingStatus();
+  const [myMaxDeposit, setMyMaxDeposit] = useState(0)
+  useEffect(() => {
+    var level_deposit = TIER_DEPOSIT_PERCENT[tier]
+    var mymax = Number(poolInfo?.hardCap) * Number(level_deposit / myTierLevelCount) / 100;
+    setMyMaxDeposit(mymax)
+  }, [tier, myTierLevelCount, poolInfo])
+
   useEffect(() => {
     (async () => {
       if (account && poolInfo) {
-        var shouldBeWhitelisted = !poolInfo?.whitelistable || poolInfo?.whiteLists?.includes(account); // if pool is public or account is whitelisted, user can buy token
-        console.log('wowwowoowow', approved, shouldBeWhitelisted, approved & shouldBeWhitelisted)
-        setBuyCondition(approved & shouldBeWhitelisted);
+        var checkWhitelisted = !poolInfo?.whitelistable || poolInfo?.whiteLists?.includes(account); // if pool is public or account is whitelisted, user can buy token
+        setBuyCondition(approved & checkWhitelisted);
       }
     })();
   }, [account, poolInfo, approved]);
@@ -762,8 +752,6 @@ function ProjectInformation({ data: poolInfo }) {
   }, [account, poolInfo])
 
 
-
-  //
   const [buyingAmount, setBuyingAmount] = useState(0);
 
   //my contribution
@@ -785,12 +773,20 @@ function ProjectInformation({ data: poolInfo }) {
   //buy function
   const buy = async () => {
     try {
+      if (buyingAmount > tokenBalance) {
+        alert('It greater than wallet balance.');
+        return;
+      }
       if (buyingAmount < poolInfo.minAllocationPerUser) {
         alert('Should be greater than min allocation');
         return;
       }
       if (buyingAmount > maxAllocationHere) {
         alert('Should be less than max allocation');
+        return;
+      }
+      if (buyingAmount > myMaxDeposit) {
+        alert('Should be less than max allocation of tier level');
         return;
       }
 
@@ -805,10 +801,19 @@ function ProjectInformation({ data: poolInfo }) {
 
       var value = await poolContract._weiRaised()
       setEtherRaised(formatEther(value))
+
       await apis.updateIDOWeiRaised({
         address: poolInfo?.address,
         weiRaised: formatEther(value)
       });
+
+      await apis.updateUserDeposit({
+        pool_address: poolInfo?.address,
+        wallet_address: account,
+        amount: Number(buyingAmount)
+      })
+
+      alert('success')
     } catch (error) {
       console.log(error.message)
     }
@@ -832,29 +837,6 @@ function ProjectInformation({ data: poolInfo }) {
     }
   }
 
-  useEffect(() => { //IDO Contract is working well
-    (async () => {
-      if (idoContract) {
-        try {
-          // var value = await idoContract.poolFixedFee(0)
-          // console.log('poolFixedFee', value)    
-
-          // var value = await idoContract.poolPercentFee()
-          // console.log('poolPercentFee', value)    
-
-          var value = await idoContract.poolAddresses(0)
-          console.log('poolAddresses', value)
-
-          // var value = await idoContract.poolOwners('0x9d6CF01e8f4De8bEF944d05458C5E704F7668A08')
-          // console.log('poolOwners', value)       
-        } catch (error) {
-          console.log(error.message)
-        }
-      }
-    })();
-  }, [idoContract])
-
-
   const [etherRaised, setEtherRaised] = useState(0);
   useEffect(() => { //pool contract is working well
     (async () => {
@@ -876,7 +858,6 @@ function ProjectInformation({ data: poolInfo }) {
 
 
   //started, ended
-  const [remainingHours, setRemainingHours] = useState(0);
   useEffect(() => {
     var startingTime = new Date(poolInfo.startDateTime).getTime()
     var endingTime = new Date(poolInfo.endDateTime).getTime()
@@ -884,8 +865,6 @@ function ProjectInformation({ data: poolInfo }) {
     console.log(startingTime, nowTime)
     if (startingTime > nowTime) {
       setStarted(false);
-      var diff = startingTime - nowTime;
-      setRemainingHours(Math.ceil(diff / 60 / 60 / 1000))
     }
     else setStarted(true)
 
@@ -896,15 +875,7 @@ function ProjectInformation({ data: poolInfo }) {
     }
   }, [poolInfo])
 
-  //staking staus
-  const [stakingamount, setStakingAmount] = useState(true); //user staking status, it is condition for user approving
-  const stakingContract = useMainStakingContract(); //MGV token
-  useEffect(() => {
-    (async () => {
-      const staked = await stakingContract.balances(account);
-      setStakingAmount(Number(formatEther(staked)))
-    })();
-  }, [account, stakingContract])
+
 
   const handleFinalize = async () => {
     try {
@@ -1058,12 +1029,7 @@ function ProjectInformation({ data: poolInfo }) {
             </Grid>
           </Grid>
 
-          {!started &&
-            <Grid item sm={12}>
-              {/* <h5>Project is not started! {remainingHours} hour left. Your staked amount: {stakingamount}</h5> */}
-            </Grid>
-          }
-          {!started && (stakingamount > 0) && account &&
+          {!started && (staked_amount > 0) && account &&
             (
               approved ?
                 <Box
@@ -1092,6 +1058,8 @@ function ProjectInformation({ data: poolInfo }) {
               <Grid item container marginTop='20px'>
                 <Grid item sm={12} color='#56C5FF'>
                   Your BNB balance: {tokenBalance}
+                  <br />
+                  Max Deposit For Your Tier({tier}, {myTierLevelCount} users): {myMaxDeposit}
                 </Grid>
                 <Grid item container sm={6} bgcolor='#232323' position='relative' display='flex'>
                   <Box
@@ -1264,12 +1232,8 @@ function ProjectInformation({ data: poolInfo }) {
               {Number(1 / poolInfo?.presaleRate)} {getNetworkSymbol(chainId)}
             </Grid>
           </Grid>
-          {!started &&
-            <Grid item sm={12}>
-              {/* <h5>Project is not started! {remainingHours} hour left.</h5> */}
-            </Grid>
-          }
-          {!started && (stakingamount > 0) && account &&
+
+          {!started && (staked_amount > 0) && account &&
             (
               approved ?
                 <Box
@@ -1296,7 +1260,7 @@ function ProjectInformation({ data: poolInfo }) {
             <>
               <Grid item container marginTop='20px'>
                 <Grid item sm={12} color='#56C5FF'>
-                  Your BNB balance: {tokenBalance}
+                  Your BNB balance: {tokenBalance}  . Max deposit {myMaxDeposit}
                 </Grid>
                 <Grid item container sm={6} bgcolor='#232323' position='relative' display='flex'>
                   <Box

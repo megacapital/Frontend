@@ -81,8 +81,8 @@ export default function IdoDeals(){
                 <Box component="h2" marginTop="20px" display="flex" align="center" justifyContent="center" color="#00BFFF">PROJECTS</Box>
                 <Grid align="center" justifyContent={'center'}><Box component="img" marginTop="30px" src={imageURL('projects.png')}></Box></Grid>
                 <Grid container direction="row" marginTop="20px">
-                    <Grid item md="6"></Grid>
-                    <Grid item md="6" position="relative" display="flex">
+                    <Grid item md={6}></Grid>
+                    <Grid item md={6} position="relative" display="flex">
                         <Box component="input" placeholder="Search..." style={{ paddingLeft:"10px", borderRadius:2, height:"50px", width:"100%", border:"none", backgroundColor:"rgba(255, 255, 255, 0.1)"}}/>
                         <Box component="button" border="none" borderRadius={1} height="40px" width="90px" position="absolute" right="10px" top="5px" style={{ backgroundColor:"#56C5FF", color:"white" }}>Search</Box>
 
