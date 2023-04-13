@@ -58,6 +58,8 @@ export default function Router() {
         { path: '/presale/:address', element: <DetailPage /> }, // presale
 
         { path: '/vote', element: <Vote /> },
+        { path: '/create-vote', element: <CreateVote /> }, //admin - create vote
+
         { path: '/dashboard', element: <Dashboard /> },
 
         { path: '/stakepad', element: <Stakepad /> },
@@ -119,6 +121,7 @@ const Blog = Loadable(lazy(() => import('pages/Blog')));
 const DetailPage = Loadable(lazy(() => import('pages/DetailPage')));
 const CreatePage = Loadable(lazy(() => import('pages/CreatePage')));
 const CreateStake = Loadable(lazy(() => import('pages/CreateStake')));
+const CreateVote = Loadable(lazy(() => import('pages/CreateVote')));
 const LockListPage = Loadable(lazy(() => import('pages/LockListPage')));
 const TokenLockDetailPage = Loadable(lazy(() => import('pages/TokenLockDetailPage')));
 const LiquidityLockDetailPage = Loadable(lazy(() => import('pages/LiquidityLockDetailPage')));

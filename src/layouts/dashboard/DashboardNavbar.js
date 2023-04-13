@@ -94,6 +94,7 @@ export default function DashboardNavbar({ onOpenSidebar }) {
               <NavMenuItem onClick={handleClose} title="Dashbaord" link="/dashboard" />
               <NavMenuItem onClick={handleClose} title="Deals" link="/deals" />
               <NavMenuItem onClick={handleClose} title="Pools" link="/stakepad" />
+              <NavMenuItem onClick={handleClose} title="Votes" link="/vote" />
 
             </Box>
             {/*<NavMenuItem onClick={handleClose} title="Vote" link="/vote" />*/}

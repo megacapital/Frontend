@@ -1,167 +1,197 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-// material
 import { Box, Button, Grid } from '@mui/material';
-
 import { getPools } from 'redux/slices/pools';
-// import { useIDOContract } from 'hooks/useContract';
 import useActiveWeb3React from 'hooks/useActiveWeb3React';
-// hooks
-// import useSettings from 'hooks/useSettings';
-// components
 import Page from 'components/Page';
 import MHidden from 'components/@material-extend/MHidden';
 import { imageURL } from '../utils';
-
-// ----------------------------------------------------------------------
+import apis from 'services';
+import { useSnackbar } from 'notistack';
+import { useNavigate } from 'react-router';
+import { useMainStakingStatus } from 'hooks/useMyStatus';
 
 export default function Vote() {
-  const { hash } = useLocation();
-
-  const dispatch = useDispatch();
   const { account } = useActiveWeb3React();
+  const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
+  const { staked_amount: vote_power } = useMainStakingStatus();
 
-  // const [search, setSearch] = useContext(SearchContext);
+  const [votes, setVotes] = useState([]);
+  const [opendVoteID, setOpenedVoteID] = useState('');
 
-  //Pagination part
-  // const [pageSize, setPageSize] = useState(50);
-  const [tab, setTab] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const network = useSelector((state) => state.network.chainId);
-  // const pools = useSelector((state) => state.pools.pools);
-  // const totalPage = useSelector((state) => state.pools.totalPage);
-  // const handlePageChange = (e, value) => {
-  //   setPage(value);
-  // };
-
-  //--------------------
   useEffect(() => {
     let unmounted = false;
     (async () => {
-      setIsLoading(true);
-      await dispatch(getPools(network, tab, account));
-      if (!unmounted)
-        setIsLoading(false);
+      const response = await apis.getVotes({});
+      if (!unmounted) {
+        if (response.data.result) {
+          setVotes(response.data.data)
+        } else {
+          enqueueSnackbar(response.data.message, {
+            variant: 'danger'
+          });
+        }
+      }
     })();
     return () => unmounted = true;
-  }, [account, dispatch, network, tab]);
+  }, []);
 
-  useEffect(() => {
-    switch (hash) {
-      case '#my-contributions':
-        setTab(1);
-        break;
-      case '#my-alarms':
-        setTab(2);
-        break;
-      case '#my-presales':
-        setTab(3);
-        break;
-      default:
-        setTab(0);
+  const placeVote = async (vote_id, isUp) => {
+    try {
+      const response = await apis.placeVote({
+        vote_id,
+        wallet_address: account,
+        power: vote_power,
+        isUp
+      });
+      if (response.data.result) {
+        enqueueSnackbar('success', {
+          variant: 'success'
+        });
+        window.location.reload()
+      } else {
+        enqueueSnackbar(response.data.message, {
+          variant: 'danger'
+        });
+      }
+    } catch (error) {
+      enqueueSnackbar(error.message, {
+        variant: 'danger'
+      });
     }
-  }, [hash]);
+  }
+
 
   return (
-    <Page  style={{ backgroundColor: '#171819' }}>
-      {/* <Container maxWidth='md'> */}
-      <MHidden width='mdDown'>
-        <Grid paddingLeft={'10%'} paddingRight={'10%'} paddingTop='70px'>
-          <Grid align='center' justifyContent='center' paddingBottom='30px'>
-            <Box component='h2' className='text-info'>VOTE</Box>
-            <Box component='h5' color='white'>
-              Vote for the next project you'd like to see on mega capital<br />Launchpads
-            </Box>
-          </Grid>
-          <VoteCard name='Hassan Coin'></VoteCard>
-          <VoteCard name='sheraz coin'></VoteCard>
-          <VoteCard name='Mega Capital Coin'></VoteCard>
-          <VoteCard name='Mega coin 1'></VoteCard>
-          <VoteCard name='Clinton Randolph'></VoteCard>
-          <AboutCard></AboutCard>
+    <Page style={{ backgroundColor: '#171819' }}>
+      <Grid paddingLeft={'10%'} paddingRight={'10%'} paddingTop='70px'>
+        <Grid align='center' justifyContent='center' paddingBottom='30px'>
+          <Box component='h2' className='text-info'>VOTE</Box>
+          <Box component='h5' color='white'>
+            Vote for the next project you'd like to see on Launchpads
+            <br />Your vote power is {vote_power}
+          </Box>
         </Grid>
-      </MHidden>
-      <MHidden width='mdUp'>
-        <Grid paddingLeft={'10%'} paddingRight={'10%'} paddingTop='30px'>
-          <Grid align='center' justifyContent='center'>
-            <Box component='h2' className='text-info'>VOTE</Box>
-            <Box color='white' fontSize={16} marginBottom='20px'>
-              Vote for the next project you'd like to see on mega capital Launchpads
-            </Box>
-          </Grid>
-          <PhoneVoteCard name='Hassan Coin' angle='down'></PhoneVoteCard>
-          <PhoneVoteCard name='sheraz coin' angle='up'></PhoneVoteCard>
-          <PhoneVoteCard name='Mega Capital Coin' angle='down'></PhoneVoteCard>
-          <PhoneVoteCard name='Mega coin 1' angle='down'></PhoneVoteCard>
-          <PhoneVoteCard name='Clinton Randolph' angle='down'></PhoneVoteCard>
-          <AboutCard></AboutCard>
-        </Grid>
-      </MHidden>
-      {/* </Container> */}
+
+        {
+          votes.map((item) => {
+            //check if I did vote before
+            let found = item.participants.find((item) => item.wallet_address == account);
+
+            return (
+              <>
+                <Grid borderRadius={1} container bgcolor={'#232323'} direction='row' sx={{ width: '100%' }}
+                  padding='20px 5px 20px 5px' marginTop='20px' onClick={() => setOpenedVoteID(item._id)}>
+                  <Grid item container md='3' sm='12' direction='row'>
+                    <Box component='img' src={item.logo} marginLeft='10px' height="50px"></Box>
+                    <Box fontSize='20px' marginTop='13px' marginLeft='10px' color='white'> {item.projectName}</Box>
+                  </Grid>
+                  <Grid item md='2' sm='3'>
+                    <Box marginTop='1px' alignItems='center' justifyContent='center' display='flex' fontSize='16px'
+                      borderRadius={1} style={{
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        width: '100px',
+                        height: '40px',
+                        color: '#56C5FF'
+                      }}> {item.ticker} </Box>
+                  </Grid>
+                  <Grid item md='3' sm='3' container direction='row' spacing={1}>
+                    <Grid item>
+                      <Box style={{
+                        height: '44px',
+                        border: 'none',
+                        borderRadius: 4,
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        padding: '10px 10px 10px 10px'
+                      }} component='button' >
+                        <Box component='a' href={item.website} target='_blank'>
+                          <Box component='img' src={imageURL('Vector_www.png')} />
+                        </Box>
+                      </Box>
+                    </Grid>
+                    <Grid item>
+                      <Box style={{
+                        height: '44px',
+                        border: 'none',
+                        borderRadius: 4,
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        padding: '10px 10px 10px 10px'
+                      }} component='button'>
+                        <Box component='a' href={item.website} target='_blank'>
+                          <Box component='img' src={imageURL('plane_avatar.png')} />
+                        </Box>
+                      </Box>
+                    </Grid>
+                    <Grid item>
+                      <Box style={{
+                        height: '44px',
+                        border: 'none',
+                        borderRadius: 4,
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        padding: '10px 10px 10px 10px'
+                      }} component='button'>
+                        <Box component='a' href={item.website} target='_blank'>
+                          <Box component='img' src={imageURL('twitter_avatar.png')} />
+                        </Box>
+                      </Box>
+                    </Grid>
+                    <Grid item>
+                      <Box style={{
+                        height: '44px',
+                        border: 'none',
+                        borderRadius: 4,
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        padding: '10px 10px 10px 10px'
+                      }} component='button'>
+                        <Box component='a' href={item.website} target='_blank'>
+                          <Box component='img' src={imageURL('Discord.png')} />
+                        </Box>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                  <Grid item md='1' sm='3'>
+                    {!found && <Button className='btn btn-info text-light ' onClick={() => placeVote(item._id, true)}>YES</Button>}
+                  </Grid>
+                  <Grid item md='1' sm='3'>
+                    {!found &&
+                      <Button className='btn btn-outline-info' onClick={() => placeVote(item._id, false)}>NO</Button>}
+                  </Grid>
+                  <Grid item md='2' sm='3'>
+                    <Grid item sm={12}>
+                      <Box color='#56C5FF'>Yes {item.up}/ No  {item.down}</Box>
+                      <Box position='relative' display='flex'>
+                        <Box width='100%' height='10px' borderRadius={2} backgroundColor='white' />
+                        <Box
+                          position='absolute'
+                          left='0px'
+                          borderRadius={2}
+                          height='10px'
+                          width={`${Number(item.up) / (Number(item.up) + Number(item.down)) * 100}%`}
+                          backgroundColor='#56C5FF'
+                        />
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                {opendVoteID == item._id &&
+                  <Box bgcolor={'#232323'} marginTop="5px">
+                    {item.participants.map((voter) =>
+                      <>
+                        <p>{voter.wallet_address}, Power: {voter.power}, {voter.isUp ? "Yes" : "No"}</p>
+                      </>
+                    )}
+                  </Box>}
+              </>);
+          })
+        }
+        {/* <AboutCard></AboutCard> */}
+      </Grid>
     </Page>
   );
 }
 
-function PhoneVoteCard(props) {
-  return (
-    <>
-      <Grid container backgroundColor='#232323' padding='10px' marginBottom='20px' borderRadius={1}>
-        <Grid item xs={12} height='100px' position='relative' display='flex'>
-          <Box component='img' width='100%' height='100%' position='absolute' src={imageURL('projects (2).png')}></Box>
-          <Box component='img' src={imageURL('logo.png')} width='35px' height='30px' position='absolute' left='10px'
-               top='10px'></Box>
-          <Box backgroundColor='#232323' position='absolute' left='5px' bottom='5px' padding='1px 10px' color='white'
-               borderRadius={0.5} fontSize={14}>NFT</Box>
-          <Box component='button' backgroundColor='rgb(255, 255, 255, 0)' border='none' position='absolute' right='10px'
-               top='10px'>
-            {props.angle === 'down' ? <Box component='img' src={imageURL('angle_down.png')}></Box> :
-              <Box component='img' src={imageURL('angle_up.png')}></Box>}
-          </Box>
-        </Grid>
-        <Grid item xs={12} marginTop='15px' color='#56C5FF'>Project Name</Grid>
-        <Grid item xs={6} marginTop='15px' padding='5px'><Box component='button' borderRadius={0.5} width='100%'
-                                                              color='#56C5FF' backgroundColor='rgb(255, 255, 255, 0)'
-                                                              padding='5px' border='1px solid #56C5FF'>NO</Box></Grid>
-        <Grid item xs={6} marginTop='15px' padding='5px'><Box component='button' borderRadius={0.5} width='100%'
-                                                              color='white' backgroundColor='#56C5FF' padding='5px'
-                                                              border='none'>YES</Box></Grid>
-      </Grid>
-
-    </>
-  );
-}
-
-function VoteCard(props) {
-  return (
-    <Grid borderRadius={1} container bgcolor={'#232323'} direction='row' sx={{ width: '100%' }}
-          padding='20px 5px 20px 5px' marginTop='20px'>
-      <Grid item container md='5' sm='12' direction='row'>
-        <Box component='img' src={imageURL('logo.png')} marginLeft='10px'></Box>
-        <Box fontSize='20px' marginTop='13px' marginLeft='10px' color='white'> {props.name}</Box>
-      </Grid>
-      <Grid item md='3' sm='3'>
-        <Box marginTop='13px' alignItems='center' justifyContent='center' display='flex' fontSize='16px'
-             borderRadius={1} style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.1)',
-          width: '100px',
-          height: '40px',
-          color: '#56C5FF'
-        }}>NFT</Box>
-      </Grid>
-      <Grid item md='1.5' sm='3'>
-        <Button className='btn btn-info text-light mx-2 px-5 mt-2'>YES</Button>
-      </Grid>
-      <Grid item md='1.5' sm='3'>
-        <Button className='btn btn-outline-info mx-2 px-5 mt-2'>NO</Button>
-      </Grid>
-      <Grid item md='1' sm='3'>
-        <Button><i className='Nft-arrow fa-solid fa-angle-down text-info mx-5 pt-3'></i></Button>
-      </Grid>
-    </Grid>
-  );
-}
 
 function AboutCard() {
   return (
@@ -205,8 +235,8 @@ function AboutCard() {
               backgroundColor: 'rgba(255, 255, 255, 0.1)',
               padding: '10px 10px 10px 10px'
             }}> <Grid container direction='row'><Box component='img' marginTop='7px' width='26px' height='14px'
-                                                     src={imageURL('homelink.png')} /><Box marginLeft='5px'
-                                                                                           color='white'>www.megacapital.com</Box></Grid></Box>
+              src={imageURL('homelink.png')} /><Box marginLeft='5px'
+                color='white'>www.megacapital.com</Box></Grid></Box>
             <Box component='button' marginLeft='10px' href='/' style={{
               height: '44px',
               border: 'none',
@@ -222,7 +252,7 @@ function AboutCard() {
       <MHidden width='mdUp'>
         <Grid container bgcolor={'#272727'} sx={{ width: '100%' }} padding='20px' marginTop='20px' borderRadius={1}>
           <Grid item xs={12} justifyContent='center' display='flex'><Box component='p' fontSize={20}
-                                                                         color='#56C5FF'>About</Box></Grid>
+            color='#56C5FF'>About</Box></Grid>
           <Box marginTop='20px' component='p' textAlign='center' color='white' fontSize={12}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis congue volutpat in et, dui, iaculis. Commodo
             morbi posuere et porta. Velit aliquet imperdiet fringilla faucibus tincidunt quam facilisi. Risus, posuere

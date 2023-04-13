@@ -36,14 +36,15 @@ const createBackendServer = (baseURL) => {
   const setUserEmail = async (body) => api.post('api/user/setEmail', body);
   const getUserParticipations = async (body) => api.post('api/user/getParticipations', body);
 
-  /*==========    DELETE REQUESTS    ==========*/
-
-  /*==========    PUT REQUESTS    ==========*/
+  const createVote = async (body) => api.post('api/vote/create', body);
+  const getVotes = async (body) => api.post('api/vote/get', body);
+  const placeVote = async (body) => api.post('api/vote/place', body);
 
   return {
     createBscIdo, updateIDOWeiRaised, getBscIdo, getVCDeals, getProjectDetails, getDeals, getEvent, saveEvent, getFollowers, getRandomImages, ipfs,
     setApproval, getApproval, updateUserDeposit, countApproval, updateUserStaking, getCountForTierLevel,
-    getUserInfo, setUserEmail, getUserParticipations
+    getUserInfo, setUserEmail, getUserParticipations,
+    createVote, getVotes, placeVote,
   };
 };
 

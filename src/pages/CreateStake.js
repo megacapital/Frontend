@@ -273,7 +273,7 @@ export default function CreateStake() {
   };
 
   return (
-    <Page title="Create Lock">
+    <Page title="Create Stake">
       <Container maxWidth="lg" className="pt-5">
         {/* For test */}
         {/* <h6>Network: {network}, Account: {account}, Token: {token}</h6>  */}
