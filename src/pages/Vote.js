@@ -71,12 +71,17 @@ export default function Vote() {
           <Box component='h2' className='text-info'>VOTE</Box>
           <Box component='h5' color='white'>
             Vote for the next project you'd like to see on Launchpads
-            <br />Your vote power is {vote_power}
+            <br />
+            {account && <>
+              Your vote power is {vote_power}
+            </>}
           </Box>
         </Grid>
 
         {
           votes.map((item) => {
+            let up_percent = Math.round(Number(item.up) / (Number(item.up) + Number(item.down)) * 100);
+            let down_percent = Math.round(Number(item.down) / (Number(item.up) + Number(item.down)) * 100);
             //check if I did vote before
             let found = item.participants.find((item) => item.wallet_address == account);
 
@@ -152,23 +157,22 @@ export default function Vote() {
                     </Grid>
                   </Grid>
                   <Grid item md='1' sm='3'>
-                    {!found && <Button className='btn btn-info text-light ' onClick={() => placeVote(item._id, true)}>YES</Button>}
+                    {account && !found && <Button className='btn btn-info text-light ' onClick={() => placeVote(item._id, true)}>YES</Button>}
                   </Grid>
                   <Grid item md='1' sm='3'>
-                    {!found &&
-                      <Button className='btn btn-outline-info' onClick={() => placeVote(item._id, false)}>NO</Button>}
+                    {account && !found && <Button className='btn btn-outline-info' onClick={() => placeVote(item._id, false)}>NO</Button>}
                   </Grid>
                   <Grid item md='2' sm='3'>
                     <Grid item sm={12}>
-                      <Box color='#56C5FF'>Yes {item.up}/ No  {item.down}</Box>
-                      <Box position='relative' display='flex'>
+                      <Box color='#56C5FF'>Yes {up_percent}%/ No {down_percent}%</Box>
+                      <Box position='relative' display='flex' marginRight={'10px'}>
                         <Box width='100%' height='10px' borderRadius={2} backgroundColor='white' />
                         <Box
                           position='absolute'
                           left='0px'
                           borderRadius={2}
                           height='10px'
-                          width={`${Number(item.up) / (Number(item.up) + Number(item.down)) * 100}%`}
+                          width={`${up_percent}%`}
                           backgroundColor='#56C5FF'
                         />
                       </Box>

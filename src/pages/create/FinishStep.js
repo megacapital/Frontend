@@ -71,6 +71,8 @@ const FinishStep = ({ goBack, goComplete }) => {
 
   // const refund = useSelector((state) => state.tokenListing.refund);
   const whiteListable = useSelector((state) => state.tokenListing.whiteListable);
+  const whitelistAddresses = useSelector((state) => state.tokenListing.whitelistAddresses);
+  const whitelistMaxDeposit = useSelector((state) => state.tokenListing.whitelistMaxDeposit);
   const dex_amount = useSelector((state) => state.tokenListing.dex_amount);
   const dex_rate = useSelector((state) => state.tokenListing.dex_rate);
   const dex_lockup = useSelector((state) => state.tokenListing.dex_lockup);
@@ -161,7 +163,7 @@ const FinishStep = ({ goBack, goComplete }) => {
           // parseEther(String(max_buy)), //maximum buy per user
           parseEther(String(hard_cap)), //maximum buy per user - will be calculated automatically
           dex_lockup,
-          whiteListable === 'whiteListable' ? true : false
+          whiteListable
         ];
         let _vesting;
 
@@ -177,6 +179,7 @@ const FinishStep = ({ goBack, goComplete }) => {
           : (_vesting = [0, 0, 0, 0, 0, 0]);
 
         console.log(_model, _details, address, poolFixedFee)
+
         const tx = await idoContract.createPool(
           _model,
           _details,
@@ -190,20 +193,18 @@ const FinishStep = ({ goBack, goComplete }) => {
         console.log('tx', tx);
         const aa = await tx.wait();
         console.log('AA', aa);
+        
         if (aa.confirmations > 0) {
           let _poolAddress;
           for (let i = 0; i < aa.events.length; i++) {
             if (aa.events[i].event === 'LogPoolCreated') {
               _poolAddress = aa.events[i].args['pool'];
-              // setPoolAddress(aa.events[i].args['pool']);
-              // _poolAddress = "0x29e5AE7C1c3D3ce86cA42EA7598fe56cC30d9C93"
               setPoolAddress(_poolAddress);
             }
           }
           _model.push(address);
           _details.push(cid_path);
           console.log('projectTokenAddress', address);
-          console.log('projectTokenAddress', _model[6]);
           const data = {
             poolOwner: account,
             model: _model,
@@ -229,6 +230,8 @@ const FinishStep = ({ goBack, goComplete }) => {
             projectName,
             poster,
             category, blockchain, tgi, type,
+            whitelistAddresses,
+            whitelistMaxDeposit
           };
 
           const _res = await apis.createBscIdo(data);

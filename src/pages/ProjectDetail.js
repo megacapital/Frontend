@@ -659,7 +659,7 @@ function ProjectInformation({ data: poolInfo }) {
   // const chainId = useSelector((store) => store.network.chainId); //TO_DO check 
   const { account, library, chainId } = useActiveWeb3React();
   const [approved, setApproved] = useState(false); //user preapproving status
-  const [buyCondition, setBuyCondition] = useState(false); //condition for user buying
+
   const [started, setStarted] = useState(false);
   const [ended, setEnded] = useState(false);
   const idoContract = useIDOContract();
@@ -669,11 +669,40 @@ function ProjectInformation({ data: poolInfo }) {
   const { tier, staked_amount, myTierLevelCount } = useMainStakingStatus();
   const [myMaxDeposit, setMyMaxDeposit] = useState(0)
   useEffect(() => {
-    var level_deposit = TIER_DEPOSIT_PERCENT[tier]
-    var mymax = Number(poolInfo?.hardCap) * Number(level_deposit / myTierLevelCount) / 100;
-    setMyMaxDeposit(mymax)
-  }, [tier, myTierLevelCount, poolInfo])
+    if (!account || !poolInfo.address) return;
 
+    if (poolInfo?.whitelistable) {//whitelist
+      if (poolInfo?.whiteLists?.includes(account)) { //included in whitelists
+        setMyMaxDeposit(poolInfo.whitelistMaxDeposit)
+      } else { //not included in whitelists
+        var tier_count = Number(myTierLevelCount) ? Number(myTierLevelCount) : 1;
+        var mymax = Number(poolInfo?.hardCap) * Number(TIER_DEPOSIT_PERCENT[tier]) / 100 / tier_count;
+        setMyMaxDeposit(mymax)
+      }
+
+    } else { //public
+      var tier_count = Number(myTierLevelCount) ? Number(myTierLevelCount) : 1;
+      var mymax = Number(poolInfo?.hardCap) * Number(TIER_DEPOSIT_PERCENT[tier]) / 100 / tier_count;
+      setMyMaxDeposit(mymax)
+    }
+  }, [tier, myTierLevelCount, poolInfo, account])
+
+  /**
+   * Condition for user to preapprove
+   * If IDO is public and staked amount >0, OR IDO is whitelist and account is in whitelists, then user can preapprove
+   */
+  const [approvingCondition, setApprovingCondition] = useState(false);
+  useEffect(() => {
+    (async () => {
+      if (account && poolInfo) {
+        var value = (!poolInfo?.whitelistable && staked_amount > 0) || (poolInfo?.whitelistable && poolInfo?.whiteLists?.includes(account));
+        setApprovingCondition(value);
+      }
+    })();
+  }, [account, poolInfo, staked_amount]);
+
+  //condition for user buying
+  const [buyCondition, setBuyCondition] = useState(false);
   useEffect(() => {
     (async () => {
       if (account && poolInfo) {
@@ -1030,7 +1059,7 @@ function ProjectInformation({ data: poolInfo }) {
             </Grid>
           </Grid>
 
-          {!started && (staked_amount > 0) && account &&
+          {!started && approvingCondition && account &&
             (
               approved ?
                 <Box
@@ -1059,8 +1088,8 @@ function ProjectInformation({ data: poolInfo }) {
               <Grid item container marginTop='20px'>
                 <Grid item sm={12} color='#56C5FF'>
                   Your {CURRENCY_SYMBOL[chainId]} balance: {tokenBalance}  . Max deposit {myMaxDeposit}
-                  <br />
-                  Max Deposit For Your Tier({tier}, {myTierLevelCount} users): {myMaxDeposit}
+                  {/* <br />
+                  Max Deposit For Your Tier({tier}, {myTierLevelCount} users): {myMaxDeposit} */}
                 </Grid>
                 <Grid item container sm={6} bgcolor='#232323' position='relative' display='flex'>
                   <Box
@@ -1234,7 +1263,7 @@ function ProjectInformation({ data: poolInfo }) {
             </Grid>
           </Grid>
 
-          {!started && (staked_amount > 0) && account &&
+          {!started && approvingCondition && account &&
             (
               approved ?
                 <Box

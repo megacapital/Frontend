@@ -63,6 +63,8 @@ const MainInfo = ({ goBack, goNext }) => {
   const max_buy = useSelector((state) => state.tokenListing.max_buy);
   // const refund = useSelector((state) => state.tokenListing.refund);
   const whiteListable = useSelector((state) => state.tokenListing.whiteListable);
+  const whitelistAddresses = useSelector((state) => state.tokenListing.whitelistAddresses);
+  const whitelistMaxDeposit = useSelector((state) => state.tokenListing.whitelistMaxDeposit);
   const dex_amount = useSelector((state) => state.tokenListing.dex_amount);
   const dex_rate = useSelector((state) => state.tokenListing.dex_rate);
   const dex_lockup = useSelector((state) => state.tokenListing.dex_lockup);
@@ -176,6 +178,8 @@ const MainInfo = ({ goBack, goNext }) => {
       max_buy,
       // refund,
       whiteListable,
+      whitelistAddresses,
+      whitelistMaxDeposit,
       dex_amount,
       dex_rate,
       dex_lockup,
@@ -228,7 +232,6 @@ const MainInfo = ({ goBack, goNext }) => {
     }
     setTeamVestingExisted(e.target.checked);
   };
-  const network = useSelector((state) => state.network.chainId);
 
   const { values, errors, touched, handleSubmit, getFieldProps } = formik;
   return (
@@ -355,31 +358,58 @@ const MainInfo = ({ goBack, goNext }) => {
                   }} />
               </Stack>
               <Stack spacing={1} flex={1}>
-                <Stack component="span" fontSize="0.7rem">
-                  Presale Type
-                </Stack>
-                <Select
-                  labelId="whiteListable-label"
-                  id="whiteListable-select"
-                  {...getFieldProps('whiteListable')}
-                  MenuProps={{
-                    sx: {
-                      '& .MuiPaper-root': {
-                        background: 'rgba(255, 255, 255, 0.2)',
-                        backdropFilter: 'blur(6px)'
-                      }
-                    }
-                  }}
-                >
-                  <MenuItem value="all">Public</MenuItem>
-                  <MenuItem value="whiteListable">Whitelist</MenuItem>
-                </Select>
               </Stack>
-
             </Stack>
-            <Stack direction="row" spacing={3} alignItems="flex-start">
+            <Stack direction="row" alignItems="flex-start">
               *Time is displayed locally.
             </Stack>
+            <Stack spacing={1} flex={1}>
+              <Stack component="span" fontSize="0.7rem">
+                Presale Type
+              </Stack>
+              <Select
+                labelId="whiteListable-label"
+                id="whiteListable-select"
+                {...getFieldProps('whiteListable')}
+                MenuProps={{
+                  sx: {
+                    '& .MuiPaper-root': {
+                      background: 'rgba(255, 255, 255, 0.2)',
+                      backdropFilter: 'blur(6px)'
+                    }
+                  }
+                }}
+              >
+                <MenuItem value={false}>Public</MenuItem>
+                <MenuItem value={true}>Whitelist</MenuItem>
+              </Select>
+            </Stack>
+            {values.whiteListable &&
+              <>
+                <Stack spacing={1}>
+                  <TextField
+                    fullWidth
+                    label="Whitelist Addresses"
+                    type="text"
+                    multiline minRows={3} maxRows={8}
+                    {...getFieldProps('whitelistAddresses')}
+                  />
+                  <Stack component="span" color="success.main">
+                    Put multilines, 1 line for 1 address
+                  </Stack>
+                </Stack>
+                <Stack spacing={1}>
+                  <TextField
+                    fullWidth
+                    label={`Whitelist Maximum Buy(${CURRENCY_SYMBOL[chainId]})`}
+                    type="number"
+                    {...getFieldProps('whitelistMaxDeposit')}
+                  />
+                </Stack>
+              </>
+
+            }
+
 
             {/* Team vesting option */}
             {/* <Stack direction="row" spacing={3} alignItems="flex-start">          

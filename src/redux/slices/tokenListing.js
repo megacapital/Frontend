@@ -4,8 +4,8 @@ const initialState = {
   category: 'Startup',
   blockchain: 'Binance',
   tgi: 'Solana',
-  type: 'Unlocked', 
-  deal: 'IDO', 
+  type: 'Unlocked',
+  deal: 'IDO',
   totalSupply: 0,
   address: '',
   error: '',
@@ -19,7 +19,9 @@ const initialState = {
   hard_cap: 100,
   min_buy: 1,
   max_buy: 100,
-  whiteListable: 'whiteListable',
+  whiteListable: false,
+  whitelistAddresses: "",
+  whitelistMaxDeposit: 0.1,
   dex_amount: '60',
   dex_rate: '1',
   dex_lockup: '31',
@@ -106,6 +108,8 @@ const slice = createSlice({
       state.max_buy = action.payload.max_buy;
       // state.refund=action.payload.refund;
       state.whiteListable = action.payload.whiteListable;
+      state.whitelistAddresses = action.payload.whitelistAddresses;
+      state.whitelistMaxDeposit = action.payload.whitelistMaxDeposit;
       state.dex_amount = action.payload.dex_amount;
       state.dex_rate = action.payload.dex_rate;
       state.dex_lockup = action.payload.dex_lockup;
