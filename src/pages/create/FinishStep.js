@@ -70,15 +70,17 @@ const FinishStep = ({ goBack, goComplete }) => {
   const teamVesting_each_period = useSelector((state) => state.tokenListing.teamVesting_each_period);
 
   // const refund = useSelector((state) => state.tokenListing.refund);
-  const whiteListable = useSelector((state) => state.tokenListing.whiteListable);
+  const whitelistable = useSelector((state) => state.tokenListing.whiteListable);
   const whitelistAddresses = useSelector((state) => state.tokenListing.whitelistAddresses);
   const whitelistMaxDeposit = useSelector((state) => state.tokenListing.whitelistMaxDeposit);
   const dex_amount = useSelector((state) => state.tokenListing.dex_amount);
   const dex_rate = useSelector((state) => state.tokenListing.dex_rate);
-  const dex_lockup = useSelector((state) => state.tokenListing.dex_lockup);
-  const start_date = useSelector((state) => state.tokenListing.startDate);
-  const end_date = useSelector((state) => state.tokenListing.endDate);
-  const list_date = useSelector((state) => state.tokenListing.listDate);
+  const dexLockup = useSelector((state) => state.tokenListing.dex_lockup);
+  const startDateTime = useSelector((state) => state.tokenListing.startDate);
+  const endDateTime = useSelector((state) => state.tokenListing.endDate);
+  const fcfsStartDateTime = useSelector((state) => state.tokenListing.fcfsStartDate);
+  const fcfsEndDateTime = useSelector((state) => state.tokenListing.fcfsEndDate);
+  const listDateTime = useSelector((state) => state.tokenListing.listDate);
 
   const category = useSelector((state) => state.tokenListing.category);
   const blockchain = useSelector((state) => state.tokenListing.blockchain);
@@ -144,7 +146,6 @@ const FinishStep = ({ goBack, goComplete }) => {
 
 
         const poolFixedFee = await idoContract.poolFixedFee(POOL_TIER.findIndex((ele) => ele === tier));
-        console.log('poolFixedFee', formatEther(poolFixedFee))
 
         let _model = [
           parseEther(String(hard_cap)),
@@ -156,14 +157,13 @@ const FinishStep = ({ goBack, goComplete }) => {
         ];
 
         let _details = [
-          Math.round(new Date(start_date).getTime() / 1000),
-          Math.round(new Date(end_date).getTime() / 1000),
-          Math.round(new Date(list_date).getTime() / 1000),
+          Math.round(new Date(startDateTime).getTime() / 1000),
+          Math.round(new Date(fcfsEndDateTime).getTime() / 1000), //fsfsEndDate is the end of IDO
+          Math.round(new Date(listDateTime).getTime() / 1000),
           parseEther(String(min_buy)),
-          // parseEther(String(max_buy)), //maximum buy per user
           parseEther(String(hard_cap)), //maximum buy per user - will be calculated automatically
-          dex_lockup,
-          whiteListable
+          dexLockup,
+          whitelistable
         ];
         let _vesting;
 
@@ -178,69 +178,65 @@ const FinishStep = ({ goBack, goComplete }) => {
           ])
           : (_vesting = [0, 0, 0, 0, 0, 0]);
 
-        console.log(_model, _details, address, poolFixedFee)
+        let _poolAddress;
 
-        const tx = await idoContract.createPool(
-          _model,
-          _details,
-          address,
-          cid_path,
-          // _vesting,
-          {
-            value: poolFixedFee
-          }
-        );
-        console.log('tx', tx);
-        const aa = await tx.wait();
-        console.log('AA', aa);
-        
-        if (aa.confirmations > 0) {
-          let _poolAddress;
-          for (let i = 0; i < aa.events.length; i++) {
-            if (aa.events[i].event === 'LogPoolCreated') {
-              _poolAddress = aa.events[i].args['pool'];
-              setPoolAddress(_poolAddress);
+        if ('act with blockchain' != 'yes') {
+          const tx = await idoContract.createPool(
+            _model,
+            _details,
+            address,
+            cid_path,
+            {
+              value: poolFixedFee
+            }
+          );
+          console.log('tx', tx);
+          const aa = await tx.wait();
+          console.log('AA', aa);
+
+          if (aa.confirmations > 0) {
+            for (let i = 0; i < aa.events.length; i++) {
+              if (aa.events[i].event === 'LogPoolCreated') {
+                _poolAddress = aa.events[i].args['pool'];
+                setPoolAddress(_poolAddress);
+                console.log('poolAddress', _poolAddress);
+              }
             }
           }
-          _model.push(address);
-          _details.push(cid_path);
-          console.log('projectTokenAddress', address);
-          const data = {
-            poolOwner: account,
-            model: _model,
-            details: _details,
-            vesting: _vesting,
-            poolPercentFee: 0,
-            poolAddress: _poolAddress,
-            descriptions: {
-              description,
-              roadmap_description,
-              roadmap_url,
-              about_description,
-              about_url,
-              features_description,
-              features_url,
-              teams_description,
-              teams_url,
-              tokenomics_description,
-              tokenomics_url,
-              twitter_followers,
-            },
-            logo, deal,
-            projectName,
-            poster,
-            category, blockchain, tgi, type,
-            whitelistAddresses,
-            whitelistMaxDeposit
-          };
-
-          const _res = await apis.createBscIdo(data);
-          console.log(_res);
         }
 
-        console.log(Date.now());
+        const data = {
+          poolOwner: account,
+          model: _model,
+          vesting: _vesting,
+          poolPercentFee: 0,
+          poolAddress: _poolAddress,
+          descriptions: {
+            description,
+            roadmap_description,
+            roadmap_url,
+            about_description,
+            about_url,
+            features_description,
+            features_url,
+            teams_description,
+            teams_url,
+            tokenomics_description,
+            tokenomics_url,
+            twitter_followers,
+          },
+          logo, deal,
+          projectName,
+          poster,
+          category, blockchain, tgi, type,
+          whitelistAddresses,
+          whitelistMaxDeposit,
+          startDateTime, endDateTime, fcfsStartDateTime, fcfsEndDateTime, listDateTime,
+          minAllocationPerUser: min_buy, maxAllocationPerUser: hard_cap, whitelistable, extraData: cid_path, projectTokenAddress: address, dexLockup
+        };
+        await apis.createBscIdo(data);
+
         setTimeout(() => {
-          console.log(Date.now());
           setIsConfirming(false);
           setComplete(true);
         }, 8000);
@@ -417,21 +413,35 @@ const FinishStep = ({ goBack, goComplete }) => {
           <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
             <span>Start Time</span>
             <Stack component="span" color="success.main" marginLeft="15px">
-              <Moment format="YYYY-MM-DD HH:mm">{new Date(start_date)}</Moment>
+              <Moment format="YYYY-MM-DD HH:mm">{new Date(startDateTime)}</Moment>
             </Stack>
           </Stack>
           <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
           <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
             <span>End Time</span>
             <Stack component="span" color="success.main" marginLeft="15px">
-              <Moment format="YYYY-MM-DD HH:mm">{new Date(end_date)}</Moment>
+              <Moment format="YYYY-MM-DD HH:mm">{new Date(endDateTime)}</Moment>
+            </Stack>
+          </Stack>
+          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
+          <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
+            <span>FCFS Start Time</span>
+            <Stack component="span" color="success.main" marginLeft="15px">
+              <Moment format="YYYY-MM-DD HH:mm">{new Date(fcfsStartDateTime)}</Moment>
+            </Stack>
+          </Stack>
+          <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
+          <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
+            <span>FCFS End Time</span>
+            <Stack component="span" color="success.main" marginLeft="15px">
+              <Moment format="YYYY-MM-DD HH:mm">{new Date(fcfsEndDateTime)}</Moment>
             </Stack>
           </Stack>
           <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
           <Stack direction="row" alignItems="center" justifyContent="space-between" fontSize="0.85rem">
             <span>Estimated Listing Time</span>
             <Stack component="span" color="success.main" marginLeft="15px">
-              <Moment format="YYYY-MM-DD HH:mm">{new Date(list_date)}</Moment>
+              <Moment format="YYYY-MM-DD HH:mm">{new Date(listDateTime)}</Moment>
             </Stack>
           </Stack>
           {/* <Divider sx={{ my: 1.5, borderColor: 'rgba(255, 255, 255, 0.3)' }} />

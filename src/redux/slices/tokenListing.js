@@ -27,6 +27,8 @@ const initialState = {
   dex_lockup: '31',
   startDate: '',
   endDate: '',
+  fcfsStartDate: '',
+  fcfsEndDate: '',
   listDate: '', // token listing date, when team sends token to admin, it is just information
   poster: 'https://snipboard.io/F0wMfL.jpg',
   logo: 'https://snipboard.io/SJgPjt.jpg',
@@ -115,6 +117,8 @@ const slice = createSlice({
       state.dex_lockup = action.payload.dex_lockup;
       state.endDate = action.payload.endDate;
       state.startDate = action.payload.startDate;
+      state.fcfsStartDate = action.payload.fcfsStartDate;
+      state.fcfsEndDate = action.payload.fcfsEndDate;
       state.listDate = action.payload.listDate;
       state.teamVesting_amount = action.payload.teamVesting_amount;
       state.teamVesting_first_percent = action.payload.teamVesting_first_percent;

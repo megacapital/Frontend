@@ -10,6 +10,6 @@ const CHAINS_IMAGES = {
 };
 
 export const getNetworkImage = (chainId = 0) => {
-  return CHAINS_IMAGES[chainId];
+  return CHAINS_IMAGES[[process.env.REACT_APP_PROJECT_CHAINID]];
 };
 

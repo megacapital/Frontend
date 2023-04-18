@@ -660,8 +660,6 @@ function ProjectInformation({ data: poolInfo }) {
   const { account, library, chainId } = useActiveWeb3React();
   const [approved, setApproved] = useState(false); //user preapproving status
 
-  const [started, setStarted] = useState(false);
-  const [ended, setEnded] = useState(false);
   const idoContract = useIDOContract();
   const poolContract = usePoolContract(poolInfo?.address);
 
@@ -674,13 +672,13 @@ function ProjectInformation({ data: poolInfo }) {
     if (poolInfo?.whitelistable) {//whitelist
       if (poolInfo?.whiteLists?.includes(account)) { //included in whitelists
         setMyMaxDeposit(poolInfo.whitelistMaxDeposit)
-      } else { //not included in whitelists
+      } else { //not included in whitelists, follow tier system
         var tier_count = Number(myTierLevelCount) ? Number(myTierLevelCount) : 1;
         var mymax = Number(poolInfo?.hardCap) * Number(TIER_DEPOSIT_PERCENT[tier]) / 100 / tier_count;
         setMyMaxDeposit(mymax)
       }
 
-    } else { //public
+    } else { //public, tier system
       var tier_count = Number(myTierLevelCount) ? Number(myTierLevelCount) : 1;
       var mymax = Number(poolInfo?.hardCap) * Number(TIER_DEPOSIT_PERCENT[tier]) / 100 / tier_count;
       setMyMaxDeposit(mymax)
@@ -751,13 +749,7 @@ function ProjectInformation({ data: poolInfo }) {
     })();
   }, [account, poolInfo]);
 
-  //max allocation 
-  const [maxAllocationHere, setmaxAllocationhere] = useState(0);
-  useEffect(() => {
-    if (poolInfo && started && numberofApproving > 0)
-      if (numberofApproving > 0) setmaxAllocationhere(Number(poolInfo?.hardCap) / Number(numberofApproving))
 
-  }, [started, poolInfo, numberofApproving])
 
 
   //Wallet token balance
@@ -888,24 +880,45 @@ function ProjectInformation({ data: poolInfo }) {
   }, [poolContract])
 
 
-  //started, ended
+  //stage
+  const [stage, setStage] = useState(0);
   useEffect(() => {
-    var startingTime = new Date(poolInfo.startDateTime).getTime()
-    var endingTime = new Date(poolInfo.endDateTime).getTime()
+    var startDateTime = new Date(poolInfo.startDateTime).getTime()
+    var endDateTime = new Date(poolInfo.endDateTime).getTime()
+    var fcfsStartDateTime = new Date(poolInfo.fcfsStartDateTime).getTime()
+    var fcfsEndDateTime = new Date(poolInfo.fcfsEndDateTime).getTime()
     var nowTime = Date.now();
-    console.log(startingTime, nowTime)
-    if (startingTime > nowTime) {
-      setStarted(false);
-    }
-    else setStarted(true)
 
-    if (nowTime > endingTime) {
-      setEnded(true);
-    } else {
-      setEnded(false)
-    }
+    if (nowTime < startDateTime) setStage(0); // upcoming
+    else if (nowTime < endDateTime) setStage(1); // current open
+    else if (nowTime < fcfsStartDateTime) setStage(2); // break time
+    else if (nowTime < fcfsEndDateTime) setStage(3); // FCFS 
+    else if (nowTime >= fcfsEndDateTime) setStage(4); // Closed
   }, [poolInfo])
 
+  //max allocation 
+  const [maxAllocationHere, setmaxAllocationhere] = useState(0);
+  const [openFCFSCondition, setOpenFCFSCondition] = useState(false);
+  useEffect(() => {
+    if (poolInfo != {}) {
+      switch (stage) {
+        case 0:
+          break;
+        case 1:
+          if (numberofApproving > 0) setmaxAllocationhere(Number(poolInfo?.hardCap) / Number(numberofApproving))
+          break;
+        case 3:
+          if (etherRaised < poolInfo.hardCap) {
+            setOpenFCFSCondition(true)
+            setmaxAllocationhere(Number(poolInfo?.hardCap) - Number(etherRaised))
+          }
+          break;
+
+        default:
+          break;
+      }
+    }
+  }, [stage, poolInfo, numberofApproving, etherRaised])
 
 
   const handleFinalize = async () => {
@@ -938,152 +951,151 @@ function ProjectInformation({ data: poolInfo }) {
 
   return (
     <>
-      {/* Desktop view */}
-      <MHidden width='mdDown'>
-        <Grid container border='1px solid #56C5FF' borderRadius={1} bgcolor='#232323' padding='30px' rowSpacing={2}>
-          <Grid item sm={7} color='#56C5FF' fontSize={48}>
-            Project Information
-          </Grid>
-          <Grid item sm={5} color='#56C5FF' fontSize={48}>
-            Token Information
-          </Grid>
-          <Grid container direction='row'>
-            <Grid item sm={2} >
-              <Grid item color='white'>
-                HARDCAP
-              </Grid>
-              <Grid item color='white'>
-                OPEN TIME
-              </Grid>
-              <Grid item color='white'>
-                CLOSE TIME
-              </Grid>
-              <Grid item color='white'>
-                LISTING DATE
-              </Grid>
-              <Grid item color='white'>
-                DEAL
-              </Grid>
+      <Grid container border='1px solid #56C5FF' borderRadius={1} bgcolor='#232323' padding='30px' rowSpacing={2}>
+        <Grid item sm={7} color='#56C5FF' fontSize={48}>
+          Project Information {stage}
+        </Grid>
+        <Grid item sm={5} color='#56C5FF' fontSize={48}>
+          Token Information
+        </Grid>
+        <Grid container direction='row'>
+          <Grid item sm={2} >
+            <Grid item color='white'>
+              HARDCAP
             </Grid>
-            <Grid item sm={3} >
-              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {poolInfo?.hardCap} {CURRENCY_SYMBOL[chainId]}
-              </Grid>
-              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {formattedDate(poolInfo?.startDateTime)}
-              </Grid>
-              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {formattedDate(poolInfo?.endDateTime)}
-              </Grid>
-              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {formattedDate(poolInfo?.listDateTime)}
-              </Grid>
-              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {poolInfo?.deal}
-              </Grid>
+            <Grid item color='white'>
+              OPEN TIME
             </Grid>
-            <Grid item sm={2}></Grid>
-            <Grid item sm={2} >
-              <Grid item color='white'>
-                SYMBOL
-              </Grid>
-              <Grid item color='white'>
-                CATEGORY
-              </Grid>
-              <Grid item color='white'>
-                BLOCKCHAIN
-              </Grid>
-              <Grid item color='white'>
-                TGI
-              </Grid>
-              <Grid item color='white'>
-                TYPE
-              </Grid>
+            <Grid item color='white'>
+              CLOSE TIME
             </Grid>
-            <Grid item sm={2} >
-              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {poolInfo?.symbol}
-              </Grid>
-              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {poolInfo?.category}
-              </Grid>
-              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {poolInfo?.blockchain}
-              </Grid>
-              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {poolInfo?.tgi}
-              </Grid>
-              <Grid item color='#56C5FF' justifyContent='right' display='flex'>
-                {poolInfo?.type}
-              </Grid>
+            <Grid item color='white'>
+              LISTING DATE
+            </Grid>
+            <Grid item color='white'>
+              DEAL
             </Grid>
           </Grid>
-          <Grid item sm={12} marginTop='50px'>
-            <Box color='#56C5FF'>{etherRaised}/{poolInfo?.hardCap} {CURRENCY_SYMBOL[chainId]}</Box>
-            <Box position='relative' display='flex'>
-              <Box width='100%' height='10px' borderRadius={2} backgroundColor='white' />
+          <Grid item sm={3} >
+            <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+              {poolInfo?.hardCap} {CURRENCY_SYMBOL[chainId]}
+            </Grid>
+            <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+              {formattedDate(poolInfo?.startDateTime)}
+            </Grid>
+            <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+              {formattedDate(poolInfo?.endDateTime)}
+            </Grid>
+            <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+              {formattedDate(poolInfo?.listDateTime)}
+            </Grid>
+            <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+              {poolInfo?.deal}
+            </Grid>
+          </Grid>
+          <Grid item sm={2}></Grid>
+          <Grid item sm={2} >
+            <Grid item color='white'>
+              SYMBOL
+            </Grid>
+            <Grid item color='white'>
+              CATEGORY
+            </Grid>
+            <Grid item color='white'>
+              BLOCKCHAIN
+            </Grid>
+            <Grid item color='white'>
+              TGI
+            </Grid>
+            <Grid item color='white'>
+              TYPE
+            </Grid>
+          </Grid>
+          <Grid item sm={2} >
+            <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+              {poolInfo?.symbol}
+            </Grid>
+            <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+              {poolInfo?.category}
+            </Grid>
+            <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+              {poolInfo?.blockchain}
+            </Grid>
+            <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+              {poolInfo?.tgi}
+            </Grid>
+            <Grid item color='#56C5FF' justifyContent='right' display='flex'>
+              {poolInfo?.type}
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item sm={12} marginTop='50px'>
+          <Box color='#56C5FF'>{etherRaised}/{poolInfo?.hardCap} {CURRENCY_SYMBOL[chainId]}</Box>
+          <Box position='relative' display='flex'>
+            <Box width='100%' height='10px' borderRadius={2} backgroundColor='white' />
+            <Box
+              position='absolute'
+              left='0px'
+              borderRadius={2}
+              height='10px'
+              width={`${Number(etherRaised / poolInfo.hardCap * 100)}%`}
+              backgroundColor='#56C5FF'
+            />
+          </Box>
+        </Grid>
+        <Grid item container marginTop='50px'>
+          <Grid item sm={3} color='#56C5FF'>
+            Your Contribution
+          </Grid>
+          <Grid item sm={3} color='#56C5FF'>
+            Personal Min
+          </Grid>
+          <Grid item sm={3} color='#56C5FF'>
+            Personal Max
+          </Grid>
+          <Grid item sm={3} color='#56C5FF'>
+            Token Price
+          </Grid>
+          <Grid item sm={3} fontSize={28} color='white'>
+            {myCollaboration} {CURRENCY_SYMBOL[chainId]}
+          </Grid>
+          <Grid item sm={3} fontSize={28} color='white'>
+            {poolInfo?.minAllocationPerUser} {CURRENCY_SYMBOL[chainId]}
+          </Grid>
+          <Grid item sm={3} fontSize={28} color='white'>
+            {maxAllocationHere} {CURRENCY_SYMBOL[chainId]}
+          </Grid>
+          <Grid item sm={3} fontSize={28} color='white'>
+            {Number(1 / poolInfo?.presaleRate)} {CURRENCY_SYMBOL[chainId]}
+          </Grid>
+        </Grid>
+
+        {stage == 0 && approvingCondition && account &&
+          (
+            approved ?
               <Box
-                position='absolute'
-                left='0px'
-                borderRadius={2}
-                height='10px'
-                width={`${Number(etherRaised / poolInfo.hardCap * 100)}%`}
-                backgroundColor='#56C5FF'
-              />
-            </Box>
-          </Grid>
-          <Grid item container marginTop='50px'>
-            <Grid item sm={3} color='#56C5FF'>
-              Your Contribution
-            </Grid>
-            <Grid item sm={3} color='#56C5FF'>
-              Personal Min
-            </Grid>
-            <Grid item sm={3} color='#56C5FF'>
-              Personal Max
-            </Grid>
-            <Grid item sm={3} color='#56C5FF'>
-              Token Price
-            </Grid>
-            <Grid item sm={3} fontSize={28} color='white'>
-              {myCollaboration} {CURRENCY_SYMBOL[chainId]}
-            </Grid>
-            <Grid item sm={3} fontSize={28} color='white'>
-              {poolInfo?.minAllocationPerUser} {CURRENCY_SYMBOL[chainId]}
-            </Grid>
-            <Grid item sm={3} fontSize={28} color='white'>
-              {maxAllocationHere} {CURRENCY_SYMBOL[chainId]}
-            </Grid>
-            <Grid item sm={3} fontSize={28} color='white'>
-              {Number(1 / poolInfo?.presaleRate)} {CURRENCY_SYMBOL[chainId]}
-            </Grid>
-          </Grid>
+                component='button'
+                style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6, marginRight: '10px', marginTop: '20px', cursor: 'no-drop' }}
+                color='white'
+                padding='10px 28px 10px 28px'
+              >
+                Already Approved
+              </Box> :
+              <Box
+                component='button'
+                style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6, marginRight: '10px', marginTop: '20px', cursor: 'pointer' }}
+                color='white'
+                padding='10px 28px 10px 28px'
+                onClick={() => preapprove()}
+              >
+                PreApprove
+              </Box>
+          )
+        }
 
-          {!started && approvingCondition && account &&
-            (
-              approved ?
-                <Box
-                  component='button'
-                  style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6, marginRight: '10px', marginTop: '20px', cursor: 'no-drop' }}
-                  color='white'
-                  padding='10px 28px 10px 28px'
-                >
-                  Already Approved
-                </Box> :
-                <Box
-                  component='button'
-                  style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6, marginRight: '10px', marginTop: '20px', cursor: 'pointer' }}
-                  color='white'
-                  padding='10px 28px 10px 28px'
-                  onClick={() => preapprove()}
-                >
-                  PreApprove
-                </Box>
-            )
-          }
-
-          {/* started not ended */}
-          {started && !ended && (buyCondition ? (
+        {/* started not ended */}
+        {stage == 1 && (
+          buyCondition ?
             <>
               <Grid item container marginTop='20px'>
                 <Grid item sm={12} color='#56C5FF'>
@@ -1131,221 +1143,71 @@ function ProjectInformation({ data: poolInfo }) {
                 </Box>
               </Grid>
             </>
-          ) : <></>)}
+            :
+            <></>
+        )}
+        {stage == 3 && openFCFSCondition &&
+          <>
+            <Grid item container marginTop='20px'>
+              <Grid item sm={12} color='#ff56c3'>
+                FCFS System Opened until {formattedDate(poolInfo?.fcfsEndDateTime)}
+              </Grid>
+              <Grid item sm={12} color='#56C5FF'>
+                Your {CURRENCY_SYMBOL[chainId]} balance: {tokenBalance}
+              </Grid>
+              <Grid item container sm={6} bgcolor='#232323' position='relative' display='flex'>
+                <Box
+                  component='input'
+                  padding='5px'
+                  width='100%'
+                  height='50px'
+                  placeholder='0.0'
+                  style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', border: 'none', borderRadius: 5 }}
+                  type="number"
+                  value={buyingAmount}
+                  onChange={(e) => setBuyingAmount(e.target.value)}
+                ></Box>
+                <Box
+                  component='button'
+                  position='absolute'
+                  right='8px'
+                  top='7px'
+                  style={{ backgroundColor: '#56C5FF', height: '70%', border: 'none', borderRadius: 6 }}
+                  color='white'
+                  paddingLeft='20px'
+                  paddingRight='20px'
+                  onClick={() => setBuyingAmount(tokenBalance)}
+                >
+                  MAX
+                </Box>
+              </Grid>
+            </Grid>
+            <Grid marginTop='20px'>
 
-          {
-            ended && ADMIN_WALLETS.includes(account) && <Box
-              component='button'
-              style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6, marginRight: '10px', marginTop: '20px', cursor: 'pointer' }}
-              color='white'
-              padding='10px 28px 10px 28px'
-              onClick={() => handleFinalize()}
-            >
-              Finalize
-            </Box>
-          }
-        </Grid>
-      </MHidden>
-
-      {/* Mobile view */}
-      <MHidden width='mdUp'>
-        <Grid
-          container
-          border='1px solid #56C5FF'
-          borderRadius={1}
-          backgroundColor='#232323'
-          padding='20px'
-          rowSpacing={2}
-        >
-          <Grid item xs={12} color='#56C5FF' fontSize={20} justifyContent='center' display='flex'>
-            Project Information
-          </Grid>
-          <Grid fontSize={16}>
-            <Grid item xs={12} color='white' marginTop='20px'>
-              HARDCAP
-            </Grid>
-            <Grid item xs={12} color='#56C5FF'>
-              {poolInfo?.hardCap} {CURRENCY_SYMBOL[chainId]}
-            </Grid>
-            <Grid item xs={12} color='white' marginTop='15px'>
-              OPEN TIME
-            </Grid>
-            <Grid item xs={12} color='#56C5FF'>
-              {formattedDate(poolInfo?.startDateTime)}
-            </Grid>
-            <Grid item xs={12} color='white' marginTop='15px'>
-              CLOSE TIME
-            </Grid>
-            <Grid item xs={12} color='#56C5FF'>
-              {formattedDate(poolInfo?.endDateTime)}
-            </Grid>
-            <Grid item xs={12} color='white' marginTop='15px'>
-              LISTING DATE
-            </Grid>
-            <Grid item xs={12} color='#56C5FF'>
-              {formattedDate(poolInfo?.listDateTime)}
-            </Grid>
-            <Grid item xs={12} color='white' marginTop='15px'>
-              DEAL
-            </Grid>
-            <Grid item xs={12} color='#56C5FF' marginBottom='30px'>
-              {poolInfo?.deal}
-            </Grid>
-          </Grid>
-          <Grid item xs={12} color='#56C5FF' fontSize={20} justifyContent='center' display='flex'>
-            Token Information
-          </Grid>
-          <Grid item xs={12} color='#56C5FF' marginTop='15px' marginBottom='20px'>
-            PRGC
-          </Grid>
-          <Grid item xs={6}>
-            <Box color='white'>CATEGORY</Box>
-            <Box color='#56C5FF' marginTop='2px'>
-              {poolInfo?.category}
-            </Box>
-          </Grid>
-          <Grid item xs={6}>
-            <Box color='white'>TGI</Box>
-            <Box color='#56C5FF' marginTop='2px'>
-              {poolInfo?.tgi}
-            </Box>
-          </Grid>
-          <Grid item xs={6} marginTop='10px'>
-            <Box color='white'>BLOCKCHAIN</Box>
-            <Box color='#56C5FF' marginTop='2px'>
-              {poolInfo?.blockchain}
-            </Box>
-          </Grid>
-          <Grid item xs={6} marginTop='10px'>
-            <Box color='white'>TYPE</Box>
-            <Box color='#56C5FF' marginTop='2px'>
-              {poolInfo?.type}
-            </Box>
-          </Grid>
-          <Grid item xs={12} marginTop='30px' width='100%'>
-            <Box color='#56C5FF'>{etherRaised}/{poolInfo?.hardCap} {CURRENCY_SYMBOL[chainId]}</Box>
-            <Box position='relative' display='flex'>
-              <Box width='100%' height='10px' borderRadius={2} backgroundColor='white' />
               <Box
-                position='absolute'
-                left='0px'
-                borderRadius={2}
-                height='10px'
-                width={`${Number(etherRaised / poolInfo.hardCap * 100)}%`}
-                backgroundColor='#56C5FF'
-              />
-            </Box>
-          </Grid>
-          <Grid item container marginTop='50px'>
-            <Grid item xs={6} fontSize={16} color='#56C5FF'>
-              Your Contribution
+                component='button'
+                style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6 }}
+                color='white'
+                padding='10px 28px 10px 28px'
+                onClick={() => buy()}
+              >
+                BUY
+              </Box>
             </Grid>
-            <Grid item xs={6} fontSize={22} color='white' display='flex' justifyContent='flex-end'>
-              {myCollaboration} {CURRENCY_SYMBOL[chainId]}
-            </Grid>
-            <Grid item xs={6} fontSize={16} color='#56C5FF'>
-              Personal Min
-            </Grid>
-            <Grid item xs={6} fontSize={22} color='white' display='flex' justifyContent='flex-end'>
-              {poolInfo?.minAllocationPerUser} {CURRENCY_SYMBOL[chainId]}
-            </Grid>
-            <Grid item xs={6} fontSize={16} color='#56C5FF'>
-              Personal Max
-            </Grid>
-            <Grid item xs={6} fontSize={22} color='white' display='flex' justifyContent='flex-end'>
-              {maxAllocationHere} {CURRENCY_SYMBOL[chainId]}
-            </Grid>
-            <Grid item xs={6} fontSize={16} color='#56C5FF'>
-              Token Price
-            </Grid>
-            <Grid item xs={6} fontSize={22} color='white' display='flex' justifyContent='flex-end'>
-              {Number(1 / poolInfo?.presaleRate)} {CURRENCY_SYMBOL[chainId]}
-            </Grid>
-          </Grid>
-
-          {!started && approvingCondition && account &&
-            (
-              approved ?
-                <Box
-                  component='button'
-                  style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6, marginRight: '10px', marginTop: '20px', cursor: 'no-drop' }}
-                  color='white'
-                  padding='10px 28px 10px 28px'
-                >
-                  Already Approved
-                </Box> :
-                <Box
-                  component='button'
-                  style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6, marginRight: '10px', marginTop: '20px', cursor: 'pointer' }}
-                  color='white'
-                  padding='10px 28px 10px 28px'
-                  onClick={() => preapprove()}
-                >
-                  PreApprove
-                </Box>
-            )
-          }
-
-          {started && !ended && (buyCondition ? (
-            <>
-              <Grid item container marginTop='20px'>
-                <Grid item sm={12} color='#56C5FF'>
-                  Your {CURRENCY_SYMBOL[chainId]} balance: {tokenBalance}  . Max deposit {myMaxDeposit}
-                </Grid>
-                <Grid item container sm={6} bgcolor='#232323' position='relative' display='flex'>
-                  <Box
-                    component='input'
-                    padding='5px'
-                    width='100%'
-                    height='50px'
-                    placeholder='0.0'
-                    style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', border: 'none', borderRadius: 5 }}
-                    type="number"
-                    value={buyingAmount}
-                    onChange={(e) => setBuyingAmount(e.target.value)}
-                  ></Box>
-                  <Box
-                    component='button'
-                    position='absolute'
-                    right='8px'
-                    top='7px'
-                    style={{ backgroundColor: '#56C5FF', height: '70%', border: 'none', borderRadius: 6 }}
-                    color='white'
-                    paddingLeft='20px'
-                    paddingRight='20px'
-                    onClick={() => setBuyingAmount(tokenBalance)}
-                  >
-                    MAX
-                  </Box>
-                </Grid>
-              </Grid>
-              <Grid marginTop='20px'>
-                <Box
-                  component='button'
-                  style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6 }}
-                  color='white'
-                  padding='10px 28px 10px 28px'
-                  onClick={() => buy()}
-                >
-                  BUY
-                </Box>
-              </Grid>
-            </>
-          ) : <></>)}
-
-          {
-            ended && <Box
-              component='button'
-              style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6, marginRight: '10px', marginTop: '20px', cursor: 'pointer' }}
-              color='white'
-              padding='10px 28px 10px 28px'
-              onClick={() => handleFinalize()}
-            >
-              Finalize
-            </Box>
-          }
-        </Grid>
-      </MHidden>
+          </>
+        }
+        {
+          stage == 4 && ADMIN_WALLETS.includes(account) && <Box
+            component='button'
+            style={{ backgroundColor: '#56C5FF', border: 'none', borderRadius: 6, marginRight: '10px', marginTop: '20px', cursor: 'pointer' }}
+            color='white'
+            padding='10px 28px 10px 28px'
+            onClick={() => handleFinalize()}
+          >
+            Finalize (only visible to admin)
+          </Box>
+        }
+      </Grid>
     </>
   );
 }

@@ -88,7 +88,7 @@ function Create() {
   const decimals = useSelector((state) => state.tokenListing.decimals);
   const approved = useSelector((state) => state.tokenListing.approved);
   const dispatch = useDispatch();
-  const [activeStep, setActiveStep] = useState(0); // 0 default
+  const [activeStep, setActiveStep] = useState(0); // 0 default, 1 maininfo, 2 additional info
   const [isApproving, setIsApproving] = useState(false);
   const [isParsing, setIsParsing] = useState(false);
   const params = useParams();

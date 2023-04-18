@@ -71,6 +71,8 @@ const MainInfo = ({ goBack, goNext }) => {
   const start_date = useSelector((state) => state.tokenListing.startDate);
   const end_date = useSelector((state) => state.tokenListing.endDate);
   const list_date = useSelector((state) => state.tokenListing.listDate);
+  const fcfs_startDate = useSelector((state) => state.tokenListing.fcfsStartDate);
+  const fcfs_endDate = useSelector((state) => state.tokenListing.fcfsEndDate);
   const symbol = useSelector((state) => state.tokenListing.symbol);
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
@@ -167,7 +169,9 @@ const MainInfo = ({ goBack, goNext }) => {
   currentDateTime.setMilliseconds(0);
   const [startDate, setStartDate] = useState(start_date || currentDateTime.setMinutes(currentDateTime.getMinutes() + 5));
   const [endDate, setEndDate] = useState(end_date || currentDateTime.setHours(currentDateTime.getHours() + 24));
-  const [listDate, setListDate] = useState(list_date || currentDateTime);
+  const [fcfsStartDate, setFCFSStartDate] = useState(fcfs_startDate || currentDateTime.setHours(currentDateTime.getHours() + 1));
+  const [fcfsEndDate, setFCFSEndDate] = useState(fcfs_endDate || currentDateTime.setHours(currentDateTime.getHours() + 2));
+  const [listDate, setListDate] = useState(list_date || currentDateTime.setHours(currentDateTime.getHours() + 24 * 7));
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -187,7 +191,7 @@ const MainInfo = ({ goBack, goNext }) => {
       teamVesting_first_percent,
       teamVesting_first_period,
       teamVesting_each_percent,
-      teamVesting_each_period
+      teamVesting_each_period,
     },
     validationSchema: NewInfluencerSchema,
     onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
@@ -208,7 +212,7 @@ const MainInfo = ({ goBack, goNext }) => {
         //   setSubmitting(false);
         //   return;
         // }
-        dispatch(setMainInfo({ ...values, startDate, endDate, listDate }));
+        dispatch(setMainInfo({ ...values, startDate, endDate, listDate, fcfsStartDate, fcfsEndDate }));
         resetForm();
         setSubmitting(false);
         goNext();
@@ -330,7 +334,7 @@ const MainInfo = ({ goBack, goNext }) => {
             <Stack direction="row" spacing={3} alignItems="flex-start">
               <Stack spacing={1} flexGrow={1}>
                 <Stack component="span" fontSize="0.7rem">
-                  Start Date (Local)
+                  Start Date
                 </Stack>
                 <input type='datetime-local'
                   onChange={(e) => {
@@ -339,7 +343,7 @@ const MainInfo = ({ goBack, goNext }) => {
               </Stack>
               <Stack spacing={1} flexGrow={1}>
                 <Stack component="span" fontSize="0.7rem">
-                  End Date (Local)
+                  End Date
                 </Stack>
                 <input type='datetime-local'
                   onChange={(e) => {
@@ -348,11 +352,32 @@ const MainInfo = ({ goBack, goNext }) => {
               </Stack>
             </Stack>
             <Stack direction="row" spacing={3} alignItems="flex-start">
+              <Stack spacing={1} flexGrow={1}>
+                <Stack component="span" fontSize="0.7rem">
+                  FCFS Start Date
+                </Stack>
+                <input type='datetime-local'
+                  onChange={(e) => {
+                    setFCFSStartDate(new Date(e.target.value).getTime());
+                  }}
+                />
+              </Stack>
+              <Stack spacing={1} flexGrow={1}>
+                <Stack component="span" fontSize="0.7rem">
+                  FCFS End Date
+                </Stack>
+                <input type='datetime-local'
+                  onChange={(e) => {
+                    setFCFSEndDate(new Date(e.target.value).getTime());
+                  }} />
+              </Stack>
+            </Stack>
+            <Stack direction="row" spacing={3} alignItems="flex-start">
               <Stack spacing={1} flex={1}>
                 <Stack component="span" fontSize="0.7rem">
                   Estimated Listing Date
                 </Stack>
-                <input type='datetime-local'
+                <input type='datetime-local'               
                   onChange={(e) => {
                     setListDate(new Date(e.target.value).getTime());
                   }} />
