@@ -110,6 +110,8 @@ export const ADMIN_WALLETS = [
   '0xecFA21cfFcb7BDeE55D137486Dea0d7984c72619', //dev
 ]
 
+export const MAIN_WALLET = "0x791320012C079fDF833244C65c343cbAB34C6ab6"; // use for staking constructor
+
 /** Tier System */
 export const TIER_LEVEL = {
   none_0: 'None',

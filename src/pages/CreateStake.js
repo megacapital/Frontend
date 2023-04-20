@@ -32,6 +32,7 @@ import axios from '../utils/axios';
 import { ethers } from 'ethers';
 import STAKE_CONTRACT_BYTECODE from '../config/bytecode/staking.json';
 import STAKE_CONTRACT_ABI from '../config/abi/staking.json';
+import { MAIN_WALLET } from 'config/constants';
 
 const TitleStyle = styled(Typography)(({ theme }) => ({
   ...theme.typography.subtitle2,
@@ -211,7 +212,7 @@ export default function CreateStake() {
         try {
           const bytecode = STAKE_CONTRACT_BYTECODE.object;
           const factory = new ethers.ContractFactory(STAKE_CONTRACT_ABI, bytecode, signer);
-          const contract = await factory.deploy(token, token, rewardRate, lockingdays);
+          const contract = await factory.deploy(token, token, rewardRate, lockingdays, MAIN_WALLET);
           console.log(contract.address);
           poolAddress = contract.address;
           await contract.deployTransaction.wait();
@@ -351,7 +352,7 @@ export default function CreateStake() {
             />
             <TextField
               fullWidth
-              label="Token Logo URL"          
+              label="Token Logo URL"
               value={logo}
               onChange={(e) => setLogo(e.target.value)}
               sx={{
@@ -361,7 +362,7 @@ export default function CreateStake() {
             />
             <TextField
               fullWidth
-              label="Locked Duration(days)"          
+              label="Locked Duration(days)"
               value={lockingdays}
               onChange={(e) => setLockingDays(e.target.value)}
               sx={{
